@@ -1,29 +1,21 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useState } from "react";
-import Tabs from "~/components/Tabs";
 import { Link, useLoaderData } from "@remix-run/react";
 import chocolatines from "~/data/chocolatines.json";
 import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
 
-const pictures = [
-  "https://images.unsplash.com/photo-1607151815172-254f6b0c9b4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTE0MTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDIzNDQ3MzQ&ixlib=rb-1.2.1&q=80&w=1080",
-  "https://images.unsplash.com/photo-1595397351604-cf490cc38bf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTE0MTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDIzNDQ3NTI&ixlib=rb-1.2.1&q=80&w=1080",
-  "https://images.unsplash.com/photo-1577595927087-dedbe84f0e4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTE0MTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDIzNDQ3NjU&ixlib=rb-1.2.1&q=80&w=1080",
-  "https://images.unsplash.com/photo-1532635224-cf024e66d122?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyOTE0MTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDIzNDQ3NzI&ixlib=rb-1.2.1&q=80&w=1080",
-];
-
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const chocolatine = chocolatines.find((c) => c.belongsTo.identifier === params.shopSlug);
   const quality: any = {
-    softness: 0,
-    flakiness: 0,
-    crispiness: 0,
-    fondant: 0,
-    chocolate_quality: 0,
-    chocolate_disposition: 0,
-    note: 0,
-    visual_aspect: 0,
+    note: null,
+    visual_aspect: null,
+    softness: null,
+    flakiness: null,
+    crispiness: null,
+    fondant: null,
+    chocolate_quality: null,
+    chocolate_disposition: null,
   };
   for (const review of chocolatine?.reviews ?? []) {
     for (const criteria of review.additionalProperty) {
@@ -31,29 +23,32 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       quality[criteria.name] += criteria.value;
     }
   }
-  const isHomemade = chocolatine?.additionalProperty.find(
-    (prop) => prop.name === "Homemade" && prop.value === true
+  const isHomemade = String(
+    chocolatine?.additionalProperty.find((prop) => prop.name === "Homemade")?.value
   );
   const shop = shops.find((s) => s.identifier === params.shopSlug);
   return {
     chocolatine,
     isHomemade,
-    quality,
+    quality: chocolatine?.reviews.length ? quality : null,
+    ingredients: chocolatine?.additionalType.find((type) => type.name === "Ingredients")?.value,
     shop,
   };
 };
 
 const Shop = () => {
-  const { chocolatine, quality, shop, isHomemade } = useLoaderData<typeof loader>();
+  const { chocolatine, quality, shop, isHomemade, ingredients } = useLoaderData<typeof loader>();
+
+  const email =
+    typeof window !== "undefined" ? window.atob("a2lzcy5teS5jaG9jb2xhdGluZUBnbWFpbC5jb20=") : "";
 
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <div
       id="drawer"
-      className="h-[75vh] relative shrink-0 sm:max-h-none max-w-sm w-full sm:h-full bg-white drop-shadow-lg flex flex-col overflow-y-hidden">
-      {/* <img src={pictures[0]} className="w-full h-60 object-cover" loading="lazy" /> */}
-      <h1 className="font-bold px-4 mt-4 text-xl">{shop?.name} </h1>
+      className="h-[75vh] relative shrink-0 sm:max-h-full max-w-sm w-full sm:h-full bg-white drop-shadow-lg flex flex-col overflow-y-hidden z-20 sm:z-0">
+      <h2 className="font-bold px-4 mt-4 text-xl">{shop?.name} </h2>
       <span
         aria-details="address"
         className="pl-6 opacity-70 flex text-sm mt-1 cursor-pointer"
@@ -82,76 +77,93 @@ const Shop = () => {
           <path
             strokeLinecap="round"
             className="drop-shadow-sm"
-            // style={{ filter: "drop-shadow(0px 0px 1px rgba(0, 0, 0, 1))" }}
             strokeLinejoin="round"
             strokeWidth={2}
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
       </Link>
-      {/* <Tabs
-        menu={["Pain au Chocolat", "About the shop"]}
-        className="mt-3 grow shrink overflow-y-hidden"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}> */}
       <div className="w-full h-full overflow-x-auto overflow-y-auto flex-col">
-        {/* <div
-          style={{ transform: `translateX(${-activeTab * 100}%)` }}
-          className="transition-transform h-full flex min-h-fit w-full"> */}
         <section className="w-full shrink-0 px-4 pt-4 overflow-y-auto min-h-fit">
           <h3 className={`mt-1 ${!isHomemade ? "text-red-500 font-bold" : "font-semibold"}`}>
-            {isHomemade ? "Home made 🧑‍🍳 " : "Industrial 🏭 "}
+            {isHomemade === "true" && "Home made 🧑‍🍳 "}
+            {isHomemade === "false" && "Industrial 🏭 "}
           </h3>
           <p className="mt-3 mb-0">
-            Price: {chocolatine?.offers.price} {chocolatine?.offers.priceCurrency}
+            Price:{" "}
+            {chocolatine?.offers?.price
+              ? `${chocolatine?.offers.price} ${chocolatine?.offers.priceCurrency}`
+              : "N/A"}
           </p>
-          <h3 className="mt-10 mb-2 font-bold">Reviews</h3>
-          {Object.keys(quality).map((criteria) => {
-            return (
-              <div className="flex flex-col mt-2 ml-1 text-sm" key={criteria}>
-                <span className="">
-                  {criteria === "note" && <>Note globale </>}
-                  {criteria === "visual_aspect" && <>Aspect visuel </>}
-                  {criteria === "softness" && <>Moelleux </>}
-                  {criteria === "flakiness" && <>Feuilletage </>}
-                  {criteria === "crispiness" && <>Croustillant </>}
-                  {criteria === "fondant" && <>Fondant </>}
-                  {criteria === "chocolate_quality" && <>Qualité du chocolat </>}
-                  {criteria === "chocolate_disposition" && <>Disposition du chocolat </>}
-                  &nbsp;
-                  {quality[criteria] === 0 && "😖"}
-                  {quality[criteria] === 1 && "😒"}
-                  {quality[criteria] === 2 && "🤨"}
-                  {quality[criteria] === 3 && "😕"}
-                  {quality[criteria] === 4 && "😋"}
-                  {quality[criteria] === 5 && "🤩"}
-                </span>
-                <progress
-                  max="5"
-                  value={quality[criteria]}
-                  className="w-full rounded-full overflow-hidden h-2"></progress>
-              </div>
-            );
-          })}
-          <h3 className="mt-10 mb-2 font-bold">Ingredients</h3>
-          {chocolatine?.additionalType
-            .find((type) => type.name === "Ingredients")
-            ?.value?.map((ingredient) => {
-              return (
-                <div className="mt-2 ml-1 text-sm flex" key={ingredient.name}>
-                  <img
-                    className="h-6 w-6 mr-2"
-                    src={`/assets/${
-                      ingredient.additionalProperties.find((prop) => prop.name === "Icon")?.value
-                    }`}
-                    loading="lazy"
-                  />
-                  <span>
-                    <span className="font-semibold">{ingredient.name}</span>: {ingredient.quantity}
-                  </span>
-                </div>
-              );
-            })}
+          <div className="mt-10 mb-2 flex justify-between">
+            <h3 className="font-bold">Reviews</h3>
+            <a
+              href={`mailto:${email}?subject=New Review for ${shop?.name}'s Pain au Chocolat&body=You can fill any of these fields, with a note from 0 to 5%0A-Softness/Moelleux:%0A-Flakiness/Feuilletage:%0A-Crispiness/Croustillant:%0A-Fondant:%0A-Chocolate quality:%0A-Chocolate disposition:%0A-Note:%0A-Visual aspect:%0A%0AIf you know the ingredients, you can add them here too%0A%0AIf we are missing any information about the bakery, please tell us here too%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
+              className="ml-auto text-xs">
+              🙋 Add mine
+            </a>
+          </div>
+          {!quality
+            ? "No review yet"
+            : Object.keys(quality).map((criteria) => {
+                return (
+                  <div className="flex flex-col mt-2 ml-1 text-sm" key={criteria}>
+                    <span className="">
+                      {criteria === "note" && <>Global note </>}
+                      {criteria === "visual_aspect" && <>Visual aspect </>}
+                      {criteria === "softness" && <>Softness/Moelleux </>}
+                      {criteria === "flakiness" && <>Flakiness/Feuilletage </>}
+                      {criteria === "crispiness" && <>Crispiness/Croustillant </>}
+                      {criteria === "fondant" && <>Fondant </>}
+                      {criteria === "chocolate_quality" && <>Chocolate Quality </>}
+                      {criteria === "chocolate_disposition" && <>Chocolate Disposition </>}
+                      &nbsp;
+                      {quality[criteria] < 1
+                        ? "😖"
+                        : quality[criteria] < 2
+                        ? "😒"
+                        : quality[criteria] < 3
+                        ? "🤨"
+                        : quality[criteria] < 4
+                        ? "😕"
+                        : quality[criteria] < 4.6
+                        ? "😋"
+                        : "🤩"}
+                    </span>
+                    <progress
+                      max="5"
+                      value={quality[criteria]}
+                      className="w-full rounded-full overflow-hidden h-2"></progress>
+                  </div>
+                );
+              })}
+          <div className="mt-10 mb-2 flex justify-between">
+            <h3 className="font-bold">Ingredients</h3>
+            <a
+              href={`mailto:${email}?subject=Ingredient's list for ${shop?.name}'s Pain au Chocolat&body=For each ingredient, please fill up (if you know/want)%0A-name:%0A-quantity, with the unit (like 200g or 3 pincées):%0A-supplier:%0A-origin (country/city):%0A%0APlease, don't lie, tell the truth. We'll double check anyway, at some point.%0A%0AIngredients:%0A%0A%0A%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
+              className="ml-auto text-xs">
+              🔄 Update
+            </a>
+          </div>
+          {!ingredients?.length
+            ? "Ingredients not listed yet"
+            : ingredients.map((ingredient) => {
+                return (
+                  <div className="mt-2 ml-1 text-sm flex" key={ingredient.name}>
+                    <img
+                      className="h-6 w-6 mr-2"
+                      src={`/assets/${
+                        ingredient.additionalProperties.find((prop) => prop.name === "Icon")?.value
+                      }`}
+                      loading="lazy"
+                    />
+                    <span>
+                      <span className="font-semibold">{ingredient.name}</span>:{" "}
+                      {ingredient.quantity}
+                    </span>
+                  </div>
+                );
+              })}
         </section>
         <section className="w-full shrink-0  px-4 overflow-y-auto pb-6">
           <h3 className="mt-10 mb-2 font-bold">Shop infos</h3>
@@ -182,10 +194,14 @@ const Shop = () => {
               </span>
             )}
           </address>
+          <a
+            href={`mailto:${email}?subject=Feedback for ${shop?.name}'s Pain au Chocolat&body=Please, tell us:%0A%0AIngredients:%0A%0A%0A%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
+            className="ml-auto text-xs">
+            Any feedback? Good, bad, review, wrong or missing information... Please <u>click here</u> to
+            shoot us an email!
+          </a>
         </section>
-        {/* </div> */}
       </div>
-      {/* </Tabs> */}
     </div>
   );
 };

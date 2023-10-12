@@ -79,14 +79,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <h1 className="px-4 py-2 drop-shadow-sm">
+    <div className="flex flex-col-reverse w-full h-full sm:flex-col">
+      <h1 className="px-4 py-2 drop-shadow-sm shrink-0 sm:relative absolute z-10 bottom-0 left-0 right-0 bg-white">
         THE Ultimate <b>"Pains au Chocolat"</b> showdown: the Good, the Bad, and the Ugly 🤔🍫🇫🇷
       </h1>
 
       <div
         className={[
-          "w-full h-full flex relative sm:flex-row flex-col",
+          "flex w-full relative sm:flex-row flex-col flex-1 overflow-hidden",
           isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
         ]
           .filter(Boolean)

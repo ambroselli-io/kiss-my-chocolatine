@@ -166,27 +166,27 @@
           {
             "@type": "PropertyValue",
             "name": "softness",
-            "value": 5
-          },
-          {
-            "@type": "PropertyValue",
-            "name": "flakiness",
             "value": 4
           },
           {
             "@type": "PropertyValue",
+            "name": "flakiness",
+            "value": 4.5
+          },
+          {
+            "@type": "PropertyValue",
             "name": "crispiness",
-            "value": 1
+            "value": 5
           },
           {
             "@type": "PropertyValue",
             "name": "fondant",
-            "value": 2
+            "value": 4
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_quality",
-            "value": 3
+            "value": 5
           },
           {
             "@type": "PropertyValue",
@@ -196,7 +196,7 @@
           {
             "@type": "PropertyValue",
             "name": "note",
-            "value": 5
+            "value": 4.5
           },
           {
             "@type": "PropertyValue",
@@ -206,5 +206,35 @@
         ]
       }
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "selmas-centrum-herenstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "selmas-centrum-herenstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
   }
 ]

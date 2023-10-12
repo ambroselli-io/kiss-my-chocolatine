@@ -25,7 +25,6 @@ const Availability = ({
       //   "opens": "09:00",
       //   "closes": "16:00"
       // }
-      console.log(spec);
       for (const dayOfWeek of spec.dayOfWeek) {
         days[dayOfWeek].opens = spec.opens;
         days[dayOfWeek].closes = spec.closes;
