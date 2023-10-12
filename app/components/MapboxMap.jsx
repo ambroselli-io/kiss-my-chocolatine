@@ -71,7 +71,7 @@ const MapboxService = class {
   enableNavToShop = async (navigate) => {
     this.map.on("click", "shops", (e) => {
       const properties = e.features[0].properties;
-      const featureId = properties._id;
+      const featureId = properties.identifier;
       navigate(`/shop/${featureId}`);
     });
   };

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* For Webkit browsers like Chrome and Safari */
+progress::-webkit-progress-bar {
+  @apply bg-gray-100;
+}
+
+progress::-webkit-progress-value {
+  @apply bg-[#FFBB01] opacity-60;
+}
+
+/* For Firefox */
+progress::-moz-progress-bar {
+  @apply bg-gray-100;
+}

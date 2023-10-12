@@ -1,6 +1,4 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import stylesheet from "~/styles/tailwind.css";
-import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -11,12 +9,23 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
+import stylesheet from "~/styles/tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
   { rel: "stylesheet", href: mapboxStyles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
+
+declare global {
+  interface Window {
+    ENV: {
+      MAPBOX_ACCESS_TOKEN: string;
+    };
+  }
+}
+
 export const loader = async () => {
   return {
     ENV: {
@@ -24,6 +33,7 @@ export const loader = async () => {
     },
   };
 };
+
 export default function App() {
   const { ENV } = useLoaderData();
   return (

@@ -1,6 +1,9 @@
-import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import MapboxMap from "~/components/MapboxMap";
+import {
+  type MetaFunction,
+  type LoaderFunctionArgs,
+  type MetaArgs,
+  redirect,
+} from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,26 +12,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  return {
-    data: {
-      type: "FeatureCollection",
-      features: [],
-      // features: shops.map(({ _id, name, location }) => ({
-      //   type: "Feature",
-      //   id: _id,
-      //   geometry: location,
-      //   properties: {
-      //     _id,
-      //     title: name,
-      //   },
-      // })),
-    },
-  };
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  return redirect("/chocolatine");
 };
 
 export default function Index() {
-  const { data } = useLoaderData();
-
-  return <MapboxMap data={data} />;
+  return null;
 }

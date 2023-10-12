@@ -1,0 +1,522 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "petit-gateau-haarlemmerstraat",
+    "name": "Petit Gateau",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Haarlemmerstraat 80",
+      "postalCode": "1013 EV",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 737 1585",
+    "url": "https://petitgateau.nl/",
+    "description": "Laid-back bakery & cafe turning out a diverse selection of traditional French pastries.",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3804796,
+      "longitude": 4.8916477
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "10:00",
+        "closes": "18:00"
+      }
+    ],
+    "servesCuisine": "French pastries",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Cafe"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "saint-jean-lindengracht",
+    "name": "SAINT-JEAN Bakery",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lindengracht 158h",
+      "postalCode": "1015 KK",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": null,
+    "url": "https://saintjean.nl/",
+    "description": "Pastry shop",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3803056,
+      "longitude": 4.8842824
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "17:00"
+      }
+    ],
+    "servesCuisine": "Pastries",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Dine-in", "Takeaway", "Delivery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "fort-negen-jan-evertsenstraat",
+    "name": "Fort Negen",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Jan Evertsenstraat 31",
+      "postalCode": "1057 ZX",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": null,
+    "url": "https://fortnegen.nl/",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3710564,
+      "longitude": 4.8575042
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    ],
+    "servesCuisine": "Bakery products",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "le-fournil-de-sebastien-olympiaplein",
+    "name": "Le Fournil de Sébastien Amsterdam",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Olympiaplein 119",
+      "postalCode": "1077 CW",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 672 4211",
+    "url": "https://lefournil.nl/",
+    "description": "Bakery known for high-quality offerings",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3463012,
+      "longitude": 4.8679007
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "07:00",
+        "closes": "19:00"
+      }
+    ],
+    "servesCuisine": "French Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "bbrood-tweede-goudsbloemdwarsstraat",
+    "name": "Bbrood",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Tweede Goudsbloemdwarsstraat 14-16",
+      "postalCode": "1015 JZ",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 244 3864",
+    "url": "https://bbrood.nl/",
+    "description": "Bakery known for a variety of offerings",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.380757,
+      "longitude": 4.883947
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "07:30",
+        "closes": "17:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "brothers-niemeijer-nieuwendijk",
+    "name": "Brothers Niemeijer",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Nieuwendijk 35",
+      "postalCode": "1012 MA",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 707 6752",
+    "url": "https://gebroedersniemeijer.nl/",
+    "description": "Sourdough bread, coffee & French pastries, plus light lunches, at a bakery with an art deco ceiling.",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.37819,
+      "longitude": 4.895675
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Thursday", "Friday", "Tuesday", "Wednesday"],
+        "opens": "08:15",
+        "closes": "17:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "08:30",
+        "closes": "17:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "margos-amsterdam-eerste-tuindwarsstraat",
+    "name": "Margo's Amsterdam",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Eerste Tuindwarsstraat 2A",
+      "postalCode": "1015 RV",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 303 1424",
+    "url": "https://margosamsterdam.com/",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3777616,
+      "longitude": 4.883549
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "15:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "16:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "De Bakkers van Oost Kadijksplein",
+    "identifier": "de-bakkers-van-oost-kadijksplein",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kadijksplein 6",
+      "postalCode": "1018 AB",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "Netherlands"
+    },
+    "telephone": "+31 20 752 2031",
+    "url": "https://debakkersvanoost.nl/",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3701449,
+      "longitude": 4.9121832
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "07:30",
+        "closes": "16:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.7",
+      "reviewCount": 89
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "bakkerij-verhagen-utrechtsestraat",
+    "name": "Bakkerij Verhagen",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Utrechtsestraat 61",
+      "postalCode": "1017 VJ",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 623 6374",
+    "url": "https://bakkerijverhagen.nl",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3636092,
+      "longitude": 4.8985539
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "07:00",
+        "closes": "17:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "11:00",
+        "closes": "17:00"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "wims-noordermarkt",
+    "name": "Wims",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Noordermarkt",
+      "postalCode": "1015 NA",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": null,
+    "url": "https://wims.nu",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.379389,
+      "longitude": 4.886445
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "09:00",
+        "closes": "16:00"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "selmas-centrum-herenstraat",
+    "name": "Selma’s (centrum)",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Herenstraat 35",
+      "postalCode": "1015 BZ",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 786 8419",
+    "url": "https://selmasbakery.com",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3773186,
+      "longitude": 4.8857913
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "16:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Patisserie",
+    "identifier": "le-petit-deli-tweede-egelantiersdwarsstraat",
+    "name": "Le Petit Deli",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Tweede Egelantiersdwarsstraat 16",
+      "postalCode": "1015 SC",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 337 3228",
+    "url": "https://lepetitdeli.nl",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.376594,
+      "longitude": 4.8795699
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday", "Monday"],
+        "opens": "10:00",
+        "closes": "18:00"
+      }
+    ]
+  },
+
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "bbrood-haarlemmerdijk",
+    "name": "Bbrood",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Haarlemmerdijk 67",
+      "postalCode": "1013 KB",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": null,
+    "url": "https://bbrood.nl/",
+    "description": "Bakery known for a variety of offerings",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.382483,
+      "longitude": 4.8870076
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "07:30",
+        "closes": "17:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["Credit Card", "Cash"],
+    "additionalType": ["Bakery"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "ulmus-bakery-cabralstraat",
+    "name": "Ulmus Bakery",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Cabralstraat 7",
+      "postalCode": "1057 CD",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": null,
+    "url": "https://ulmusbakkerij.nl",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3695214,
+      "longitude": 4.8518477
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
+        "opens": "08:30",
+        "closes": "16:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "09:00",
+        "closes": "16:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "10:00",
+        "closes": "15:00"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "identifier": "bakkerij-wolf-wolvenstraat",
+    "name": "Bakkerij Wolf",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Wolvenstraat 22",
+      "postalCode": "1016 EP",
+      "addressLocality": "Amsterdam",
+      "addressCountry": "NL"
+    },
+    "telephone": "+31 20 775 2497",
+    "url": "https://bakkerijwolf.nl",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3703766,
+      "longitude": 4.8855546
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday"],
+        "opens": "08:00",
+        "closes": "17:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    ]
+  }
+]
