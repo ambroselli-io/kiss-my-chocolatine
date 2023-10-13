@@ -27,8 +27,11 @@ import chocolatines from "~/data/chocolatines.json";
 import { newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
 
-export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
+export const meta: MetaFunction = ({ matches }: MetaArgs) => {
+  const parentMeta = matches[matches.length - 2].meta ?? [];
+
   return [
+    ...parentMeta,
     ...chocolatines
       .map((chocolatine) => {
         const shop = shops.find(

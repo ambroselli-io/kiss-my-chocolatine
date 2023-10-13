@@ -15,9 +15,23 @@ import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
 import stylesheet from "~/styles/tailwind.css";
 import { useEffect, useState } from "react";
 
-export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
+export function meta() {
   const url = "https://chocolatine.kiss-my.app";
   return [
+    {
+      title:
+        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+    },
+    {
+      name: "description",
+      content:
+        "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
+    },
+    {
+      title: "og:title",
+      content:
+        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+    },
     {
       property: "og:title",
       content:
@@ -68,7 +82,7 @@ export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
     { property: "apple-mobile-web-app-status-bar-style", content: "#FFBB01" },
     { tagName: "link", rel: "canonical", href: url },
   ];
-};
+}
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },

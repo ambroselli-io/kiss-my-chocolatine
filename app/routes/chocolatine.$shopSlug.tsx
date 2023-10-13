@@ -9,15 +9,11 @@ import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
 import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 
-export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
+export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   data = data as never;
+  const parentMeta = matches[matches.length - 2].meta ?? [];
   return [
-    { title: "Kiss my Chocolatine" },
-    {
-      name: "description",
-      content:
-        "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
-    },
+    ...parentMeta,
     { "script:ld+json": data.chocolatine, key: "chocolatine" },
     { "script:ld+json": data.shop, key: "shop" },
   ];
