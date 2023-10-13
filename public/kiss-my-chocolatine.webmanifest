@@ -1,0 +1,9 @@
+{
+  "name": "Kiss my Chocolatine",
+  "short_name": "Kiss my Chocolatine",
+  "theme_color": "#FFBB01",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "scope": "./",
+  "start_url": "./"
+}

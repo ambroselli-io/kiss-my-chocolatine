@@ -3,7 +3,15 @@ import type {
   MetaArgs,
   LoaderFunctionArgs,
 } from "@remix-run/node";
-import { Outlet, useLoaderData, useNavigate } from "@remix-run/react";
+import type { ShouldRevalidateFunction } from "@remix-run/react";
+
+import {
+  Outlet,
+  useLoaderData,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "@remix-run/react";
 import {
   Layer,
   Map,
@@ -16,6 +24,8 @@ import MapImage from "~/components/MapImage";
 import Onboarding from "~/components/Onboarding";
 import shops from "~/data/shops.json";
 import chocolatines from "~/data/chocolatines.json";
+import { newShopEmail } from "~/utils/emails";
+import Cookies from "js-cookie";
 
 export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
   return [
@@ -37,12 +47,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     longitude: 4.891332614225945,
     latitude: 52.373091430357476,
   };
+  const currentShop = shops.find((f) => f.identifier === params?.shopSlug);
   const { longitude, latitude } = (() => {
     if (!params.shopSlug) return damSquare;
-    const shopGeo = shops.find((f) => f.identifier === params.shopSlug)?.geo;
+    const shopGeo = currentShop?.geo;
     if (!shopGeo) return damSquare;
     return shopGeo;
   })();
+
   return {
     initialViewState: {
       longitude,
@@ -68,6 +80,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
             properties: {
               identifier: shop.identifier,
               name: shop.name,
+              is_active_shop: shop.identifier === params?.shopSlug ? 1 : 0,
               address: shop.address,
               telephone: shop.telephone,
               url: shop.url,
@@ -92,9 +105,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  const { initialViewState, data } = useLoaderData();
+  let { initialViewState, data } = useLoaderData();
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
+  const params = useParams();
+
+  const email: string = useOutletContext();
   const navigate = useNavigate();
   useEffect(() => {
     setMapboxAccessToken(window.ENV.MAPBOX_ACCESS_TOKEN);
@@ -107,19 +123,27 @@ export default function App() {
       setIsOnboardingOpen(true);
     }
   }, []);
-  const chocolatineName =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("chocolatine-name")
-      : "pain au chocolat";
+  const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return (
     <>
-      <div className="flex h-full w-full flex-col-reverse sm:flex-col">
-        <h1 className="absolute bottom-0 left-0 right-0 z-10 shrink-0 bg-white px-4 py-2 drop-shadow-sm sm:relative">
-          THE Ultimate{" "}
-          <b onClick={() => setIsOnboardingOpen(true)}>{chocolatineName}</b>{" "}
-          showdown: the Good, the Bad, and the Ugly 🤔🍫🇫🇷
+      <div className="relatve flex h-full w-full flex-col-reverse sm:flex-col">
+        <h1
+          className="absolute left-0 right-0 top-0 z-10 shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm sm:relative"
+          onClick={() => setIsOnboardingOpen(true)}
+        >
+          All the <b>{chocolatineName}</b> from the world 🌍
         </h1>
+
+        {!params.shopSlug && (
+          <a
+            href={newShopEmail(email)}
+            className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
+          >
+            <div className="absolute m-auto h-1 w-1/2 bg-white" />
+            <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
+          </a>
+        )}
 
         <div
           className={[
@@ -157,6 +181,8 @@ export default function App() {
                       layout={{
                         "icon-image": [
                           "case",
+                          ["==", ["get", "is_active_shop"], 1],
+                          "marker-full-black",
                           ["to-boolean", ["get", "chocolatine_hasreview"]],
                           "marker-black",
                           "marker-white",
@@ -165,14 +191,23 @@ export default function App() {
                         "icon-ignore-placement": true,
                         "icon-size": 0.2,
                         "icon-offset": [0, -75],
-                        "symbol-sort-key": ["get", "chocolatine_sort_key"], // Add this line
+                        "symbol-sort-key": [
+                          "case",
+                          ["==", ["get", "is_active_shop"], 1],
+                          [
+                            "+",
+                            ["*", 1000, ["get", "is_active_shop"]],
+                            ["get", "chocolatine_sort_key"],
+                          ],
+                          ["get", "chocolatine_sort_key"],
+                        ],
                       }}
                     />
                   </Source>
                 </MapImage>
                 <NavigationControl
                   showCompass={false}
-                  showZoom={true}
+                  showZoom={false}
                   visualizePitch={true}
                 />
               </Map>
@@ -191,3 +226,11 @@ export default function App() {
     </>
   );
 }
+
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentParams,
+  nextParams,
+}) => {
+  if (currentParams.shopSlug !== nextParams.shopSlug) return true;
+  return false;
+};

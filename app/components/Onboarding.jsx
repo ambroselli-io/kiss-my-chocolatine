@@ -1,16 +1,13 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
 import { ModalBody, ModalContainer, ModalFooter, ModalHeader } from "./Modal";
 
 export default function Onboarding({ open, onClose }) {
   const [step, setStep] = useState(0);
-  const chocolatineName =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("chocolatine-name")
-      : "pain au chocolat";
+
+  const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
   const chocolatinesName =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("chocolatines-name")
-      : "pain au chocolat";
+    Cookies.get("chocolatines-name") || "pains au chocolat";
 
   return (
     <ModalContainer
@@ -213,10 +210,14 @@ function ChocolatineButton({ children, onClick, value, plural }) {
   return (
     <button
       type="button"
-      className="mb-1 inline-flex gap-2 rounded-lg border border-gray-300 px-4 py-1"
+      className={[
+        "mb-1 inline-flex gap-2 rounded-lg border border-gray-300 px-4 py-1",
+        "plausible-event-name=chocolatine+name",
+        `plausible-event-value=${value.split(" ").join("+")}`,
+      ].join(" ")}
       onClick={() => {
-        window.localStorage.setItem("chocolatine-name", value);
-        window.localStorage.setItem("chocolatines-name", plural);
+        Cookies.set("chocolatine-name", value, { expires: 7 }); // expires in 7 days
+        Cookies.set("chocolatines-name", plural, { expires: 7 });
         onClick();
       }}
     >

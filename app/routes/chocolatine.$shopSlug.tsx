@@ -3,11 +3,11 @@ import type {
   MetaArgs,
   MetaFunction,
 } from "@remix-run/node";
-import { useState } from "react";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
 import chocolatines from "~/data/chocolatines.json";
 import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
+import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 
 export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
   data = data as never;
@@ -61,13 +61,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 const Shop = () => {
   const { chocolatine, quality, shop, isHomemade, ingredients } =
     useLoaderData<typeof loader>();
-
-  const email =
-    typeof window !== "undefined"
-      ? window.atob("a2lzcy5teS5jaG9jb2xhdGluZUBnbWFpbC5jb20=")
-      : "";
-
-  const [activeTab, setActiveTab] = useState(0);
+  const email = useOutletContext();
 
   return (
     <div
@@ -133,10 +127,7 @@ const Shop = () => {
           </p>
           <div className="mb-2 mt-10 flex justify-between">
             <h3 className="font-bold">Reviews</h3>
-            <a
-              href={`mailto:${email}?subject=New Review for ${shop?.name}'s Pain au Chocolat&body=You can fill any of these fields, with a note from 0 to 5%0A-Softness/Moelleux:%0A-Flakiness/Feuilletage:%0A-Crispiness/Croustillant:%0A-Fondant:%0A-Chocolate quality:%0A-Chocolate disposition:%0A-Note:%0A-Visual aspect:%0A%0AIf you know the ingredients, you can add them here too%0A%0AIf we are missing any information about the bakery, please tell us here too%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
-              className="ml-auto text-xs"
-            >
+            <a href={newReview(email, shop?.name)} className="ml-auto text-xs">
               🙋 Add mine
             </a>
           </div>
@@ -191,7 +182,7 @@ const Shop = () => {
           <div className="mb-2 mt-10 flex justify-between">
             <h3 className="font-bold">Ingredients</h3>
             <a
-              href={`mailto:${email}?subject=Ingredient's list for ${shop?.name}'s Pain au Chocolat&body=For each ingredient, please fill up (if you know/want)%0A-name:%0A-quantity, with the unit (like 200g or 3 pincées):%0A-supplier:%0A-origin (country/city):%0A%0APlease, don't lie, tell the truth. We'll double check anyway, at some point.%0A%0AIngredients:%0A%0A%0A%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
+              href={newIngredient(email, shop?.name)}
               className="ml-auto text-xs"
             >
               🔄 Update
@@ -249,10 +240,7 @@ const Shop = () => {
               </span>
             )}
           </address>
-          <a
-            href={`mailto:${email}?subject=Feedback for ${shop?.name}'s Pain au Chocolat&body=Please, tell us:%0A%0AIngredients:%0A%0A%0A%0A%0AThanks!%0A%0AArnaud, from Kiss My Chocolatine`}
-            className="ml-auto text-xs"
-          >
+          <a href={newFeedback(email, shop?.name)} className="ml-auto text-xs">
             Any feedback? Good, bad, review, wrong or missing information...
             Please <u>click here</u> to shoot us an email!
           </a>
