@@ -1,0 +1,57 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "author": {
+    "@type": "Person",
+    "name": "Arnaud"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": 5,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "reviewBody": "",
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "softness",
+      "value": 3
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "flakiness",
+      "value": 2
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "crispiness",
+      "value": 2
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "fondant",
+      "value": 5
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "chocolate_quality",
+      "value": 4
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "chocolate_disposition",
+      "value": 5
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "note",
+      "value": 3
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "visual_aspect",
+      "value": 4.5
+    }
+  ]
+}

@@ -5,15 +5,29 @@ export default function MapImage({ children }) {
 
   if (!mapHook?.current) return null;
   const map = mapHook.current;
-  if (!map.hasImage("pin")) {
-    let img = new Image(133, 150);
-    img.onload = () => {
-      if (!map.hasImage("pin")) map.addImage("pin", img);
+
+  console.log("marker-black", map.hasImage("marker-black"));
+  if (!map.hasImage("marker-black")) {
+    let markerBlack = new Image(133, 150);
+    markerBlack.onload = () => {
+      if (!map.hasImage("marker-black"))
+        map.addImage("marker-black", markerBlack);
     };
-    img.onerror = () => {
-      console.log("Failed to load image"); // Debug line
+    markerBlack.src = "/assets/marker-black.svg";
+  }
+  console.log("marker-white", map.hasImage("marker-white"));
+  if (!map.hasImage("marker-white")) {
+    let markerWhite = new Image(133, 150);
+    markerWhite.onload = () => {
+      if (!map.hasImage("marker-white"))
+        map.addImage("marker-white", markerWhite);
     };
-    img.src = "/assets/marker.svg";
+    markerWhite.src = "/assets/marker-white.svg";
+  }
+  try {
+    console.log(map.listImages?.());
+  } catch (e) {
+    console.log(e);
   }
 
   return children;

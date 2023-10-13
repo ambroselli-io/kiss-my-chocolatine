@@ -1,0 +1,128 @@
+{
+  "additionalType": [
+    {
+      "name": "Ingredients",
+      "value": [
+        {
+          "name": "All-purpose flour",
+          "supplier": "Local Mill",
+          "quantity": "200g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "flour.webp"
+            }
+          ]
+        },
+        {
+          "name": "Unsalted butter",
+          "supplier": "Dairy Farm",
+          "quantity": "150g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "butter.webp"
+            }
+          ]
+        },
+        {
+          "name": "Chocolate chips",
+          "supplier": "Chocolate Inc.",
+          "quantity": "100g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "chocolate.webp"
+            }
+          ]
+        },
+        {
+          "name": "Sugar",
+          "supplier": "Local Supplier",
+          "quantity": "20g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "sugar.webp"
+            }
+          ]
+        },
+        {
+          "name": "Milk",
+          "supplier": "Dairy Farm",
+          "quantity": "50ml",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "milk.webp"
+            }
+          ]
+        },
+        {
+          "name": "Yeast",
+          "supplier": "Local Supplier",
+          "quantity": "7g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "levure.webp"
+            }
+          ]
+        },
+        {
+          "name": "Salt",
+          "supplier": "Local Supplier",
+          "quantity": "1g",
+          "additionalProperties": [
+            {
+              "@type": "PropertyValue",
+              "name": "Origin",
+              "value": "France"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Icon",
+              "value": "salt.webp"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

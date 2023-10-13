@@ -24,127 +24,7 @@
     "additionalType": [
       {
         "name": "Ingredients",
-        "value": [
-          {
-            "name": "All-purpose flour",
-            "supplier": "Local Mill",
-            "quantity": "200g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "flour.webp"
-              }
-            ]
-          },
-          {
-            "name": "Unsalted butter",
-            "supplier": "Dairy Farm",
-            "quantity": "150g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "butter.webp"
-              }
-            ]
-          },
-          {
-            "name": "Chocolate chips",
-            "supplier": "Chocolate Inc.",
-            "quantity": "100g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "chocolate.webp"
-              }
-            ]
-          },
-          {
-            "name": "Sugar",
-            "supplier": "Local Supplier",
-            "quantity": "20g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "sugar.webp"
-              }
-            ]
-          },
-          {
-            "name": "Milk",
-            "supplier": "Dairy Farm",
-            "quantity": "50ml",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "milk.webp"
-              }
-            ]
-          },
-          {
-            "name": "Yeast",
-            "supplier": "Local Supplier",
-            "quantity": "7g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "levure.webp"
-              }
-            ]
-          },
-          {
-            "name": "Salt",
-            "supplier": "Local Supplier",
-            "quantity": "1g",
-            "additionalProperties": [
-              {
-                "@type": "PropertyValue",
-                "name": "Origin",
-                "value": "France"
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Icon",
-                "value": "salt.webp"
-              }
-            ]
-          }
-        ]
+        "value": []
       }
     ],
     "reviews": [
@@ -215,6 +95,557 @@
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "selmas-centrum-herenstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "saint-jean-lindengracht-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "saint-jean-lindengracht"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "3.00",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": true
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 5,
+          "bestRating": 5,
+          "worstRating": 1
+        },
+        "reviewBody": "",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "softness",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "flakiness",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispiness",
+            "value": 4.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "fondant",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_quality",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "note",
+            "value": 4.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "visual_aspect",
+            "value": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "fort-negen-jan-evertsenstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "fort-negen-jan-evertsenstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "le-fournil-de-sebastien-olympiaplein-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "le-fournil-de-sebastien-olympiaplein"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "bbrood-tweede-goudsbloemdwarsstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "bbrood-tweede-goudsbloemdwarsstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "2.75",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": false
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 5,
+          "bestRating": 5,
+          "worstRating": 1
+        },
+        "reviewBody": "",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "softness",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "flakiness",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispiness",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "fondant",
+            "value": 4
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_quality",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "note",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "visual_aspect",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "brothers-niemeijer-nieuwendijk-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "brothers-niemeijer-nieuwendijk"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "margos-amsterdam-eerste-tuindwarsstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "margos-amsterdam-eerste-tuindwarsstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "de-bakkers-van-oost-kadijksplein-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "de-bakkers-van-oost-kadijksplein"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "2.20",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": true
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 5,
+          "bestRating": 5,
+          "worstRating": 1
+        },
+        "reviewBody": "",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "softness",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "flakiness",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispiness",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "fondant",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_quality",
+            "value": 4
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "value": 5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "note",
+            "value": 3
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "visual_aspect",
+            "value": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "bakkerij-verhagen-utrechtsestraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "bakkerij-verhagen-utrechtsestraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "wims-noordermarkt-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "wims-noordermarkt"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "le-petit-deli-tweede-egelantiersdwarsstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "le-petit-deli-tweede-egelantiersdwarsstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "bbrood-haarlemmerdijk-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "bbrood-haarlemmerdijk"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "ulmus-bakery-cabralstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "ulmus-bakery-cabralstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "bakkerij-wolf-wolvenstraat-pain-au-chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "bakkerij-wolf-wolvenstraat"
     },
     "offers": {
       "@type": "Offer",
