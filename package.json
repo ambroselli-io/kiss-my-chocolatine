@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build --sourcemap && sentry-upload-sourcemaps --org arnaud-ambroselli --project mon-croissant",
+    "build": "remix build --sourcemap && sentry-upload-sourcemaps --org arnaud-ambroselli --project kiss-my-chocolatine",
     "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
