@@ -26,6 +26,7 @@ import shops from "~/data/shops.json";
 import chocolatines from "~/data/chocolatines.json";
 import { newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
+import { ClientOnly } from "remix-utils/client-only";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -113,7 +114,6 @@ export default function App() {
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const params = useParams();
 
-  const email: string = useOutletContext();
   const navigate = useNavigate();
   useEffect(() => {
     setMapboxAccessToken(window.ENV.MAPBOX_ACCESS_TOKEN);
@@ -131,22 +131,28 @@ export default function App() {
   return (
     <>
       <div className="relatve flex h-full w-full flex-col-reverse sm:flex-col">
-        <h1
-          className="absolute left-0 right-0 top-0 z-10 shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm sm:relative"
-          onClick={() => setIsOnboardingOpen(true)}
-        >
-          All the <b>{chocolatineName}</b> from the world 🌍
-        </h1>
+        <ClientOnly>
+          {() => (
+            <>
+              <h1
+                className="absolute left-0 right-0 top-0 z-10 shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm sm:relative"
+                onClick={() => setIsOnboardingOpen(true)}
+              >
+                All the <b>{chocolatineName}</b> from the world 🌍
+              </h1>
 
-        {!params.shopSlug && (
-          <a
-            href={newShopEmail(email)}
-            className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
-          >
-            <div className="absolute m-auto h-1 w-1/2 bg-white" />
-            <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
-          </a>
-        )}
+              {!params.shopSlug && (
+                <a
+                  href={newShopEmail()}
+                  className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
+                >
+                  <div className="absolute m-auto h-1 w-1/2 bg-white" />
+                  <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
+                </a>
+              )}
+            </>
+          )}
+        </ClientOnly>
 
         <div
           className={[

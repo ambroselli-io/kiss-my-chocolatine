@@ -1,6 +1,6 @@
 import { captureRemixErrorBoundaryError } from "@sentry/remix";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, MetaArgs, MetaFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,7 +13,6 @@ import {
 } from "@remix-run/react";
 import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
 import stylesheet from "~/styles/tailwind.css";
-import { useEffect, useState } from "react";
 
 export function meta() {
   const url = "https://chocolatine.kiss-my.app";
@@ -26,11 +25,6 @@ export function meta() {
       name: "description",
       content:
         "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
-    },
-    {
-      title: "og:title",
-      content:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
     },
     {
       property: "og:title",
@@ -120,11 +114,6 @@ export const ErrorBoundary = () => {
 
 export default function App() {
   const { ENV } = useLoaderData();
-  const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    setEmail(window.atob("a2lzcy5teS5jaG9jb2xhdGluZUBnbWFpbC5jb20="));
-  }, []);
 
   return (
     <html lang="en" className="h-full w-full">
@@ -137,7 +126,7 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full w-full">
-        <Outlet context={email} />
+        <Outlet />
 
         <ScrollRestoration />
         <Scripts />

@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 
-export function createMailtoHref(mail: string, subject: string, body: string) {
+export function createMailtoHref(subject: string, body: string) {
+  const mail = window.atob("a2lzcy5teS5jaG9jb2xhdGluZUBnbWFpbC5jb20=");
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body)
     .replace(/%20/g, " ")
@@ -9,11 +10,10 @@ export function createMailtoHref(mail: string, subject: string, body: string) {
   return `mailto:${mail}?subject=${encodedSubject}&body=${encodedBody}`;
 }
 
-export function newShopEmail(email: string) {
+export function newShopEmail() {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
-    email,
     "New Bakery",
     `Hello, and thanks for your interest!
 
@@ -39,11 +39,10 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-export function newIngredient(email: string, shopName?: string) {
+export function newIngredient(shopName?: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
-    email,
     `Ingredient's list for ${shopName}'s ${chocolatineName}`,
     `Hello, and thanks for your interest!
 
@@ -63,11 +62,10 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-export function newReview(email: string, shopName?: string) {
+export function newReview(shopName?: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
-    email,
     `New Review for ${shopName}'s ${chocolatineName}`,
     `Hello, and thanks for your interest!
 
@@ -91,11 +89,10 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-export function newFeedback(email: string, shopName?: string) {
+export function newFeedback(shopName?: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
-    email,
     `New Feedback for ${shopName}'s ${chocolatineName}`,
     `Hello, and thanks for your interest!
 

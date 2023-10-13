@@ -3,11 +3,12 @@ import type {
   MetaArgs,
   MetaFunction,
 } from "@remix-run/node";
-import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import chocolatines from "~/data/chocolatines.json";
 import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
 import { newFeedback, newIngredient, newReview } from "~/utils/emails";
+import { ClientOnly } from "remix-utils/client-only";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   data = data as never;
@@ -57,7 +58,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 const Shop = () => {
   const { chocolatine, quality, shop, isHomemade, ingredients } =
     useLoaderData<typeof loader>();
-  const email = useOutletContext();
 
   return (
     <div
@@ -123,9 +123,13 @@ const Shop = () => {
           </p>
           <div className="mb-2 mt-10 flex justify-between">
             <h3 className="font-bold">Reviews</h3>
-            <a href={newReview(email, shop?.name)} className="ml-auto text-xs">
-              🙋 Add mine
-            </a>
+            <ClientOnly>
+              {() => (
+                <a href={newReview(shop?.name)} className="ml-auto text-xs">
+                  🙋 Add mine
+                </a>
+              )}
+            </ClientOnly>
           </div>
           {!quality
             ? "No review yet"
@@ -177,12 +181,13 @@ const Shop = () => {
               })}
           <div className="mb-2 mt-10 flex justify-between">
             <h3 className="font-bold">Ingredients</h3>
-            <a
-              href={newIngredient(email, shop?.name)}
-              className="ml-auto text-xs"
-            >
-              🔄 Update
-            </a>
+            <ClientOnly>
+              {() => (
+                <a href={newIngredient(shop?.name)} className="ml-auto text-xs">
+                  🔄 Update
+                </a>
+              )}
+            </ClientOnly>
           </div>
           {!ingredients?.length
             ? "Ingredients not listed yet"
@@ -236,10 +241,14 @@ const Shop = () => {
               </span>
             )}
           </address>
-          <a href={newFeedback(email, shop?.name)} className="ml-auto text-xs">
-            Any feedback? Good, bad, review, wrong or missing information...
-            Please <u>click here</u> to shoot us an email!
-          </a>
+          <ClientOnly>
+            {() => (
+              <a href={newFeedback(shop?.name)} className="ml-auto text-xs">
+                Any feedback? Good, bad, review, wrong or missing information...
+                Please <u>click here</u> to shoot us an email!
+              </a>
+            )}
+          </ClientOnly>
         </section>
       </div>
     </div>
