@@ -162,6 +162,10 @@ const Shop = () => {
                       {criteria === "chocolate_disposition" && (
                         <>Chocolate Disposition </>
                       )}
+                      : &nbsp;
+                      <span className="font-extralight">
+                        {quality[criteria]}
+                      </span>
                       &nbsp;
                       {quality[criteria] < 1
                         ? "😖"
@@ -178,8 +182,8 @@ const Shop = () => {
                     <progress
                       max="5"
                       value={quality[criteria]}
-                      className="h-2 w-full overflow-hidden rounded-full"
-                    ></progress>
+                      className="h-2 w-full max-w-[15rem] overflow-hidden rounded-full"
+                    />
                   </div>
                 );
               })}
