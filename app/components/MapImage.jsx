@@ -6,7 +6,6 @@ export default function MapImage({ children }) {
   if (!mapHook?.current) return null;
   const map = mapHook.current;
 
-  console.log("marker-black", map.hasImage("marker-black"));
   if (!map.hasImage("marker-black")) {
     let markerBlack = new Image(133, 150);
     markerBlack.onload = () => {
@@ -15,7 +14,6 @@ export default function MapImage({ children }) {
     };
     markerBlack.src = "/assets/marker-black.svg";
   }
-  console.log("marker-white", map.hasImage("marker-white"));
   if (!map.hasImage("marker-white")) {
     let markerWhite = new Image(133, 150);
     markerWhite.onload = () => {
@@ -23,11 +21,6 @@ export default function MapImage({ children }) {
         map.addImage("marker-white", markerWhite);
     };
     markerWhite.src = "/assets/marker-white.svg";
-  }
-  try {
-    console.log(map.listImages?.());
-  } catch (e) {
-    console.log(e);
   }
 
   return children;

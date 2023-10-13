@@ -15,7 +15,8 @@ export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
     { title: "Kiss my Chocolatine" },
     {
       name: "description",
-      content: 'All the best "pains au chocolat" of Amsterdam!',
+      content:
+        "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
     },
     { "script:ld+json": data.chocolatine, key: "chocolatine" },
     { "script:ld+json": data.shop, key: "shop" },

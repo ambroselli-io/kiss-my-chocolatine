@@ -8,7 +8,11 @@ import {
 export const meta: MetaFunction = () => {
   return [
     { title: "Kiss my Chocolatine" },
-    { name: "description", content: 'All the best "pains au chocolat" of Amsterdam!' },
+    {
+      name: "description",
+      content:
+        "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
+    },
   ];
 };
 

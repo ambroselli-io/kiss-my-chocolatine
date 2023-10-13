@@ -13,16 +13,12 @@ import {
 } from "react-map-gl";
 import { useEffect, useState } from "react";
 import MapImage from "~/components/MapImage";
+import Onboarding from "~/components/Onboarding";
 import shops from "~/data/shops.json";
 import chocolatines from "~/data/chocolatines.json";
 
 export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
   return [
-    { title: "Kiss my Chocolatine" },
-    {
-      name: "description",
-      content: 'All the best "pains au chocolat" of Amsterdam!',
-    },
     ...chocolatines
       .map((chocolatine) => {
         const shop = shops.find(
@@ -104,72 +100,94 @@ export default function App() {
     setMapboxAccessToken(window.ENV.MAPBOX_ACCESS_TOKEN);
   }, []);
 
-  return (
-    <div className="flex h-full w-full flex-col-reverse sm:flex-col">
-      <h1 className="absolute bottom-0 left-0 right-0 z-10 shrink-0 bg-white px-4 py-2 drop-shadow-sm sm:relative">
-        THE Ultimate <b>"Pains au Chocolat"</b> showdown: the Good, the Bad, and
-        the Ugly 🤔🍫🇫🇷
-      </h1>
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  useEffect(() => {
+    const isOnboardingDone = window.localStorage.getItem("isOnboardingDone");
+    if (!isOnboardingDone) {
+      setIsOnboardingOpen(true);
+    }
+  }, []);
+  const chocolatineName =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("chocolatine-name")
+      : "pain au chocolat";
 
-      <div
-        className={[
-          "relative flex w-full flex-1 flex-col overflow-hidden sm:flex-row",
-          isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
-        {!!mapboxAccessToken && (
-          <MapProvider>
-            <Map
-              mapboxAccessToken={mapboxAccessToken}
-              initialViewState={initialViewState}
-              reuseMaps
-              id="maproot"
-              interactiveLayerIds={["shops"]}
-              onMouseMove={(e) => {
-                setIsHoveringFeature(!!e.features?.length);
-              }}
-              onClick={(e) => {
-                if (e.features?.length) {
-                  const feature = e.features[0] as any;
-                  const { identifier } = feature.properties;
-                  navigate(`/chocolatine/${identifier}`);
-                }
-              }}
-              mapStyle="mapbox://styles/mapbox/streets-v11"
-            >
-              <MapImage>
-                <Source id="shops" type="geojson" data={data}>
-                  <Layer
-                    id="shops"
-                    type="symbol"
-                    layout={{
-                      "icon-image": [
-                        "case",
-                        ["to-boolean", ["get", "chocolatine_hasreview"]],
-                        "marker-black",
-                        "marker-white",
-                      ],
-                      "icon-allow-overlap": true,
-                      "icon-ignore-placement": true,
-                      "icon-size": 0.2,
-                      "icon-offset": [0, -75],
-                      "symbol-sort-key": ["get", "chocolatine_sort_key"], // Add this line
-                    }}
-                  />
-                </Source>
-              </MapImage>
-              <NavigationControl
-                showCompass={false}
-                showZoom={true}
-                visualizePitch={true}
-              />
-            </Map>
-            <Outlet />
-          </MapProvider>
-        )}
+  return (
+    <>
+      <div className="flex h-full w-full flex-col-reverse sm:flex-col">
+        <h1 className="absolute bottom-0 left-0 right-0 z-10 shrink-0 bg-white px-4 py-2 drop-shadow-sm sm:relative">
+          THE Ultimate{" "}
+          <b onClick={() => setIsOnboardingOpen(true)}>{chocolatineName}</b>{" "}
+          showdown: the Good, the Bad, and the Ugly 🤔🍫🇫🇷
+        </h1>
+
+        <div
+          className={[
+            "relative flex w-full flex-1 flex-col overflow-hidden sm:flex-row",
+            isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {!!mapboxAccessToken && (
+            <MapProvider>
+              <Map
+                mapboxAccessToken={mapboxAccessToken}
+                initialViewState={initialViewState}
+                reuseMaps
+                id="maproot"
+                interactiveLayerIds={["shops"]}
+                onMouseMove={(e) => {
+                  setIsHoveringFeature(!!e.features?.length);
+                }}
+                onClick={(e) => {
+                  if (e.features?.length) {
+                    const feature = e.features[0] as any;
+                    const { identifier } = feature.properties;
+                    navigate(`/chocolatine/${identifier}`);
+                  }
+                }}
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+              >
+                <MapImage>
+                  <Source id="shops" type="geojson" data={data}>
+                    <Layer
+                      id="shops"
+                      type="symbol"
+                      layout={{
+                        "icon-image": [
+                          "case",
+                          ["to-boolean", ["get", "chocolatine_hasreview"]],
+                          "marker-black",
+                          "marker-white",
+                        ],
+                        "icon-allow-overlap": true,
+                        "icon-ignore-placement": true,
+                        "icon-size": 0.2,
+                        "icon-offset": [0, -75],
+                        "symbol-sort-key": ["get", "chocolatine_sort_key"], // Add this line
+                      }}
+                    />
+                  </Source>
+                </MapImage>
+                <NavigationControl
+                  showCompass={false}
+                  showZoom={true}
+                  visualizePitch={true}
+                />
+              </Map>
+              <Outlet />
+            </MapProvider>
+          )}
+        </div>
       </div>
-    </div>
+      <Onboarding
+        open={isOnboardingOpen}
+        onClose={() => {
+          setIsOnboardingOpen(false);
+          window.localStorage.setItem("isOnboardingDone", "true");
+        }}
+      />
+    </>
   );
 }

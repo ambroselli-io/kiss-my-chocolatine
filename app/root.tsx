@@ -1,3 +1,4 @@
+import { captureRemixErrorBoundaryError } from "@sentry/remix";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
@@ -8,6 +9,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
 import stylesheet from "~/styles/tailwind.css";
@@ -34,17 +36,23 @@ export const loader = async () => {
   };
 };
 
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+  captureRemixErrorBoundaryError(error);
+  return <div>Something went wrong</div>;
+};
+
 export default function App() {
   const { ENV } = useLoaderData();
   return (
-    <html lang="en" className="w-full h-full">
+    <html lang="en" className="h-full w-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body className="w-full h-full">
+      <body className="h-full w-full">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
@@ -53,6 +61,11 @@ export default function App() {
             __html: `window.ENV = ${JSON.stringify(ENV)}`,
           }}
         />
+        <script
+          defer
+          data-domain="chocolatine.kiss-my.app"
+          src="https://plausible.io/js/script.tagged-events.js"
+        ></script>
         <LiveReload />
       </body>
     </html>
