@@ -9,6 +9,8 @@ import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
 import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   data = data as never;
@@ -16,7 +18,6 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   return [
     ...parentMeta,
     { "script:ld+json": data.chocolatine, key: "chocolatine" },
-    { "script:ld+json": data.shop, key: "shop" },
   ];
 };
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -58,11 +59,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 const Shop = () => {
   const { chocolatine, quality, shop, isHomemade, ingredients } =
     useLoaderData<typeof loader>();
-
+  const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
+  useEffect(() => {
+    setChocolatineName(Cookies.get("chocolatine-name") || "pain au chocolat");
+  }, []);
   return (
     <div
       id="drawer"
-      className="relative z-20 flex h-[75vh] w-full max-w-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-full sm:max-h-full"
+      className="relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-full sm:max-h-full sm:max-w-sm"
     >
       <h2 className="mt-4 px-4 text-xl font-bold">{shop?.name} </h2>
       <span
@@ -140,19 +144,78 @@ const Shop = () => {
                     key={criteria}
                   >
                     <span className="">
-                      {criteria === "note" && <>Global note </>}
-                      {criteria === "visual_aspect" && <>Visual aspect </>}
-                      {criteria === "softness" && <>Softness/Moelleux </>}
-                      {criteria === "flakiness" && <>Flakiness/Feuilletage </>}
-                      {criteria === "crispiness" && (
-                        <>Crispiness/Croustillant </>
+                      {criteria === "note" && (
+                        <details className="inline-flex">
+                          <summary>Global note</summary>
+                          <p className="text-xs italic opacity-70">
+                            independantly from the rest of the criterias, this
+                            is your global feeling about the {chocolatineName}
+                            &nbsp; 🤗
+                          </p>
+                        </details>
                       )}
-                      {criteria === "fondant" && <>Fondant </>}
+                      {criteria === "visual_aspect" && (
+                        <details className="inline-flex">
+                          <summary>Visual aspect</summary>
+                          <p className="text-xs italic opacity-70">
+                            there is quite a pattern, even though some bakers
+                            are creative. Your subjectivity is welcome
+                            here&nbsp;🤓
+                          </p>
+                        </details>
+                      )}
+                      {criteria === "softness" && (
+                        <details className="inline-flex">
+                          <summary>Softness/Moelleux</summary>
+                          <p className="text-xs italic opacity-70">
+                            not too soft, not too hard&nbsp;😇
+                          </p>
+                        </details>
+                      )}
+                      {criteria === "flakiness" && (
+                        <details className="inline-flex">
+                          <summary>Flakiness/Feuilletage</summary>
+                          <p className="text-xs italic opacity-70">
+                            the original {chocolatineName} IS flaky. Butterly
+                            flaky. Non butterly flaky {chocolatineName} is a bad{" "}
+                            {chocolatineName}&nbsp;😖
+                          </p>
+                        </details>
+                      )}
+                      {criteria === "crispiness" && (
+                        <details className="inline-flex">
+                          <summary>Crispiness/Croustillant</summary>
+                          <p className="text-xs italic opacity-70">
+                            not too crispy, but just a soupçon of what makes it
+                            great&nbsp;🤤
+                          </p>
+                        </details>
+                      )}
+                      {criteria === "fondant" && (
+                        <details className="inline-flex">
+                          <summary>Fondant</summary>
+                          <p className="text-xs italic opacity-70">
+                            butter, chocolate, flakiness and softness all
+                            together in your mouth&nbsp;🤩
+                          </p>
+                        </details>
+                      )}
                       {criteria === "chocolate_quality" && (
-                        <>Chocolate Quality </>
+                        <details className="inline-flex">
+                          <summary>Chocolate Quality</summary>
+                          <p className="text-xs italic opacity-70">🍫</p>
+                        </details>
                       )}
                       {criteria === "chocolate_disposition" && (
-                        <>Chocolate Disposition </>
+                        <details className="inline-flex">
+                          <summary>Chocolate Disposition</summary>
+                          <p className="text-xs italic opacity-70">
+                            a {chocolatineName} has two chocolate bars, one on
+                            each side. A {chocolatineName} with only one
+                            chocolate bar, or with thw two bars stuck together
+                            is a sad {chocolatineName}&nbsp;😤
+                          </p>
+                        </details>
                       )}
                       : &nbsp;
                       <span className="font-extralight">

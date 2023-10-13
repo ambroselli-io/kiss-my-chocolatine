@@ -119,73 +119,42 @@ export default function Onboarding({ open, onClose }) {
       {step === 1 && (
         <>
           <ModalBody className="flex flex-col items-center overflow-y-auto sm:p-8">
-            <p className="w-full px-4 text-center">
-              You'll find here{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                ALL the places
-              </b>{" "}
-              where are sold {chocolatinesName}, with the shop{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                opening hours
-              </b>
-              , the{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                ingredients
-              </b>{" "}
-              of the {chocolatineName}, its{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                price
-              </b>
-              , if it's{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                homemade
-              </b>{" "}
-              or not, and the{" "}
-              <b className="font-medium underline decoration-[#FFBB01]">
-                reviews
-              </b>{" "}
-              from users, following a few criterias:
-            </p>
+            <p className="w-full px-4 text-center">You'll find here </p>
             <ul className="mt-3 list-inside list-disc pl-4 text-left">
               <li>
-                <b>Softness/Moelleux</b>: not too soft, not too hard 😇
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  ALL the places
+                </b>{" "}
+                where are sold {chocolatinesName}
               </li>
               <li>
-                <b>Flakiness/Feuilletage</b>: the original {chocolatineName} IS
-                flaky. Butterly flaky. Non butterly flaky {chocolatineName} is a
-                bad {chocolatineName} 😖
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  opening hours
+                </b>
               </li>
               <li>
-                <b>Crispiness/Croustillant</b>: not too crispy, but just a
-                soupçon of what makes it great 🤤
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  ingredients
+                </b>
               </li>
               <li>
-                <b>Fondant</b>: butter, chocolate, flakiness and softness all
-                together in your mouth 🤩
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  price
+                </b>
               </li>
               <li>
-                <b>Chocolate quality</b>
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  homemade
+                </b>{" "}
+                or not
               </li>
               <li>
-                <b>Chocolate disposition</b>: a {chocolatineName} has two
-                chocolate bars, one on each side. A {chocolatineName} with only
-                one chocolate bar, or with thw two bars stuck together is a sad{" "}
-                {chocolatineName} 😤
-              </li>
-              <li>
-                <b>Visual aspect</b>: there is quite a pattern, even though some
-                bakers are creative. Your subjectivity is welcome here 🤓
-              </li>
-              <li>
-                <b>Global note</b>: independantly from the rest of the
-                criterias, this is your global feeling about the{" "}
-                {chocolatineName} 🤗
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  detailed reviews
+                </b>{" "}
+                from ALL OF YOU
               </li>
             </ul>
-            <p>
-              Not everyone likes the same {chocolatineName}, so it's not because
-              the rates are bad that the product is bad in itself
-            </p>
             <img
               src="/assets/pain-au-choc-feuillete.webp"
               className="mx-auto my-4 h-40"
