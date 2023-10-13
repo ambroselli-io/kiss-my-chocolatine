@@ -29,10 +29,10 @@ export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
         "Ingredients, reviews, prices, shop's opening hours of all the Pains au Chocolat around the world.",
     },
     { property: "og:url", content: url },
-    { property: "og:image", content: `${url}/og-image-1200-630.png` },
+    { property: "og:image", content: `${url}/og-image-1200-630.jpg` },
     {
       property: "og:image:secure_url",
-      content: `${url}/og-image-1200-630.png`,
+      content: `${url}/og-image-1200-630.jpg`,
     },
     { property: "og:image:type", content: "image/png" },
     { property: "og:image:width", content: "1200" },
@@ -52,7 +52,7 @@ export const meta: MetaFunction = ({ params, data }: MetaArgs) => {
       content:
         "Ingredients, reviews, prices, shop's opening hours of all the Pains au Chocolat around the world.",
     },
-    { property: "twitter:image", content: `${url}/og-image-1200-630.png` },
+    { property: "twitter:image", content: `${url}/og-image-1200-630.jpg` },
     {
       property: "twitter:image:alt",
       content:
