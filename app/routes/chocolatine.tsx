@@ -130,33 +130,10 @@ export default function App() {
 
   return (
     <>
-      <div className="relatve flex h-full w-full flex-col-reverse sm:flex-col">
-        <ClientOnly>
-          {() => (
-            <>
-              <h1
-                className="absolute left-0 right-0 top-0 z-10 shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm sm:relative"
-                onClick={() => setIsOnboardingOpen(true)}
-              >
-                All the <b>{chocolatineName}</b> from the world 🌍
-              </h1>
-
-              {!params.shopSlug && (
-                <a
-                  href={newShopEmail()}
-                  className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
-                >
-                  <div className="absolute m-auto h-1 w-1/2 bg-white" />
-                  <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
-                </a>
-              )}
-            </>
-          )}
-        </ClientOnly>
-
+      <div className="relative flex h-full w-full flex-col justify-between sm:justify-start">
         <div
           className={[
-            "relative flex w-full flex-1 flex-col overflow-hidden sm:flex-row",
+            "absolute inset-0",
             isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
           ]
             .filter(Boolean)
@@ -169,6 +146,7 @@ export default function App() {
                 initialViewState={initialViewState}
                 reuseMaps
                 id="maproot"
+                style={{ border: "3px solid #FFBB01" }}
                 interactiveLayerIds={["shops"]}
                 onMouseMove={(e) => {
                   setIsHoveringFeature(!!e.features?.length);
@@ -220,10 +198,32 @@ export default function App() {
                   visualizePitch={true}
                 />
               </Map>
-              <Outlet />
             </MapProvider>
           )}
         </div>
+        <ClientOnly>
+          {() => (
+            <>
+              <h1
+                className="relative shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm"
+                onClick={() => setIsOnboardingOpen(true)}
+              >
+                All the <b>{chocolatineName}</b> from the world 🌍
+              </h1>
+
+              {!params.shopSlug && (
+                <a
+                  href={newShopEmail()}
+                  className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
+                >
+                  <div className="absolute m-auto h-1 w-1/2 bg-white" />
+                  <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
+                </a>
+              )}
+            </>
+          )}
+        </ClientOnly>
+        <Outlet />
       </div>
       <Onboarding
         open={isOnboardingOpen}

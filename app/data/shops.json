@@ -22,7 +22,15 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
         "opens": "10:00",
         "closes": "18:00"
       }
@@ -55,7 +63,15 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
         "opens": "08:00",
         "closes": "17:00"
       }
@@ -86,7 +102,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "08:00",
         "closes": "18:00"
       }
@@ -118,7 +141,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "07:00",
         "closes": "19:00"
       }
@@ -151,7 +181,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "07:30",
         "closes": "17:00"
       }
@@ -222,8 +259,8 @@
     "url": "https://margosamsterdam.com/",
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 52.3777616,
-      "longitude": 4.883549
+      "latitude": 52.377885983179254,
+      "longitude": 4.883570464934405
     },
     "openingHoursSpecification": [
       {
@@ -266,7 +303,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "07:30",
         "closes": "16:00"
       }
@@ -303,7 +347,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "07:00",
         "closes": "17:30"
       },
@@ -359,8 +410,8 @@
     "url": "https://selmasbakery.com",
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 52.3773186,
-      "longitude": 4.8857913
+      "latitude": 52.377295248548535,
+      "longitude": 4.8883717313708095
     },
     "openingHoursSpecification": [
       {
@@ -393,8 +444,8 @@
     "url": "https://lepetitdeli.nl",
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 52.376594,
-      "longitude": 4.8795699
+      "latitude": 52.37660721055867,
+      "longitude": 4.882132329215286
     },
     "openingHoursSpecification": [
       {
@@ -435,7 +486,14 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
         "opens": "07:30",
         "closes": "17:00"
       }
@@ -513,7 +571,14 @@
       },
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "dayOfWeek": [
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
         "opens": "08:00",
         "closes": "18:00"
       }

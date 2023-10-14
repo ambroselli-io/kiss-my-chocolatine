@@ -7,17 +7,17 @@ import { Link, useLoaderData } from "@remix-run/react";
 import chocolatines from "~/data/chocolatines.json";
 import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
+import BalancedRate from "~/components/BalancedRate";
 import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
-  data = data as never;
   const parentMeta = matches[matches.length - 2].meta ?? [];
   return [
     ...parentMeta,
-    { "script:ld+json": data.chocolatine, key: "chocolatine" },
+    { "script:ld+json": data?.chocolatine, key: "chocolatine" },
   ];
 };
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -25,14 +25,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     (c) => c.belongsTo.identifier === params.shopSlug,
   );
   const quality: any = {
-    note: null,
-    visual_aspect: null,
-    softness: null,
-    flakiness: null,
-    crispiness: null,
-    fondant: null,
-    chocolate_quality: null,
+    light_or_dense: null,
+    golden_or_pale: null,
+    brioche_or_flaky: null,
+    buttery: null,
+    crispy_or_soft: null,
+    big_or_small: null,
     chocolate_disposition: null,
+    good_or_not_good: null,
   };
   for (const review of chocolatine?.reviews ?? []) {
     for (const criteria of review.additionalProperty) {
@@ -53,16 +53,24 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       (type) => type.name === "Ingredients",
     )?.value,
     shop,
+    detailedReviews: chocolatine?.reviews.filter((r) => r.reviewBody),
   };
 };
 
 const Shop = () => {
-  const { chocolatine, quality, shop, isHomemade, ingredients } =
-    useLoaderData<typeof loader>();
+  const {
+    chocolatine,
+    detailedReviews,
+    quality,
+    shop,
+    isHomemade,
+    ingredients,
+  } = useLoaderData<typeof loader>();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
   useEffect(() => {
     setChocolatineName(Cookies.get("chocolatine-name") || "pain au chocolat");
   }, []);
+
   return (
     <div
       id="drawer"
@@ -135,113 +143,141 @@ const Shop = () => {
               )}
             </ClientOnly>
           </div>
-          {!quality
-            ? "No review yet"
-            : Object.keys(quality).map((criteria) => {
-                return (
-                  <div
-                    className="ml-1 mt-2 flex flex-col text-sm"
-                    key={criteria}
-                  >
-                    <span className="">
-                      {criteria === "note" && (
-                        <details className="inline-flex">
-                          <summary>Global note</summary>
-                          <p className="text-xs italic opacity-70">
-                            independantly from the rest of the criterias, this
-                            is your global feeling about the {chocolatineName}
-                            &nbsp; 🤗
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "visual_aspect" && (
-                        <details className="inline-flex">
-                          <summary>Visual aspect</summary>
-                          <p className="text-xs italic opacity-70">
-                            there is quite a pattern, even though some bakers
-                            are creative. Your subjectivity is welcome
-                            here&nbsp;🤓
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "softness" && (
-                        <details className="inline-flex">
-                          <summary>Softness/Moelleux</summary>
-                          <p className="text-xs italic opacity-70">
-                            not too soft, not too hard&nbsp;😇
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "flakiness" && (
-                        <details className="inline-flex">
-                          <summary>Flakiness/Feuilletage</summary>
-                          <p className="text-xs italic opacity-70">
-                            the original {chocolatineName} IS flaky. Butterly
-                            flaky. Non butterly flaky {chocolatineName} is a bad{" "}
-                            {chocolatineName}&nbsp;😖
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "crispiness" && (
-                        <details className="inline-flex">
-                          <summary>Crispiness/Croustillant</summary>
-                          <p className="text-xs italic opacity-70">
-                            not too crispy, but just a soupçon of what makes it
-                            great&nbsp;🤤
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "fondant" && (
-                        <details className="inline-flex">
-                          <summary>Fondant</summary>
-                          <p className="text-xs italic opacity-70">
-                            butter, chocolate, flakiness and softness all
-                            together in your mouth&nbsp;🤩
-                          </p>
-                        </details>
-                      )}
-                      {criteria === "chocolate_quality" && (
-                        <details className="inline-flex">
-                          <summary>Chocolate Quality</summary>
-                          <p className="text-xs italic opacity-70">🍫</p>
-                        </details>
-                      )}
-                      {criteria === "chocolate_disposition" && (
-                        <details className="inline-flex">
-                          <summary>Chocolate Disposition</summary>
-                          <p className="text-xs italic opacity-70">
-                            a {chocolatineName} has two chocolate bars, one on
-                            each side. A {chocolatineName} with only one
-                            chocolate bar, or with thw two bars stuck together
-                            is a sad {chocolatineName}&nbsp;😤
-                          </p>
-                        </details>
-                      )}
-                      : &nbsp;
-                      <span className="font-extralight">
-                        {quality[criteria]}
-                      </span>
-                      &nbsp;
-                      {quality[criteria] < 1
-                        ? "😖"
-                        : quality[criteria] < 2
-                        ? "😒"
-                        : quality[criteria] < 3
-                        ? "🤨"
-                        : quality[criteria] < 4
-                        ? "😕"
-                        : quality[criteria] < 4.6
-                        ? "😋"
-                        : "🤩"}
-                    </span>
-                    <progress
-                      max="5"
-                      value={quality[criteria]}
-                      className="h-2 w-full max-w-[15rem] overflow-hidden rounded-full"
-                    />
-                  </div>
-                );
-              })}
+          {!quality ? (
+            "No review yet"
+          ) : (
+            <>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Butter:</summary>
+                  <p className="text-xs italic opacity-70">
+                    Some people like with A LOT, some other with just a touch.
+                    In any case, it's an important ingredient of the{" "}
+                    {chocolatineName}&nbsp;🧈
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Not at all"}
+                  maxCaption={"Anything but butter"}
+                  value={quality.buttery}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Flaky/Feuilleuté or Brioche-like</summary>
+                  <p className="text-xs italic opacity-70">
+                    the original {chocolatineName} IS flaky. Butterly flaky. But
+                    it takes everything to make a world&nbsp;🤷
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Brioche"}
+                  maxCaption={"Flaky"}
+                  value={quality.brioche_or_flaky}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Golden or Pale</summary>
+                  <p className="text-xs italic opacity-70">
+                    The more golden the more cooked.&nbsp;❤️‍🔥
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Golden"}
+                  maxCaption={"Pale"}
+                  value={quality.golden_or_pale}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Crispy or Soft</summary>
+                  <p className="text-xs italic opacity-70">
+                    A combinaison of buttery, flakiness and and time to
+                    cook&nbsp;🤯
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Crispy"}
+                  maxCaption={"Soft"}
+                  value={quality.crispy_or_soft}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Light or Dense</summary>
+                  <p className="text-xs italic opacity-70">
+                    This is a signature&nbsp;🧑‍🍳
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Light"}
+                  maxCaption={"Dense"}
+                  value={quality.light_or_dense}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Chocolate disposition</summary>
+                  <p className="text-xs italic opacity-70">
+                    superimposed or well distributed?&nbsp;🖖
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Superimposed"}
+                  maxCaption={"On each edges"}
+                  value={quality.chocolate_disposition}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Big or small</summary>
+                  <p className="text-xs italic opacity-70">
+                    this is maly to point out the too small ones, tbh&nbsp;👎
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Very small"}
+                  maxCaption={"Very big"}
+                  value={quality.big_or_small}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Good or not good?</summary>
+                  <p className="text-xs italic opacity-70">
+                    the only subjective rating here - the other ones are
+                    science&nbsp;🥸
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"🤢"}
+                  maxCaption={"🤩"}
+                  value={quality.good_or_not_good}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>
+                    Detailed reviews ({detailedReviews?.length})
+                  </summary>
+                  <ul className="ml-8 mt-2 flex list-inside flex-col">
+                    {detailedReviews?.map((review, index) => (
+                      <li key={index} className="mb-2">
+                        <strong className="ml-2">{review?.author.name}</strong>
+                        <small className="opacity-50">
+                          {" - "}
+                          {review?.datePublished}
+                        </small>
+                        <p>{review?.reviewBody}</p>
+                        {/* You can also add other parts of the review here, like rating, etc. */}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
+            </>
+          )}
           <div className="mb-2 mt-10 flex justify-between">
             <h3 className="font-bold">Ingredients</h3>
             <ClientOnly>
@@ -262,7 +298,7 @@ const Shop = () => {
                   >
                     <img
                       className="mr-2 h-6 w-6"
-                      src={`/assets/${ingredient.additionalProperties.find(
+                      src={`/assets/${ingredient?.additionalProperties.find(
                         (prop) => prop.name === "Icon",
                       )?.value}`}
                       loading="lazy"

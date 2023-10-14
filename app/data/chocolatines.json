@@ -35,53 +35,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "This Pain au Chocolat is simply amazing. The perfect balance of flakiness and softness.",
+        "datePublished": "2023-10-14",
+        "reviewBody": "Classic, almost as if I was in France, except I think it'smore dense. But it's a always great pleasure and emotion to eat it.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 4
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 4.5
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 5
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 4
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 5
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 4.5
-          },
-          {
-            "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.5
           }
         ]
       }
@@ -152,53 +171,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "Vegan pain au chocolat. A real pleasure in the mouth. Maybe too crispy sometimes, and too small.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 5
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": -0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 5
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 2
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 4.5
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 2
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 5
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 5
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": -0.25
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": -0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 4.5
-          },
-          {
-            "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 4.5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.9
           }
         ]
       }
@@ -239,53 +277,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "That's the best balance for me between excellent pain au chocolat and not too far from home. Always pure delight.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 5
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": -0.8
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 4.5
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 5
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 4.5
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": -0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 4
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 4.8
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 4.5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.9
           }
         ]
       }
@@ -326,53 +383,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "I don't know Sébastien, but the guys knows about pains au chocolat, butter, flakiness, and he likes perfection. Because that's what we meet here.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 5
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": -1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 5
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 2
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 5
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 1.8
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 5
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 5
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 5
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 2
           }
         ]
       }
@@ -413,53 +489,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "One of the best... industrial. But it's overpriced for what it is, and it's not close to the best homemade ones.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 3
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 2
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 3
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 4
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 3
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 3
-          },
-          {
-            "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 4
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": -0.5
           }
         ]
       }
@@ -475,15 +570,15 @@
     },
     "offers": {
       "@type": "Offer",
-      "price": null,
-      "priceCurrency": "",
+      "price": "1.90",
+      "priceCurrency": "EUR",
       "availability": "http://schema.org/InStock"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "value": true
       }
     ],
     "additionalType": [
@@ -492,7 +587,84 @@
         "value": []
       }
     ],
-    "reviews": []
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "datePublished": "2023-10-14",
+        "reviewBody": "Quite disappointed regarding the size and the shape. The taste is really good, but 1.90 for half a pain au chocolat is way too much.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 1.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": -0.1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1.8
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": -1.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": -2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1
+          }
+        ]
+      }
+    ]
   },
   {
     "@context": "https://schema.org",
@@ -558,53 +730,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "it's not the nicest piece of craftsmanship for a chocolade broodje, but I'm happy when I buy some. Especially because the baker coated each end with 2-3 cm of chocolate 😋",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 3
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 2
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": -1.2
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 2
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 5
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 4
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 3
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 4.5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1
           }
         ]
       }
@@ -649,15 +840,15 @@
     },
     "offers": {
       "@type": "Offer",
-      "price": null,
-      "priceCurrency": "",
+      "price": "3.50",
+      "priceCurrency": "EUR",
       "availability": "http://schema.org/InStock"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "value": true
       }
     ],
     "additionalType": [
@@ -666,7 +857,84 @@
         "value": []
       }
     ],
-    "reviews": []
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "datePublished": "2023-10-14",
+        "reviewBody": "Very good, no doubt. But at some point, price matters. And this one is quite expensive.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 1.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0.5
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.9
+          }
+        ]
+      }
+    ]
   },
   {
     "@context": "https://schema.org",
@@ -790,53 +1058,72 @@
           "@type": "Person",
           "name": "Arnaud"
         },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": 5,
-          "bestRating": 5,
-          "worstRating": 1
-        },
-        "reviewBody": "",
+        "datePublished": "2023-10-14",
+        "reviewBody": "Very, very good. Always this typical shape that we see a lot in Amsterdam, but it's a firework in the mouth.",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
-            "name": "softness",
-            "value": 5
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": -0.8
           },
           {
             "@type": "PropertyValue",
-            "name": "flakiness",
-            "value": 5
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "crispiness",
-            "value": 5
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 1.5
           },
           {
             "@type": "PropertyValue",
-            "name": "fondant",
-            "value": 5
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0.5
           },
           {
             "@type": "PropertyValue",
-            "name": "chocolate_quality",
-            "value": 5
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
             "name": "chocolate_disposition",
-            "value": 5
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": -0.25
           },
           {
             "@type": "PropertyValue",
-            "name": "note",
-            "value": 5
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
           },
           {
             "@type": "PropertyValue",
-            "name": "visual_aspect",
-            "value": 5
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.8
           }
         ]
       }

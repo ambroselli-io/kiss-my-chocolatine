@@ -125,7 +125,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full w-full">
+      <body className="relative h-full w-full overflow-hidden">
         <Outlet />
 
         <ScrollRestoration />
