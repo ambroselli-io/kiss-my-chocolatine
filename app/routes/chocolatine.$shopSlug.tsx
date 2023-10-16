@@ -3,7 +3,7 @@ import type {
   MetaArgs,
   MetaFunction,
 } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import chocolatines from "~/data/chocolatines.json";
 import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
@@ -12,6 +12,7 @@ import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { compileReviews } from "~/utils/review";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -24,22 +25,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const chocolatine = chocolatines.find(
     (c) => c.belongsTo.identifier === params.shopSlug,
   );
-  const quality: any = {
-    light_or_dense: null,
-    golden_or_pale: null,
-    brioche_or_flaky: null,
-    buttery: null,
-    crispy_or_soft: null,
-    big_or_small: null,
-    chocolate_disposition: null,
-    good_or_not_good: null,
-  };
-  for (const review of chocolatine?.reviews ?? []) {
-    for (const criteria of review.additionalProperty) {
-      if (!quality.hasOwnProperty(criteria.name)) continue;
-      quality[criteria.name] += criteria.value;
-    }
-  }
+  const quality = compileReviews(chocolatine?.reviews ?? []);
   const isHomemade = String(
     chocolatine?.additionalProperty.find((prop) => prop.name === "Homemade")
       ?.value,
@@ -57,7 +43,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   };
 };
 
-const Shop = () => {
+export default function Shop() {
   const {
     chocolatine,
     detailedReviews,
@@ -67,6 +53,7 @@ const Shop = () => {
     ingredients,
   } = useLoaderData<typeof loader>();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
+  const [searchParams] = useSearchParams();
   useEffect(() => {
     setChocolatineName(Cookies.get("chocolatine-name") || "pain au chocolat");
   }, []);
@@ -100,7 +87,10 @@ const Shop = () => {
         <img src="/assets/clock-grey.svg" className="mr-1 w-5 sm:mr-3" />
         <Availability shop={shop} />
       </span>
-      <Link className="absolute right-2 top-2 font-light text-black" to="..">
+      <Link
+        className="absolute right-2 top-2 font-light text-black"
+        to={`/chocolatine?${searchParams.toString()}`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -352,6 +342,4 @@ const Shop = () => {
       </div>
     </div>
   );
-};
-
-export default Shop;
+}

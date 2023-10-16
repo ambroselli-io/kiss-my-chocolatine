@@ -4,13 +4,13 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-
 import {
   Outlet,
   useLoaderData,
   useNavigate,
   useOutletContext,
   useParams,
+  useSearchParams,
 } from "@remix-run/react";
 import {
   Layer,
@@ -29,7 +29,9 @@ import { makeAReferral, newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
 import CompanyStructure from "~/components/CompanyStructure";
+import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import { isChocolatineIncludedByFilters } from "~/utils/isIncludedByFilters";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -49,7 +51,7 @@ export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   ];
 };
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const damSquare = {
     longitude: 4.891332614225945,
     latitude: 52.373091430357476,
@@ -62,13 +64,24 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     return shopGeo;
   })();
 
+  /* filters */
+  const url = new URL(request.url);
+  // const filters = Array.from(url.searchParams).map(
+  //   ([key, value]) => `${key}-${value}`,
+  // );
+  const filters = {};
+  for (let key of url.searchParams.keys()) {
+    filters[key] = url.searchParams.getAll(key);
+  }
+
   return {
     initialViewState: {
       longitude,
       latitude,
       zoom: 12,
     },
-    data: {
+    chocolatines,
+    geojson: {
       type: "FeatureCollection",
       features: chocolatines
         .map((chocolatine) => {
@@ -78,6 +91,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
           if (!shop) {
             return null;
           }
+
           return {
             type: "Feature",
             geometry: {
@@ -86,23 +100,15 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
             },
             properties: {
               identifier: shop.identifier,
-              name: shop.name,
               is_active_shop: shop.identifier === params?.shopSlug ? 1 : 0,
-              address: shop.address,
-              telephone: shop.telephone,
-              url: shop.url,
-              description: shop.description,
-              openingHoursSpecification: shop.openingHoursSpecification,
-              servesCuisine: shop.servesCuisine,
-              priceRange: shop.priceRange,
-              paymentAccepted: shop.paymentAccepted,
-              additionalType: shop.additionalType,
+              is_included_by_filters: isChocolatineIncludedByFilters(
+                chocolatine,
+                filters,
+              )
+                ? 1
+                : 0,
               chocolatine_sort_key: chocolatine.reviews.length > 0 ? 1 : 0, // 1 for with reviews, 0 for without
               chocolatine_hasreview: chocolatine.reviews.length > 0,
-              chocolatine_hasprice: !!chocolatine.offers?.price,
-              chocolatine_hasingredients: !!chocolatine.additionalType.find(
-                (t) => t.name === "Ingredients",
-              )?.value?.length,
             },
           };
         })
@@ -112,11 +118,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  let { initialViewState, data } = useLoaderData();
+  let { initialViewState, geojson } = useLoaderData();
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const params = useParams();
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -159,13 +166,15 @@ export default function App() {
                   if (e.features?.length) {
                     const feature = e.features[0] as any;
                     const { identifier } = feature.properties;
-                    navigate(`/chocolatine/${identifier}`);
+                    navigate(
+                      `/chocolatine/${identifier}?${searchParams.toString()}`,
+                    );
                   }
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
               >
                 <MapImage>
-                  <Source id="shops" type="geojson" data={data}>
+                  <Source id="shops" type="geojson" data={geojson}>
                     <Layer
                       id="shops"
                       type="symbol"
@@ -193,6 +202,14 @@ export default function App() {
                           ["get", "chocolatine_sort_key"],
                         ],
                       }}
+                      paint={{
+                        "icon-opacity": [
+                          "case",
+                          ["==", ["get", "is_included_by_filters"], 1],
+                          1,
+                          0.35,
+                        ],
+                      }}
                     />
                   </Source>
                 </MapImage>
@@ -214,7 +231,11 @@ export default function App() {
                     className="cursor-pointer"
                     onClick={() => setIsOnboardingOpen(true)}
                   >
-                    All the <b>{chocolatineName}</b> from the world 🌍
+                    All the <b>{chocolatineName}</b> from the world 🌍{" "}
+                    <small className="opacity-30">
+                      Well, it's Amsterdam only because we're living there, but
+                      the world is coming step by step
+                    </small>
                   </h1>
                   <ButtonArrowMenu
                     onClick={() => setShowMore(!showMore)}
@@ -223,6 +244,7 @@ export default function App() {
                 </div>
                 {showMore && (
                   <div className="flex flex-col gap-y-3 overflow-y-auto border-t border-t-gray-200 px-4 py-2">
+                    <ChocolatinesFilters />
                     <CompanyStructure />
                     <details>
                       <summary>
@@ -287,7 +309,12 @@ export default function App() {
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentParams,
   nextParams,
+  currentUrl,
+  nextUrl,
+  ...rest
 }) => {
   if (currentParams.shopSlug !== nextParams.shopSlug) return true;
+  // if searchparms size differ, then we need to revalidate
+  if (currentUrl.searchParams.size !== nextUrl.searchParams.size) return true;
   return false;
 };

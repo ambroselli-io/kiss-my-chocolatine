@@ -41,6 +41,9 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Chocolate Disposition:
   (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
+-Big or small:
+  (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
+
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
 
