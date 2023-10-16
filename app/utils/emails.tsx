@@ -119,3 +119,20 @@ Arnaud, from Kiss My Chocolatine
 `,
   );
 }
+
+export function makeAReferral() {
+  return createMailtoHref(
+    `New Referral`,
+    `Hello, and thanks for your interest!
+
+Nice to have a new user coming here! Please, write down:
+- the email of the existing user that brought the new user here:
+- the email of the new user:
+
+
+Thanks and enjoy!
+
+Arnaud, from Kiss My Chocolatine
+`,
+  );
+}

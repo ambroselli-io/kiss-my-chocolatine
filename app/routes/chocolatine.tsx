@@ -21,12 +21,15 @@ import {
 } from "react-map-gl";
 import { useEffect, useState } from "react";
 import MapImage from "~/components/MapImage";
+import ButtonArrowMenu from "~/components/ButtonArrowMenu";
 import Onboarding from "~/components/Onboarding";
 import shops from "~/data/shops.json";
 import chocolatines from "~/data/chocolatines.json";
-import { newShopEmail } from "~/utils/emails";
+import { makeAReferral, newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
+import CompanyStructure from "~/components/CompanyStructure";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -112,6 +115,7 @@ export default function App() {
   let { initialViewState, data } = useLoaderData();
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const params = useParams();
 
   const navigate = useNavigate();
@@ -204,12 +208,56 @@ export default function App() {
         <ClientOnly>
           {() => (
             <>
-              <h1
-                className="relative shrink-0 cursor-pointer bg-white px-4 py-2 drop-shadow-sm"
-                onClick={() => setIsOnboardingOpen(true)}
-              >
-                All the <b>{chocolatineName}</b> from the world 🌍
-              </h1>
+              <div className="relative flex max-h-[85vh] shrink-0 cursor-pointer flex-col bg-white drop-shadow-sm ">
+                <div className="flex items-center justify-between px-4 py-2 ">
+                  <h1
+                    className="cursor-pointer"
+                    onClick={() => setIsOnboardingOpen(true)}
+                  >
+                    All the <b>{chocolatineName}</b> from the world 🌍
+                  </h1>
+                  <ButtonArrowMenu
+                    onClick={() => setShowMore(!showMore)}
+                    isActive={showMore}
+                  />
+                </div>
+                {showMore && (
+                  <div className="flex flex-col gap-y-3 overflow-y-auto border-t border-t-gray-200 px-4 py-2">
+                    <CompanyStructure />
+                    <details>
+                      <summary>
+                        <a
+                          href={makeAReferral()}
+                          className="inline-flex items-center gap-x-2 font-medium underline decoration-[#FFBB01]"
+                        >
+                          Make a referral and earn one share
+                          <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                        </a>
+                      </summary>
+                      <div className="mt-2 flex flex-col gap-2 px-2">
+                        <p>
+                          If you bring a new user to the platform, you earn one
+                          share - so does the new coming user.
+                        </p>
+                      </div>
+                    </details>
+                    <details>
+                      <summary className="cursor-pointer font-medium underline decoration-[#FFBB01]">
+                        Don't like the word "{chocolatineName}"?
+                      </summary>
+                      <div className="mt-2 flex flex-col gap-2 px-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsOnboardingOpen(true)}
+                          aria-label="Change the name of the chocolatine"
+                        >
+                          Click <u>here</u> to change its name.
+                        </button>
+                      </div>
+                    </details>
+                  </div>
+                )}
+              </div>
 
               {!params.shopSlug && (
                 <a
