@@ -6,9 +6,9 @@ export default function CompanyStructure() {
       </summary>
       <div className="mt-2 flex flex-col gap-2 px-2">
         <p>
-          We do believe a model where all the actors (building team, investors,
-          end users) are winning money is possible. We are building it, please
-          tell us what you think.{" "}
+          We do believe in a model where the end users are earning money. How
+          exactly? Here is how -{" "}
+          <small>we are building it, please tell us what you think.</small>
         </p>
 
         <details>
@@ -54,9 +54,7 @@ export default function CompanyStructure() {
           </div>
         </details>
         <details>
-          <summary>
-            The repartition of shares between the end-users is the following:
-          </summary>
+          <summary>No cap for the shares between the end-users:</summary>
           <div className="mt-2 flex flex-col gap-2 px-2">
             <p>
               there is no cap in the number of shares available, nor the shares
@@ -66,7 +64,10 @@ export default function CompanyStructure() {
           </div>
         </details>
         <details>
-          <summary>To earn a share, you need to do either:</summary>
+          <summary>
+            To earn a share, you need to either write a review, add a shop or
+            make a referral:
+          </summary>
           <div className="mt-2 flex flex-col gap-2 px-2">
             <ul className="list-inside px-4 text-left">
               <li>
@@ -88,7 +89,7 @@ export default function CompanyStructure() {
                 <b className="font-medium underline decoration-[#FFBB01]">
                   A referral.
                 </b>{" "}
-                For each referral you do, you earn one share.
+                For each referral you do, you and the new user earn one share.
               </li>
             </ul>
           </div>
