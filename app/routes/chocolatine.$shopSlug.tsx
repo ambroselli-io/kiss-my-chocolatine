@@ -61,7 +61,7 @@ export default function Shop() {
   return (
     <div
       id="drawer"
-      className="relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-full sm:max-h-full sm:max-w-sm"
+      className="relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-auto sm:max-h-full sm:max-w-sm sm:flex-1 sm:basis-full"
     >
       <h2 className="mt-4 px-4 text-xl font-bold">{shop?.name} </h2>
       <span

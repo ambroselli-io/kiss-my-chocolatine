@@ -234,7 +234,9 @@ function newFeedback(shopName?: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
-    `Kiss My Chocolatine: New Feedback for ${shopName}'s ${chocolatineName}`,
+    `Kiss My Chocolatine: New Feedback ${
+      shopName ? `for ${shopName}'s ${chocolatineName}` : ""
+    }`,
     `Hello, and thanks for your interest!
 
 Always nice to have a feeedbakc from a user!

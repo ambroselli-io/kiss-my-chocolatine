@@ -25,7 +25,7 @@ import ButtonArrowMenu from "~/components/ButtonArrowMenu";
 import Onboarding from "~/components/Onboarding";
 import shops from "~/data/shops.json";
 import chocolatines from "~/data/chocolatines.json";
-import { makeAReferral, newShopEmail } from "~/utils/emails";
+import { makeAReferral, newFeedback, newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
 import CompanyStructure from "~/components/CompanyStructure";
@@ -309,6 +309,20 @@ export default function App() {
                           All the source code
                           <ArrowTopRightOnSquareIcon className="h-3 w-3" />
                         </a>
+                      </div>
+                    </details>
+                    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
+                      <summary>Feedback</summary>
+                      <div className="mt-2 flex flex-col gap-2 px-2">
+                        <ClientOnly>
+                          {() => (
+                            <a href={newFeedback()} className="px-4 py-2">
+                              Any feedback? Good, bad, review, wrong or missing
+                              information... Please <u>click here</u> to shoot
+                              us an email!
+                            </a>
+                          )}
+                        </ClientOnly>
                       </div>
                     </details>
                   </div>
