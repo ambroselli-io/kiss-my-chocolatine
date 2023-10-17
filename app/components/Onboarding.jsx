@@ -21,8 +21,9 @@ export default function Onboarding({ open, onClose }) {
           <ModalHeader title="Welcome tooo Kiss My Chocolatine ! 🍫" />
           <ModalBody className="flex flex-col items-center overflow-y-auto sm:p-8">
             <p className="w-full px-4 text-center">
-              You'll find here ALL the places where is sold... but actually, how
-              do you call this?
+              You'll find here ALL the places for...
+              <br />
+              mmm wait, how do you call this👇?
             </p>
             <img
               src="/assets/chocolatine-blurred.jpg"
@@ -123,35 +124,41 @@ export default function Onboarding({ open, onClose }) {
           <ModalHeader title="Welcome tooo Kiss My Chocolatine ! 🍫" />
           <ModalBody className="flex flex-col items-center overflow-y-auto py-4 sm:p-8">
             <p className="w-full px-4 text-center">You'll find here </p>
-            <ul className="mt-3 list-inside list-disc px-4 text-left">
+            <ul className="mt-3 list-inside px-4 text-left">
               <li>
+                🍽️&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   ALL the places
                 </b>{" "}
-                where are sold {chocolatinesName}
+                for {chocolatinesName}
               </li>
               <li>
+                ⏰&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   opening hours
                 </b>
               </li>
               <li>
+                🍫&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   ingredients
                 </b>
               </li>
               <li>
+                🏷️&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   price
                 </b>
               </li>
               <li>
+                🧑‍🍳&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   homemade
                 </b>{" "}
                 or not
               </li>
               <li>
+                🕵️&nbsp;&nbsp;
                 <b className="font-medium underline decoration-[#FFBB01]">
                   detailed reviews
                 </b>{" "}

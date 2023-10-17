@@ -228,13 +228,13 @@ export default function App() {
               <div className="relative flex max-h-[85vh] shrink-0 cursor-pointer flex-col bg-white drop-shadow-sm ">
                 <div className="flex items-center justify-between px-4 py-2 ">
                   <h1
-                    className="max-w-md cursor-pointer"
+                    className="max-w-lg cursor-pointer"
                     onClick={() => setIsOnboardingOpen(true)}
                   >
                     All the <b>{chocolatineName}</b> from the world 🌍{" "}
                     <small className="opacity-30">
                       Well, it's Amsterdam only because we're living there, but
-                      the world is coming step by step
+                      the world is coming step by step 🤜
                     </small>
                   </h1>
                   <ButtonArrowMenu
