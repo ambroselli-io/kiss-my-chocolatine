@@ -5,8 +5,8 @@
     "@type": "Person",
     "name": "Arnaud"
   },
-  "datePublished": "2023-10-14",
-  "reviewBody": "Very good, no doubt. But at some point, price matters. And this one is quite expensive.",
+  "datePublished": "2023-10-17",
+  "reviewBody": "Very, very good, no doubt. Very unique shape also (go have a look here: https://www.ritzparislecomptoir.com/fr/viennoiserie/pain-au-chocolat). I've bought it a few times, but I wouldn't eat it everyday neither. Because at some point, price matters. And this one is quite expensive.",
   "additionalProperty": [
     {
       "@type": "PropertyValue",
@@ -14,7 +14,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
-      "value": 0
+      "value": 0.5
     },
     {
       "@type": "PropertyValue",
@@ -22,7 +22,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-      "value": 1.5
+      "value": 0
     },
     {
       "@type": "PropertyValue",
@@ -38,7 +38,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
-      "value": 0.5
+      "value": 0
     },
     {
       "@type": "PropertyValue",
@@ -46,7 +46,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
-      "value": -1
+      "value": -0.5
     },
     {
       "@type": "PropertyValue",
@@ -62,7 +62,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
-      "value": 0
+      "value": 1
     },
     {
       "@type": "PropertyValue",
@@ -70,7 +70,7 @@
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-      "value": 1.9
+      "value": 1.7
     }
   ]
 }

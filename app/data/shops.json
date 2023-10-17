@@ -583,5 +583,49 @@
         "closes": "18:00"
       }
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Ritz Paris Le Comptoir",
+    "identifier": "ritz-paris-le-comptoir",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "38 Rue Cambon",
+      "postalCode": "75001",
+      "addressLocality": "Paris",
+      "addressCountry": "France"
+    },
+    "telephone": "01 43 16 30 26",
+    "url": "http://ritzparislecomptoir.com",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.8688098,
+      "longitude": 2.3250568
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "19:00"
+      }
+    ],
+    "servesCuisine": "Pastry",
+    "priceRange": "€€€€",
+    "paymentAccepted": ["NA"],
+    "additionalType": ["Pastry shop"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.1",
+      "reviewCount": 1158
+    }
   }
 ]
