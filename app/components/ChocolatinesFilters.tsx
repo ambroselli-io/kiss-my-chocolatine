@@ -17,10 +17,13 @@ export default function ChocolatinesFilters() {
 
   return (
     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-      <summary className="font-medium">
+      <summary className="font-bold">
         Filters {total > 0 ? `(${total})` : "👀 "}{" "}
         {total > 0 ? (
-          <small className="opacity-25"> - {filteredGeojson} shops</small>
+          <small className="font-normal opacity-25">
+            {" "}
+            - {filteredGeojson} shops
+          </small>
         ) : (
           ""
         )}

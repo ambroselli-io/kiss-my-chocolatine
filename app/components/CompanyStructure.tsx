@@ -1,7 +1,7 @@
 export default function CompanyStructure() {
   return (
     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 open:pb-5">
-      <summary className="font-medium">About one action = one share</summary>
+      <summary>About one action = one share</summary>
       <div className="mt-2 flex flex-col gap-2 px-2">
         <p>
           We do believe in a model where the end users are earning money. How

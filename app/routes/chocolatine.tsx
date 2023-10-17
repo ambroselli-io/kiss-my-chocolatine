@@ -245,12 +245,11 @@ export default function App() {
                 {showMore && (
                   <div className="flex flex-col overflow-y-auto border-t border-t-gray-200">
                     <ChocolatinesFilters />
-                    <CompanyStructure />
                     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                       <summary>
                         <a
                           href={makeAReferral()}
-                          className="inline-flex items-center gap-x-2 font-medium"
+                          className="inline-flex items-center gap-x-2 font-bold"
                         >
                           Make a referral and earn one share
                           <ArrowTopRightOnSquareIcon className="h-3 w-3" />
@@ -263,8 +262,9 @@ export default function App() {
                         </p>
                       </div>
                     </details>
+                    <CompanyStructure />
                     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                      <summary className="cursor-pointer font-medium">
+                      <summary className="cursor-pointer">
                         Don't like the word "{chocolatineName}"?
                       </summary>
                       <div className="mt-2 flex flex-col gap-2 px-2">
@@ -311,7 +311,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   nextParams,
   currentUrl,
   nextUrl,
-  ...rest
 }) => {
   if (currentParams.shopSlug !== nextParams.shopSlug) return true;
   // if searchparms size differ, then we need to revalidate

@@ -123,7 +123,7 @@ export default function Shop() {
               ? `${chocolatine?.offers.price} ${chocolatine?.offers.priceCurrency}`
               : "N/A"}
           </p>
-          <div className="mb-2 mt-10 flex justify-between">
+          <div className="mb-2 mt-10 flex items-center justify-between">
             <h3 className="font-bold">Reviews</h3>
             <ClientOnly>
               {() => (
@@ -268,12 +268,12 @@ export default function Shop() {
               </div>
             </>
           )}
-          <div className="mb-2 mt-10 flex justify-between">
+          <div className="mb-2 mt-10 flex items-center justify-between">
             <h3 className="font-bold">Ingredients</h3>
             <ClientOnly>
               {() => (
                 <a href={newIngredient(shop?.name)} className="ml-auto text-xs">
-                  🔄 Update
+                  🥣 Update
                 </a>
               )}
             </ClientOnly>
