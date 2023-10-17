@@ -627,5 +627,50 @@
       "ratingValue": "4.1",
       "reviewCount": 1158
     }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Le Pain Retrouvé",
+    "identifier": "le-pain-retrouve",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "18 R. des Martyrs",
+      "postalCode": "75009",
+      "addressLocality": "Paris",
+      "addressCountry": "France"
+    },
+    "telephone": "01 48 78 83 91",
+    "url": "",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.8776141,
+      "longitude": 2.3395772
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "06:30",
+        "closes": "21:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "",
+    "paymentAccepted": ["NA"],
+    "additionalType": ["Bakery"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.1",
+      "reviewCount": 544
+    }
   }
 ]
