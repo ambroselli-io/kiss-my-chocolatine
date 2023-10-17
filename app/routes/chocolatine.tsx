@@ -264,7 +264,7 @@ export default function App() {
                     </details>
                     <CompanyStructure />
                     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                      <summary className="cursor-pointer">
+                      <summary>
                         Don't like the word "{chocolatineName}"?
                       </summary>
                       <div className="mt-2 flex flex-col gap-2 px-2">
@@ -275,6 +275,40 @@ export default function App() {
                         >
                           Click <u>here</u> to change its name.
                         </button>
+                      </div>
+                    </details>
+                    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
+                      <summary>Open Source</summary>
+                      <div className="mt-2 flex flex-col divide-y divide-[#FFBB01] divide-opacity-20">
+                        <a
+                          href="https://github.com/ambroselli-io/kiss-my-chocolatine/blob/main/app/data/chocolatines.json"
+                          className="inline-flex items-center gap-x-2 px-4 py-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          All the {chocolatineName} data - reviews, ingredients,
+                          prices, etc.
+                          <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                        </a>
+                        <a
+                          href="https://github.com/ambroselli-io/kiss-my-chocolatine/blob/main/app/data/shops.json"
+                          className="inline-flex items-center gap-x-2 px-4 py-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          All the shops data - name, address, geo, opening
+                          hours, etc.
+                          <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                        </a>
+                        <a
+                          href="https://github.com/ambroselli-io/kiss-my-chocolatine"
+                          className="inline-flex items-center gap-x-2 px-4 py-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          All the source code
+                          <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                        </a>
                       </div>
                     </details>
                   </div>
