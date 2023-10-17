@@ -1,7 +1,10 @@
+import { useSearchParams } from "@remix-run/react";
 import React from "react";
 
 // inspiration: https://codepen.io/rylanharper/pen/MoqBeG
 const ButtonArrowMenu = ({ isActive, onClick }) => {
+  const [searchParams] = useSearchParams();
+
   return (
     <button
       onClick={(e) => {
@@ -25,6 +28,11 @@ const ButtonArrowMenu = ({ isActive, onClick }) => {
           ].join(" ")}
         />
       </div>
+      {!isActive && searchParams.size > 0 && (
+        <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full border">
+          {searchParams.size}
+        </div>
+      )}
     </button>
   );
 };

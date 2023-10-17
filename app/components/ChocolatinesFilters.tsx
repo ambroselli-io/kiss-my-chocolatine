@@ -16,9 +16,9 @@ export default function ChocolatinesFilters() {
   )?.length;
 
   return (
-    <details open>
-      <summary className="font-medium underline decoration-[#FFBB01]">
-        Filters {total > 0 ? `(${total})` : ""}{" "}
+    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
+      <summary className="font-medium">
+        Filters {total > 0 ? `(${total})` : "👀 "}{" "}
         {total > 0 ? (
           <small className="opacity-25"> - {filteredGeojson} shops</small>
         ) : (
@@ -153,11 +153,11 @@ function CheckBoxesCategory({
   const [searchParams] = useSearchParams();
   const checkedParams = searchParams.getAll(name);
   return (
-    <details className="w-full pb-1 open:border-b open:border-[#FFBB01]">
+    <details className="w-full pb-1 open:border-b open:border-[#FFBB01] open:border-opacity-50">
       <summary className="text-sm text-gray-900">
         {title} {checkedParams.length > 0 ? `(${checkedParams.length})` : ""}
       </summary>
-      <div className="ml-6 divide-y divide-gray-200">
+      <div className="ml-6 divide-y divide-[#FFBB01] divide-opacity-20">
         {values.map(({ label, value }) => (
           <label key={label + value} className="relative flex items-start py-2">
             <div className="min-w-0 flex-1 text-sm leading-6">

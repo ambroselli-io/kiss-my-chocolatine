@@ -69,7 +69,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   // const filters = Array.from(url.searchParams).map(
   //   ([key, value]) => `${key}-${value}`,
   // );
-  const filters = {};
+  const filters: any = {};
   for (let key of url.searchParams.keys()) {
     filters[key] = url.searchParams.getAll(key);
   }
@@ -92,6 +92,12 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
             return null;
           }
 
+          const isActiveShop = shop.identifier === params?.shopSlug;
+          const isIncludedByFilters = isChocolatineIncludedByFilters(
+            chocolatine,
+            filters,
+          );
+
           return {
             type: "Feature",
             geometry: {
@@ -100,14 +106,15 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
             },
             properties: {
               identifier: shop.identifier,
-              is_active_shop: shop.identifier === params?.shopSlug ? 1 : 0,
-              is_included_by_filters: isChocolatineIncludedByFilters(
-                chocolatine,
-                filters,
-              )
-                ? 1
-                : 0,
-              chocolatine_sort_key: chocolatine.reviews.length > 0 ? 1 : 0, // 1 for with reviews, 0 for without
+              is_active_shop: isActiveShop ? 1 : 0,
+              is_included_by_filters: isIncludedByFilters ? 1 : 0,
+              chocolatine_sort_key: isActiveShop
+                ? 4
+                : isIncludedByFilters
+                ? 3
+                : chocolatine.reviews.length
+                ? 2
+                : 1,
               chocolatine_hasreview: chocolatine.reviews.length > 0,
             },
           };
@@ -191,20 +198,13 @@ export default function App() {
                         "icon-ignore-placement": true,
                         "icon-size": 0.2,
                         "icon-offset": [0, -75],
-                        "symbol-sort-key": [
-                          "case",
-                          ["==", ["get", "is_active_shop"], 1],
-                          [
-                            "+",
-                            ["*", 1000, ["get", "is_active_shop"]],
-                            ["get", "chocolatine_sort_key"],
-                          ],
-                          ["get", "chocolatine_sort_key"],
-                        ],
+                        "symbol-sort-key": ["get", "chocolatine_sort_key"],
                       }}
                       paint={{
                         "icon-opacity": [
                           "case",
+                          ["==", ["get", "is_active_shop"], 1], // Check if shop is active
+                          1,
                           ["==", ["get", "is_included_by_filters"], 1],
                           1,
                           0.35,
@@ -228,7 +228,7 @@ export default function App() {
               <div className="relative flex max-h-[85vh] shrink-0 cursor-pointer flex-col bg-white drop-shadow-sm ">
                 <div className="flex items-center justify-between px-4 py-2 ">
                   <h1
-                    className="cursor-pointer"
+                    className="max-w-md cursor-pointer"
                     onClick={() => setIsOnboardingOpen(true)}
                   >
                     All the <b>{chocolatineName}</b> from the world 🌍{" "}
@@ -243,14 +243,14 @@ export default function App() {
                   />
                 </div>
                 {showMore && (
-                  <div className="flex flex-col gap-y-3 overflow-y-auto border-t border-t-gray-200 px-4 py-2">
+                  <div className="flex flex-col overflow-y-auto border-t border-t-gray-200">
                     <ChocolatinesFilters />
                     <CompanyStructure />
-                    <details>
+                    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                       <summary>
                         <a
                           href={makeAReferral()}
-                          className="inline-flex items-center gap-x-2 font-medium underline decoration-[#FFBB01]"
+                          className="inline-flex items-center gap-x-2 font-medium"
                         >
                           Make a referral and earn one share
                           <ArrowTopRightOnSquareIcon className="h-3 w-3" />
@@ -263,8 +263,8 @@ export default function App() {
                         </p>
                       </div>
                     </details>
-                    <details>
-                      <summary className="cursor-pointer font-medium underline decoration-[#FFBB01]">
+                    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
+                      <summary className="cursor-pointer font-medium">
                         Don't like the word "{chocolatineName}"?
                       </summary>
                       <div className="mt-2 flex flex-col gap-2 px-2">
