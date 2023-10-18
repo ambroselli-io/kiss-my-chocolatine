@@ -672,5 +672,98 @@
       "ratingValue": "4.1",
       "reviewCount": 544
     }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Au Duc De La Chapelle Paris",
+    "identifier": "au-duc-de-la-chapelle-paris",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "32 Rue Tristan Tzara",
+      "postalCode": "75018",
+      "addressLocality": "Paris",
+      "addressCountry": "France"
+    },
+    "telephone": "01 40 38 18 98",
+    "url": "",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.8955273,
+      "longitude": 2.3629344
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "05:30",
+        "closes": "20:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "07:00",
+        "closes": "15:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "",
+    "paymentAccepted": ["NA"],
+    "additionalType": ["Bakery"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.2",
+      "reviewCount": 146
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Boulangerie Depreytère",
+    "identifier": "boulangerie-depreytere",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "3 Rue du Général Leclerc",
+      "postalCode": "77100",
+      "addressLocality": "Meaux",
+      "addressCountry": "France"
+    },
+    "telephone": "01 64 34 83 84",
+    "url": "",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.9590976,
+      "longitude": 2.8822804
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "07:30",
+        "closes": "19:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "07:30",
+        "closes": "13:00"
+      }
+    ],
+    "servesCuisine": "Bakery",
+    "priceRange": "€€",
+    "paymentAccepted": ["NA"],
+    "additionalType": ["Bakery"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "3.5",
+      "reviewCount": 163
+    }
   }
 ]

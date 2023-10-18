@@ -181,8 +181,8 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Light or Dense:
   (-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense)
 
--Flaky or Brioche:
-  (-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche)
+-Brioche or Flaky:
+  (-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky)
 
 -Buttery:
   (-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery)
@@ -201,6 +201,10 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
+
+-Price:
+
+-Any comment:
 
 ----------------------------------
 INGREDIENTS
