@@ -9,7 +9,7 @@ export default function ChocolatinesFilters() {
   const submit = useSubmit();
   const [searchParams] = useSearchParams();
   const { geojson } = useLoaderData();
-  const total = searchParams.size;
+  const total = Array.from(searchParams).length;
 
   const filteredGeojson = geojson?.features?.filter(
     (feature) => !!feature.properties.is_included_by_filters,
@@ -34,7 +34,7 @@ export default function ChocolatinesFilters() {
         onChange={(e) => submit(e.currentTarget)}
       >
         <CheckBoxesCategory
-          title="⏰ Opened now"
+          title="⏱️ Opened now"
           name="opened_now"
           values={[
             { label: "Yes", value: 1 },

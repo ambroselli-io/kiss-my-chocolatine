@@ -4,6 +4,7 @@ import React from "react";
 // inspiration: https://codepen.io/rylanharper/pen/MoqBeG
 const ButtonArrowMenu = ({ isActive, onClick }) => {
   const [searchParams] = useSearchParams();
+  const searchParamsSize = Array.from(searchParams).length;
 
   return (
     <button
@@ -28,9 +29,9 @@ const ButtonArrowMenu = ({ isActive, onClick }) => {
           ].join(" ")}
         />
       </div>
-      {!isActive && searchParams.size > 0 && (
+      {!isActive && searchParamsSize > 0 && (
         <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full border">
-          {searchParams.size}
+          {searchParamsSize}
         </div>
       )}
     </button>

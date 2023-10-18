@@ -27,7 +27,7 @@ export function isOpenedNow(shop) {
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const now = Date.now();
   const hoursToday = hoursPerDay[today];
-  const isOpenedNow = (() => {
+  const isOpened = (() => {
     if (!hoursToday.opens) return false;
     // opens is something like 19:00
     const opens = (() => {
@@ -40,5 +40,5 @@ export function isOpenedNow(shop) {
     })();
     return now >= opens && now <= closes;
   })();
-  return isOpenedNow;
+  return [isOpened, hoursPerDay, hoursToday];
 }

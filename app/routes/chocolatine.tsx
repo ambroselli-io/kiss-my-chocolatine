@@ -32,6 +32,7 @@ import CompanyStructure from "~/components/CompanyStructure";
 import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { isChocolatineIncludedByFilters } from "~/utils/isIncludedByFilters";
+import type { Shop } from "~/types/shop";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -87,10 +88,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         .map((chocolatine) => {
           const shop = shops.find(
             (shop) => shop.identifier === chocolatine.belongsTo.identifier,
-          );
-          if (!shop) {
-            return null;
-          }
+          ) as Shop;
 
           const isActiveShop = shop.identifier === params?.shopSlug;
           const isIncludedByFilters = isChocolatineIncludedByFilters(
@@ -363,6 +361,11 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 }) => {
   if (currentParams.shopSlug !== nextParams.shopSlug) return true;
   // if searchparms size differ, then we need to revalidate
-  if (currentUrl.searchParams.size !== nextUrl.searchParams.size) return true;
+
+  if (
+    Array.from(currentUrl.searchParams).length !==
+    Array.from(nextUrl.searchParams).length
+  )
+    return true;
   return false;
 };

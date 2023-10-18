@@ -11,7 +11,7 @@ import { hydrateRoot } from "react-dom/client";
 
 Sentry.init({
   dsn: "https://39ab0a39d6324c2e93e3ff2f9ae8a48d@o117731.ingest.sentry.io/6103537",
-  tracesSampleRate: 1,
+  tracesSampleRate: 0.05,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1,
   enabled: process.env.NODE_ENV === "production",

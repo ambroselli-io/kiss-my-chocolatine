@@ -88,7 +88,7 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-function newIngredient(shopName?: string) {
+function newIngredient(shopName: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
@@ -160,7 +160,7 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-function newReview(shopName?: string) {
+function newReview(shopName: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
@@ -234,7 +234,7 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-function newFeedback(shopName?: string) {
+function newFeedback(shopName: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(

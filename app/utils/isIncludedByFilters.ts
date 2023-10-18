@@ -1,9 +1,11 @@
 import { isOpenedNow } from "./isOpenedNow";
 import { compileReviews, criterias } from "./review";
+import type { Shop } from "~/types/shop";
+import type { Chocolatine } from "~/types/chocolatine";
 
 export function isChocolatineIncludedByFilters(
-  chocolatine: any,
-  shop: any,
+  chocolatine: Chocolatine,
+  shop: Shop,
   filters: any,
 ) {
   const reviews = compileReviews(chocolatine.reviews ?? []);
@@ -28,7 +30,7 @@ export function isChocolatineIncludedByFilters(
   })();
 
   const openedNowValue = (() => {
-    const isOpened = isOpenedNow(shop);
+    const [isOpened] = isOpenedNow(shop);
     if (isOpened === true) return "1";
     if (isOpened === false) return "0";
     return "null";
