@@ -34,6 +34,14 @@ export default function ChocolatinesFilters() {
         onChange={(e) => submit(e.currentTarget)}
       >
         <CheckBoxesCategory
+          title="⏰ Opened now"
+          name="opened_now"
+          values={[
+            { label: "Yes", value: 1 },
+            { label: "No", value: 0 },
+          ]}
+        />
+        <CheckBoxesCategory
           title="🧑‍🍳 Homemade"
           name="homemade"
           values={[

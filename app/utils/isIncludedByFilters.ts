@@ -1,6 +1,11 @@
+import { isOpenedNow } from "./isOpenedNow";
 import { compileReviews, criterias } from "./review";
 
-export function isChocolatineIncludedByFilters(chocolatine: any, filters: any) {
+export function isChocolatineIncludedByFilters(
+  chocolatine: any,
+  shop: any,
+  filters: any,
+) {
   const reviews = compileReviews(chocolatine.reviews ?? []);
 
   let isIncludedByFilters = Object.keys(filters).length === 0;
@@ -22,8 +27,18 @@ export function isChocolatineIncludedByFilters(chocolatine: any, filters: any) {
     return "null";
   })();
 
+  const openedNowValue = (() => {
+    const isOpened = isOpenedNow(shop);
+    if (isOpened === true) return "1";
+    if (isOpened === false) return "0";
+    return "null";
+  })();
+
   if (Object.keys(filters).includes("homemade")) {
     if (!filters.homemade.includes(String(homemadeNumberValue))) return false;
+  }
+  if (Object.keys(filters).includes("opened_now")) {
+    if (!filters.opened_now.includes(String(openedNowValue))) return false;
   }
 
   if (!chocolatine.offers) return true;

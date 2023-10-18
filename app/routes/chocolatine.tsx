@@ -95,6 +95,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
           const isActiveShop = shop.identifier === params?.shopSlug;
           const isIncludedByFilters = isChocolatineIncludedByFilters(
             chocolatine,
+            shop,
             filters,
           );
 
