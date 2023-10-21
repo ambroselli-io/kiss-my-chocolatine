@@ -1552,5 +1552,326 @@
         ]
       }
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "petit-gateau-haarlemmerstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "petit-gateau-haarlemmerstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "2.70",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": true
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "datePublished": "2023-10-14",
+        "reviewBody": "Classic, almost as if I was in France, except I think it'smore dense. But it's a always great pleasure and emotion to eat it.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+            "value": 1.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "schoonjans-david-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "schoonjans-david"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "1.1",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": false
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "datePublished": "2023-10-21",
+        "reviewBody": "bon mais dès qu’il refroidit un peu il ressemble à de l’industriel.",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": -1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very bad, 2 for very good",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "loof-bilderdijkstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "loof-bilderdijkstraat"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": null,
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": true
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Christophe"
+        },
+        "datePublished": "2023-10-21",
+        "reviewBody": "",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": -2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": -1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very bad, 2 for very good",
+            "value": 2
+          }
+        ]
+      }
+    ]
   }
 ]
