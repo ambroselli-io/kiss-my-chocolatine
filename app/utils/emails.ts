@@ -63,6 +63,13 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
 
+-Homemade
+
+-Price:
+
+-Any comment:
+
+
 
 ----------------------------------
 INGREDIENTS
@@ -143,6 +150,13 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
 
+-Homemade
+
+-Price:
+
+-Any comment:
+
+
 
 ----------------------------------
 BAKERY
@@ -201,6 +215,8 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
+
+-Homemade:
 
 -Price:
 
