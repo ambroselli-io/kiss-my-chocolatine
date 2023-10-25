@@ -1,6 +1,14 @@
-export default function CompanyStructure() {
+export default function AboutOneActionOneShare({ allOpen = false }) {
   return (
-    <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 open:pb-5">
+    <details
+      open={allOpen}
+      className={[
+        "border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 open:pb-5",
+        allOpen
+          ? "h-screen overflow-auto [&_summary]:my-10 [&_summary]:font-bold"
+          : "",
+      ].join(" ")}
+    >
       <summary>About one action = one share</summary>
       <div className="mt-2 flex flex-col gap-2 px-2">
         <p>
@@ -9,7 +17,7 @@ export default function CompanyStructure() {
           <small>we are building it, please tell us what you think.</small>
         </p>
 
-        <details>
+        <details open={allOpen}>
           <summary>
             The <b>shares of the company</b> are split equally between three
             stakeholders - building team, investors, end users.
@@ -51,7 +59,7 @@ export default function CompanyStructure() {
             </ul>
           </div>
         </details>
-        <details>
+        <details open={allOpen}>
           <summary>No cap for the shares between the end-users:</summary>
           <div className="mt-2 flex flex-col gap-2 px-2">
             <p>
@@ -61,7 +69,7 @@ export default function CompanyStructure() {
             </p>
           </div>
         </details>
-        <details>
+        <details open={allOpen}>
           <summary>
             To earn a share, you need to either write a review, add a shop or
             make a referral:
@@ -92,7 +100,7 @@ export default function CompanyStructure() {
             </ul>
           </div>
         </details>
-        <details>
+        <details open={allOpen}>
           <summary>How do we track this without auth system yet?</summary>
           <div className="mt-2 flex flex-col gap-2 px-2">
             <p>

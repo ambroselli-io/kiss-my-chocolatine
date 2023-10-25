@@ -28,7 +28,7 @@ import chocolatines from "~/data/chocolatines.json";
 import { makeAReferral, newFeedback, newShopEmail } from "~/utils/emails";
 import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
-import CompanyStructure from "~/components/CompanyStructure";
+import AboutOneActionOneShare from "~/components/AboutOneActionOneShare";
 import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { isChocolatineIncludedByFilters } from "~/utils/isIncludedByFilters";
@@ -261,7 +261,7 @@ export default function App() {
                         </p>
                       </div>
                     </details>
-                    <CompanyStructure />
+                    <AboutOneActionOneShare />
                     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                       <summary>
                         Don't like the word "{chocolatineName}"?
