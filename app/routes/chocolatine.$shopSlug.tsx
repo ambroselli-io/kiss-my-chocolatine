@@ -163,8 +163,8 @@ export default function Shop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Brioche"}
-                  maxCaption={"Flaky"}
+                  minCaption={"Flaky/Feuilleuté"}
+                  maxCaption={"Brioche"}
                   value={quality.brioche_or_flaky}
                 />
               </div>

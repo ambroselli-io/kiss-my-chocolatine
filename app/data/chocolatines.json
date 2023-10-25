@@ -51,7 +51,7 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
             "value": 0
           },
           {
@@ -187,8 +187,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 2
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -2
           },
           {
             "@type": "PropertyValue",
@@ -293,8 +293,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1.5
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -1.5
           },
           {
             "@type": "PropertyValue",
@@ -399,8 +399,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 2
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -2
           },
           {
             "@type": "PropertyValue",
@@ -505,8 +505,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": -1
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
@@ -611,8 +611,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 2
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -2
           },
           {
             "@type": "PropertyValue",
@@ -746,8 +746,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": -1.2
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": 1
           },
           {
             "@type": "PropertyValue",
@@ -881,8 +881,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1.5
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -2
           },
           {
             "@type": "PropertyValue",
@@ -1074,8 +1074,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1.5
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -2
           },
           {
             "@type": "PropertyValue",
@@ -1180,7 +1180,7 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
             "value": 0
           },
           {
@@ -1286,8 +1286,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
@@ -1392,7 +1392,7 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
             "value": 0
           },
           {
@@ -1498,8 +1498,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
@@ -1605,7 +1605,7 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
             "value": 0
           },
           {
@@ -1712,8 +1712,8 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-            "value": 1
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": -1
           },
           {
             "@type": "PropertyValue",
@@ -1819,7 +1819,7 @@
             "name": "brioche_or_flaky",
             "minValue": -2,
             "maxValue": 2,
-            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
             "value": 0
           },
           {
@@ -1868,6 +1868,113 @@
             "minValue": -2,
             "maxValue": 2,
             "valueReference": "-2 for very bad, 2 for very good",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "boulangerie-mayer-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "boulangerie-mayer"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "1.95",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "value": null
+      }
+    ],
+    "additionalType": [
+      {
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Marin"
+        },
+        "datePublished": "2023-10-25",
+        "reviewBody": "A votre bon cœur ! un bijou cette boulangerie ! N'hésite pas a venir gouter ! je t’attends!",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "brioche_or_flaky",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
             "value": 2
           }
         ]

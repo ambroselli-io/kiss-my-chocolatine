@@ -42,7 +42,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Light or Dense:
   (-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense)
 
--Flaky or Brioche:
+-Flaky (feuilleuté) or Brioche:
   (-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche)
 
 -Buttery:
@@ -129,7 +129,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Light or Dense:
   (-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense)
 
--Flaky or Brioche:
+-Flaky (feuilleuté) or Brioche:
   (-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche)
 
 -Buttery:
@@ -195,8 +195,8 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Light or Dense:
   (-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense)
 
--Brioche or Flaky:
-  (-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky)
+-Flaky (feuilleuté) or Brioche:
+  (-2 is for very flaky, -1 for flaky, 0 for medium, 1 for brioche, 2 for very brioche)
 
 -Buttery:
   (-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery)

@@ -851,5 +851,49 @@
     ],
     "url": "https://www.bakkerijloof.nl",
     "servesCuisine": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Boulangerie Mayer",
+    "identifier": "boulangerie-mayer",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rambla del Poblenou, 36",
+      "postalCode": "08005",
+      "addressLocality": "Barcelona",
+      "addressCountry": "Spain"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 41.4103744,
+      "longitude": 2.1632696
+    },
+    "telephone": "+34 931 45 31 32",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "3.9",
+      "bestRating": "5",
+      "worstRating": "0",
+      "reviewCount": "185"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "07:30",
+        "closes": "21:00"
+      }
+    ],
+    "url": "https://boulangeriemayer.com",
+    "servesCuisine": []
   }
 ]
