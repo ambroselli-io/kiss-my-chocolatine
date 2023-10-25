@@ -43,15 +43,15 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
-          "name": "brioche_or_flaky",
+          "name": "flaky_or_brioche",
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -59,7 +59,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -67,7 +67,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -75,7 +75,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -83,7 +83,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -91,7 +91,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
-          "value":
+          "value": null
         },
         {
           "@type": "PropertyValue",
@@ -99,7 +99,7 @@
           "minValue": -2,
           "maxValue": 2,
           "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-          "value":
+          "value": null
         }
       ]
     }

@@ -48,17 +48,17 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Buttery:
   (-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery)
 
--Golden or Pale:
+-Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft:
+-Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
-
--Chocolate Disposition:
-  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Big or small:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
+
+-Chocolate Disposition:
+  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
@@ -135,17 +135,17 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Buttery:
   (-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery)
 
--Golden or Pale:
+-Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft:
+-Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
-
--Chocolate Disposition:
-  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Big or small:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
+
+-Chocolate Disposition:
+  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
   (-2 for very bad, 2 for very good)
@@ -201,17 +201,17 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Buttery:
   (-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery)
 
--Golden or Pale:
+-Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft:
+-Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
-
--Chocolate Disposition:
-  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Big or small:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
+
+-Chocolate Disposition:
+  (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
   (-2 for very bad, 2 for very good)

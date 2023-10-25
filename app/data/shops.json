@@ -895,5 +895,49 @@
     ],
     "url": "https://boulangeriemayer.com",
     "servesCuisine": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Boulangerie Mayer - Poble Sec",
+    "identifier": "boulangerie-mayer-poble-sec",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "C/ Nou de la Rambla, 122",
+      "postalCode": "08004",
+      "addressLocality": "Barcelona",
+      "addressCountry": "Spain"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 41.3738259,
+      "longitude": 2.1655527
+    },
+    "telephone": "+34930375027",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.1",
+      "bestRating": "5",
+      "worstRating": "0",
+      "reviewCount": "127"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "21:15"
+      }
+    ],
+    "url": "https://boulangeriemayer.com",
+    "servesCuisine": []
   }
 ]

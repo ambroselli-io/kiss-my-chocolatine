@@ -18,7 +18,7 @@
     },
     {
       "@type": "PropertyValue",
-      "name": "brioche_or_flaky",
+      "name": "flaky_or_brioche",
       "minValue": -2,
       "maxValue": 2,
       "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",

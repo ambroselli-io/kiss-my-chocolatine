@@ -71,7 +71,7 @@ export default function ChocolatinesFilters() {
           ]}
         />
         <CheckBoxesCategory
-          name="brioche_or_flaky"
+          name="flaky_or_brioche"
           title="🔪 Flaky/Feuilleuté or Brioche-like"
           values={[
             { label: "Very flaky", value: -2 },

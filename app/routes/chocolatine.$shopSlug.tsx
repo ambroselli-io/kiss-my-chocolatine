@@ -165,7 +165,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Flaky/Feuilleuté"}
                   maxCaption={"Brioche"}
-                  value={quality.brioche_or_flaky}
+                  value={quality.flaky_or_brioche}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">

@@ -1,7 +1,7 @@
 /* filters */
 export const criterias: any = {
   buttery: null,
-  brioche_or_flaky: null,
+  flaky_or_brioche: null,
   golden_or_pale: null,
   crispy_or_soft: null,
   light_or_dense: null,
