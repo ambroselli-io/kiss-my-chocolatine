@@ -54,8 +54,8 @@ export const meta: MetaFunction = ({ matches }: MetaArgs) => {
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const damSquare = {
-    longitude: 4.891332614225945,
-    latitude: 52.373091430357476,
+    longitude: 2.2137,
+    latitude: 46.6034,
   };
   const currentShop = shops.find((f) => f.identifier === params?.shopSlug);
   const { longitude, latitude } = (() => {
@@ -79,7 +79,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     initialViewState: {
       longitude,
       latitude,
-      zoom: 12,
+      zoom: 4,
     },
     chocolatines,
     geojson: {
