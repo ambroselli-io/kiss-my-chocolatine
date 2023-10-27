@@ -61,9 +61,10 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
   (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
-  (-2 for very bad, 2 for very good)
+  (subjective, score from 0 to 20)
 
--Homemade
+-Homemade:
+  (yes, no, I think so, I don't think so)
 
 -Price:
 
@@ -148,9 +149,10 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
   (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
-  (-2 for very bad, 2 for very good)
+  (subjective, score from 0 to 20)
 
--Homemade
+-Homemade:
+  (yes, no, I think so, I don't think so)
 
 -Price:
 
@@ -214,9 +216,10 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
   (-2 for superimposed, -1 for stuck side by side, 0 for well-distributed, 1 for too far away, 2 for on the edges)
 
 -Good or Not Good:
-  (-2 for very bad, 2 for very good)
+  (subjective, score from 0 to 20)
 
 -Homemade:
+  (yes, no, I think so, I don't think so)
 
 -Price:
 
