@@ -97,10 +97,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.5
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 17
           }
         ]
       }
@@ -233,10 +233,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.9
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 19
           }
         ]
       }
@@ -339,10 +339,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.9
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 19
           }
         ]
       }
@@ -445,10 +445,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -551,10 +551,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": -0.5
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 8
           }
         ]
       }
@@ -657,10 +657,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 15
           }
         ]
       }
@@ -792,10 +792,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 15
           }
         ]
       }
@@ -927,10 +927,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.9
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 19
           }
         ]
       }
@@ -1120,10 +1120,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.8
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 18
           }
         ]
       }
@@ -1226,10 +1226,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.7
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 17
           }
         ]
       }
@@ -1332,10 +1332,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -1438,10 +1438,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -1544,10 +1544,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -1651,10 +1651,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 1.5
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 17
           }
         ]
       }
@@ -1758,10 +1758,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for very bad, 2 for very good",
-            "value": 1
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 15
           }
         ]
       }
@@ -1804,7 +1804,7 @@
           "name": "Christophe"
         },
         "datePublished": "2023-10-21",
-        "reviewBody": "",
+        "reviewBody": "Very good",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
@@ -1865,10 +1865,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for very bad, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -1972,10 +1972,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }
@@ -2079,10 +2079,10 @@
           {
             "@type": "PropertyValue",
             "name": "good_or_not_good",
-            "minValue": -2,
-            "maxValue": 2,
-            "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
-            "value": 2
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 20
           }
         ]
       }

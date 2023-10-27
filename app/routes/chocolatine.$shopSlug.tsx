@@ -12,7 +12,7 @@ import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { compileReviews } from "~/utils/review";
+import { compileReviews, from020to22 } from "~/utils/review";
 import type { Shop } from "~/types/shop";
 import type { Chocolatine } from "~/types/chocolatine";
 
@@ -245,18 +245,24 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"🤢"}
                   maxCaption={"🤩"}
-                  value={quality.good_or_not_good}
+                  value={from020to22(quality.good_or_not_good)}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>
-                    Eater's reviews ({detailedReviews?.length})
-                  </summary>
+                  <summary>Eater's reviews ({detailedReviews?.length})</summary>
                   <ul className="ml-8 mt-2 flex list-inside flex-col">
                     {detailedReviews?.map((review, index) => (
                       <li key={index} className="mb-2">
-                        <strong className="ml-2">{review?.author.name}</strong>
+                        <strong>
+                          {
+                            review.additionalProperty.find(
+                              (p) => p.name === "good_or_not_good",
+                            )?.value
+                          }
+                          /20
+                        </strong>
+                        <span> - {review?.author.name}</span>
                         <small className="opacity-50">
                           {" - "}
                           {review?.datePublished}

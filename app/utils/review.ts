@@ -21,3 +21,14 @@ export function compileReviews(reviews: Array<any>) {
   }
   return quality;
 }
+
+export function from020to22(oldRating: number): number {
+  // from 0 to 20 mark to -2 to 2
+  const oldMax = 20;
+  const oldMin = 0;
+  const newMax = 2;
+  const newMin = -2;
+  return (
+    ((oldRating - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin
+  );
+}
