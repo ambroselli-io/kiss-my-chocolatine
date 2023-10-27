@@ -126,11 +126,11 @@ export default function Shop() {
               : "N/A"}
           </p>
           <div className="mb-2 mt-10 flex items-center justify-between">
-            <h3 className="font-bold">Reviews</h3>
+            <h3 className="font-bold">How is it like?</h3>
             <ClientOnly>
               {() => (
                 <a href={newReview(shop.name)} className="ml-auto text-xs">
-                  🙋 Add mine
+                  🙋 Add my review
                 </a>
               )}
             </ClientOnly>
@@ -251,7 +251,7 @@ export default function Shop() {
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>
-                    Detailed reviews ({detailedReviews?.length})
+                    Eater's reviews ({detailedReviews?.length})
                   </summary>
                   <ul className="ml-8 mt-2 flex list-inside flex-col">
                     {detailedReviews?.map((review, index) => (
