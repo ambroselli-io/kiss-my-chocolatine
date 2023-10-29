@@ -33,6 +33,7 @@ import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { isChocolatineIncludedByFilters } from "~/utils/isIncludedByFilters";
 import type { Shop } from "~/types/shop";
+import type { CustomFeature, CustomFeatureCollection } from "~/types/geojson";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -75,17 +76,21 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     filters[key] = url.searchParams.getAll(key);
   }
 
-  return {
+  const data: {
+    initialViewState: any;
+    total: number;
+    geojson: CustomFeatureCollection;
+  } = {
     initialViewState: {
       longitude,
       latitude,
       zoom: 4,
     },
-    chocolatines,
+    total: chocolatines.length,
     geojson: {
       type: "FeatureCollection",
       features: chocolatines
-        .map((chocolatine) => {
+        .map((chocolatine): CustomFeature => {
           const shop = shops.find(
             (shop) => shop.identifier === chocolatine.belongsTo.identifier,
           ) as Shop;
@@ -107,24 +112,25 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
               identifier: shop.identifier,
               is_active_shop: isActiveShop ? 1 : 0,
               is_included_by_filters: isIncludedByFilters ? 1 : 0,
-              chocolatine_sort_key: isActiveShop
+              sort_key: isActiveShop
                 ? 4
                 : isIncludedByFilters
                 ? 3
                 : chocolatine.reviews.length
                 ? 2
                 : 1,
-              chocolatine_hasreview: chocolatine.reviews.length > 0,
+              has_review: chocolatine.reviews.length > 0,
             },
           };
         })
         .filter(Boolean),
     },
   };
+  return data;
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  let { initialViewState, geojson } = useLoaderData();
+  let { initialViewState, total, geojson } = useLoaderData<typeof loader>();
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -189,7 +195,7 @@ export default function App() {
                           "case",
                           ["==", ["get", "is_active_shop"], 1],
                           "marker-full-black",
-                          ["to-boolean", ["get", "chocolatine_hasreview"]],
+                          ["to-boolean", ["get", "has_review"]],
                           "marker-black",
                           "marker-white",
                         ],
@@ -197,7 +203,7 @@ export default function App() {
                         "icon-ignore-placement": true,
                         "icon-size": 0.2,
                         "icon-offset": [0, -75],
-                        "symbol-sort-key": ["get", "chocolatine_sort_key"],
+                        "symbol-sort-key": ["get", "sort_key"],
                       }}
                       paint={{
                         "icon-opacity": [
@@ -232,8 +238,8 @@ export default function App() {
                   >
                     All the <b>{chocolatineName}</b> from the world 🌍{" "}
                     <small className="opacity-30">
-                      Well, it's Amsterdam only because we're living there, but
-                      the world is coming step by step 🤜
+                      Well, it's {total} for now, but the world is coming step
+                      by step 🤜
                     </small>
                   </h1>
                   <ButtonArrowMenu
@@ -243,7 +249,7 @@ export default function App() {
                 </div>
                 {showMore && (
                   <div className="flex flex-col overflow-y-auto border-t border-t-gray-200">
-                    <ChocolatinesFilters />
+                    <ChocolatinesFilters geojson={geojson} />
                     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                       <summary>
                         <a

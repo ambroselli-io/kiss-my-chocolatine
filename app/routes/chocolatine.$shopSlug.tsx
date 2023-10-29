@@ -113,11 +113,14 @@ export default function Shop() {
         <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
           <h3
             className={`mt-1 ${
-              !isHomemade ? "font-bold text-red-500" : "font-semibold"
+              ["I don't think so", "No"].includes(isHomemade)
+                ? "font-bold text-red-500"
+                : "font-semibold"
             }`}
           >
-            {isHomemade === "true" && "Home made 🧑‍🍳 "}
-            {isHomemade === "false" && "Industrial 🏭 "}
+            Homemade: {isHomemade}
+            {["I think so", "Yes"].includes(isHomemade) && " 🧑‍🍳 "}
+            {["I don't think so", "No"].includes(isHomemade) && " 🏭 "}
           </h3>
           <p className="mb-0 mt-3">
             Price:{" "}

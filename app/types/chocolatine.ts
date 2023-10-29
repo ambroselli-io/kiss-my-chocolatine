@@ -18,7 +18,20 @@ interface PropertyValue {
   minValue?: number;
   maxValue?: number;
   valueReference?: string;
-  value: number | boolean;
+  possibleValues?: Array<string>;
+  value: number | string | boolean | Ingredient[]; // Update to include possibility of Ingredient array
+}
+
+interface Ingredient {
+  "@type": string;
+  name: string;
+  additionalProperty: IngredientProperty[];
+}
+
+interface IngredientProperty {
+  "@type": string;
+  name: string;
+  value: string;
 }
 
 interface BakeryReference {
@@ -28,9 +41,8 @@ interface BakeryReference {
 
 interface Offer {
   "@type": string;
-  price: string;
+  price: string | null;
   priceCurrency: string;
-  availability: string;
 }
 
 export interface Chocolatine {

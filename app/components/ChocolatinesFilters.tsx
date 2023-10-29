@@ -1,18 +1,17 @@
-import {
-  Form,
-  useLoaderData,
-  useSearchParams,
-  useSubmit,
-} from "@remix-run/react";
+import { Form, useSearchParams, useSubmit } from "@remix-run/react";
+import { CustomFeatureCollection } from "~/types/geojson";
 
-export default function ChocolatinesFilters() {
+type Props = {
+  geojson: CustomFeatureCollection;
+};
+
+export default function ChocolatinesFilters({ geojson }: Props) {
   const submit = useSubmit();
   const [searchParams] = useSearchParams();
-  const { geojson } = useLoaderData();
   const total = Array.from(searchParams).length;
 
   const filteredGeojson = geojson?.features?.filter(
-    (feature) => !!feature.properties.is_included_by_filters,
+    (feature) => !!feature.properties?.is_included_by_filters,
   )?.length;
 
   return (

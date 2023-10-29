@@ -17,11 +17,19 @@
     {
       "@type": "PropertyValue",
       "name": "Homemade",
-      "value": null
+      "possibleValues": [
+        "I don't know, nobody tried yet",
+        "I think so",
+        "I don't think so",
+        "Yes",
+        "No"
+      ],
+      "value": "Yes"
     }
   ],
   "additionalType": [
     {
+      "@type": "PropertyValue",
       "name": "Ingredients",
       "value": []
     }
@@ -96,9 +104,9 @@
         {
           "@type": "PropertyValue",
           "name": "good_or_not_good",
-          "minValue": -2,
-          "maxValue": 2,
-          "valueReference": "-2 for not good at all, -1 for not good, 0 for medium, 1 for good, 2 for very good",
+          "minValue": 0,
+          "maxValue": 20,
+          "valueReference": "subjective, score from 0 to 20",
           "value": null
         }
       ]

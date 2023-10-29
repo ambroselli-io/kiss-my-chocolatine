@@ -11,18 +11,25 @@
     "offers": {
       "@type": "Offer",
       "price": "2.70",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -118,18 +125,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -140,6 +154,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "saint-jean-lindengracht-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "saint-jean-lindengracht"
@@ -147,18 +162,25 @@
     "offers": {
       "@type": "Offer",
       "price": "3.00",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -246,6 +268,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "fort-negen-jan-evertsenstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "fort-negen-jan-evertsenstraat"
@@ -253,18 +276,25 @@
     "offers": {
       "@type": "Offer",
       "price": "2.80",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -352,6 +382,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "le-fournil-de-sebastien-olympiaplein-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "le-fournil-de-sebastien-olympiaplein"
@@ -359,18 +390,25 @@
     "offers": {
       "@type": "Offer",
       "price": "1.85",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -458,6 +496,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "bbrood-tweede-goudsbloemdwarsstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "bbrood-tweede-goudsbloemdwarsstraat"
@@ -465,18 +504,25 @@
     "offers": {
       "@type": "Offer",
       "price": "2.75",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": false
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "No"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -564,6 +610,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "brothers-niemeijer-nieuwendijk-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "brothers-niemeijer-nieuwendijk"
@@ -571,18 +618,25 @@
     "offers": {
       "@type": "Offer",
       "price": "1.90",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -670,6 +724,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "margos-amsterdam-eerste-tuindwarsstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "margos-amsterdam-eerste-tuindwarsstraat"
@@ -677,18 +732,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -699,6 +761,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "de-bakkers-van-oost-kadijksplein-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "de-bakkers-van-oost-kadijksplein"
@@ -706,18 +769,25 @@
     "offers": {
       "@type": "Offer",
       "price": "2.20",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -805,6 +875,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "bakkerij-verhagen-utrechtsestraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "bakkerij-verhagen-utrechtsestraat"
@@ -812,18 +883,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -834,6 +912,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "wims-noordermarkt-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "wims-noordermarkt"
@@ -841,18 +920,25 @@
     "offers": {
       "@type": "Offer",
       "price": "3.50",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -940,6 +1026,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "le-petit-deli-tweede-egelantiersdwarsstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "le-petit-deli-tweede-egelantiersdwarsstraat"
@@ -947,18 +1034,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -969,6 +1063,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "bbrood-haarlemmerdijk-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "bbrood-haarlemmerdijk"
@@ -976,18 +1071,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -998,6 +1100,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "ulmus-bakery-cabralstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "ulmus-bakery-cabralstraat"
@@ -1005,18 +1108,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1027,6 +1137,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "bakkerij-wolf-wolvenstraat-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "bakkerij-wolf-wolvenstraat"
@@ -1034,18 +1145,25 @@
     "offers": {
       "@type": "Offer",
       "price": "3.00",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1133,6 +1251,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "ritz-paris-le-comptoir-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "ritz-paris-le-comptoir"
@@ -1140,18 +1259,25 @@
     "offers": {
       "@type": "Offer",
       "price": "5.00",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1239,6 +1365,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "le-pain-retrouve-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "le-pain-retrouve"
@@ -1246,18 +1373,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1345,6 +1479,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "au-duc-de-la-chapelle-paris-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "au-duc-de-la-chapelle-paris"
@@ -1352,18 +1487,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1451,6 +1593,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "identifier": "boulangerie-depreytere-pain-au-chocolat",
+    "name": "Pain au Chocolat",
     "belongsTo": {
       "@type": "Bakery",
       "identifier": "boulangerie-depreytere"
@@ -1458,18 +1601,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1565,18 +1715,25 @@
     "offers": {
       "@type": "Offer",
       "price": "2.70",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1672,18 +1829,25 @@
     "offers": {
       "@type": "Offer",
       "price": "1.1",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": false
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "No"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1779,18 +1943,25 @@
     "offers": {
       "@type": "Offer",
       "price": null,
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": true
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "Yes"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1886,18 +2057,25 @@
     "offers": {
       "@type": "Offer",
       "price": "1.95",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -1993,18 +2171,25 @@
     "offers": {
       "@type": "Offer",
       "price": "1.95",
-      "priceCurrency": "EUR",
-      "availability": "http://schema.org/InStock"
+      "priceCurrency": "EUR"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "Homemade",
-        "value": null
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I don't know, nobody tried yet"
       }
     ],
     "additionalType": [
       {
+        "@type": "PropertyValue",
         "name": "Ingredients",
         "value": []
       }
@@ -2083,6 +2268,121 @@
             "maxValue": 20,
             "valueReference": "subjective, score from 0 to 20",
             "value": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "identifier": "le-fournil-du-trait-pain-au-chocolat",
+    "name": "Pain au Chocolat",
+    "belongsTo": {
+      "@type": "Bakery",
+      "identifier": "le-fournil-du-trait"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "1.15",
+      "priceCurrency": "EUR",
+      "availability": "http://schema.org/InStock"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Homemade",
+        "possibleValues": [
+          "I don't know, nobody tried yet",
+          "I think so",
+          "I don't think so",
+          "Yes",
+          "No"
+        ],
+        "value": "I think so"
+      }
+    ],
+    "additionalType": [
+      {
+        "@type": "PropertyValue",
+        "name": "Ingredients",
+        "value": []
+      }
+    ],
+    "reviews": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Arnaud"
+        },
+        "datePublished": "2023-10-26",
+        "reviewBody": "She told me it's homemade, but it tastes like it's not. It's not good, it's not sooo bad, it tastes industrial. Sorry if it's homemade...",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "light_or_dense",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense",
+            "value": 1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "flaky_or_brioche",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "buttery",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery",
+            "value": -1
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "golden_or_pale",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "crispy_or_soft",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft",
+            "value": 2
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "big_or_small",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "chocolate_disposition",
+            "minValue": -2,
+            "maxValue": 2,
+            "valueReference": "-2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges",
+            "value": 0
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "good_or_not_good",
+            "minValue": 0,
+            "maxValue": 20,
+            "valueReference": "subjective, score from 0 to 20",
+            "value": 6
           }
         ]
       }

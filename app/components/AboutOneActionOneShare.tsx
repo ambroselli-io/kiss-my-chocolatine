@@ -95,7 +95,10 @@ export default function AboutOneActionOneShare({ allOpen = false }) {
                 <b className="font-medium underline decoration-[#FFBB01]">
                   A referral.
                 </b>{" "}
-                For each referral you do, you and the new user earn one share.
+                For each referral you do, you and the new user earn one share. A
+                referral is either inviting a friend to join the app and tell us
+                by email, or like/comment/repost a post of ours on social
+                networks
               </li>
             </ul>
           </div>

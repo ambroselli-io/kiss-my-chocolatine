@@ -939,5 +939,48 @@
     ],
     "url": "https://boulangeriemayer.com",
     "servesCuisine": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "Le Fournil du Trait",
+    "identifier": "le-fournil-du-trait",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "685 Rue Raymond Breteche",
+      "postalCode": "76580",
+      "addressLocality": "Le Trait",
+      "addressCountry": "France"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 49.4861802,
+      "longitude": 0.8051432
+    },
+    "telephone": "+33235755838",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.0",
+      "bestRating": "5",
+      "worstRating": "0",
+      "reviewCount": "56"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "06:00",
+        "closes": "19:00"
+      }
+    ],
+    "url": "",
+    "servesCuisine": []
   }
 ]

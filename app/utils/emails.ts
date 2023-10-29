@@ -253,7 +253,7 @@ Arnaud, from Kiss My Chocolatine
   );
 }
 
-function newFeedback(shopName: string) {
+function newFeedback(shopName?: string) {
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
   return createMailtoHref(
