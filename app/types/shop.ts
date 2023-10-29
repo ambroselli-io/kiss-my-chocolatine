@@ -1,6 +1,15 @@
+type Day =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+
 interface OpeningHoursSpecification {
   "@type": string;
-  dayOfWeek: string[];
+  dayOfWeek: Array<Day>;
   opens: string;
   closes: string;
 }
