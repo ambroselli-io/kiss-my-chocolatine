@@ -1942,7 +1942,7 @@
     },
     "offers": {
       "@type": "Offer",
-      "price": null,
+      "price": "3.00",
       "priceCurrency": "EUR"
     },
     "additionalProperty": [
