@@ -233,7 +233,7 @@ export default function App() {
               <div className="relative flex max-h-[85vh] shrink-0 cursor-pointer flex-col bg-white drop-shadow-sm ">
                 <div className="flex items-center justify-between px-4 py-2 ">
                   <h1
-                    className="max-w-lg cursor-pointer"
+                    className="max-w-lg cursor-pointer md:max-w-none"
                     onClick={() => setIsOnboardingOpen(true)}
                   >
                     All the <b>{chocolatineName}</b> from the world 🌍{" "}

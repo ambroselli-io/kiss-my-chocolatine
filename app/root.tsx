@@ -88,6 +88,29 @@ export const links: LinksFunction = () => [
     href: "/kiss-my-chocolatine.webmanifest",
   },
   { rel: "apple-touch-icon", href: "/assets/icon_512.png" },
+  { rel: "icon", type: "image/vnd.microsoft.icon", href: "/favicon.ico" },
+  { rel: "icon", type: "image/png", href: "/favicon.png" },
+  { rel: "icon", sizes: "128x128", href: "/favicon.icns" },
+  {
+    rel: "apple-touch-icon-precomposed",
+    sizes: "57x57",
+    href: "/favicon-apple-touch-57.png",
+  },
+  {
+    rel: "apple-touch-icon-precomposed",
+    sizes: "72x72",
+    href: "/favicon-apple-touch-72.png",
+  },
+  {
+    rel: "apple-touch-icon-precomposed",
+    sizes: "114x114",
+    href: "/favicon-apple-touch-114.png",
+  },
+  {
+    rel: "apple-touch-icon-precomposed",
+    sizes: "144x144",
+    href: "/favicon.png",
+  },
 ];
 
 declare global {
