@@ -132,11 +132,18 @@ export const loader = async () => {
 export const ErrorBoundary = () => {
   const error = useRouteError();
   captureRemixErrorBoundaryError(error);
-  return <div>Something went wrong</div>;
+  console.log(error);
+  return (
+    <html lang="en" className="h-full w-full">
+      <body>
+        <div>Something went wrong</div>
+      </body>
+    </html>
+  );
 };
 
 export default function App() {
-  const { ENV } = useLoaderData();
+  const { ENV } = useLoaderData<typeof loader>();
 
   return (
     <html lang="en" className="h-full w-full">

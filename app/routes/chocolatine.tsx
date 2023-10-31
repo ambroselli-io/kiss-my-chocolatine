@@ -5,10 +5,10 @@ import type {
 } from "@remix-run/node";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
 import {
+  Link,
   Outlet,
   useLoaderData,
   useNavigate,
-  useOutletContext,
   useParams,
   useSearchParams,
 } from "@remix-run/react";
@@ -19,7 +19,8 @@ import {
   NavigationControl,
   Source,
 } from "react-map-gl";
-import { useEffect, useState } from "react";
+import type { MapRef } from "react-map-gl";
+import { useEffect, useRef, useState } from "react";
 import MapImage from "~/components/MapImage";
 import ButtonArrowMenu from "~/components/ButtonArrowMenu";
 import Onboarding from "~/components/Onboarding";
@@ -30,10 +31,12 @@ import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
 import AboutOneActionOneShare from "~/components/AboutOneActionOneShare";
 import ChocolatinesFilters from "~/components/ChocolatinesFilters";
+import MyCurrentLocation from "~/components/MyCurrentLocation";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { isChocolatineIncludedByFilters } from "~/utils/isIncludedByFilters";
 import type { Shop } from "~/types/shop";
 import type { CustomFeature, CustomFeatureCollection } from "~/types/geojson";
+import { prisma } from "~/db/prisma.server";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -54,15 +57,15 @@ export const meta: MetaFunction = ({ matches }: MetaArgs) => {
 };
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const damSquare = {
+  const europe = {
     longitude: 2.2137,
     latitude: 46.6034,
   };
-  const currentShop = shops.find((f) => f.identifier === params?.shopSlug);
+  const currentShop = shops.find((f) => f.identifier === params?.shopId);
   const { longitude, latitude } = (() => {
-    if (!params.shopSlug) return damSquare;
+    if (!params.shopId) return europe;
     const shopGeo = currentShop?.geo;
-    if (!shopGeo) return damSquare;
+    if (!shopGeo) return europe;
     return shopGeo;
   })();
 
@@ -95,7 +98,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
             (shop) => shop.identifier === chocolatine.belongsTo.identifier,
           ) as Shop;
 
-          const isActiveShop = shop.identifier === params?.shopSlug;
+          const isActiveShop = shop.identifier === params?.shopId;
           const isIncludedByFilters = isChocolatineIncludedByFilters(
             chocolatine,
             shop,
@@ -151,12 +154,14 @@ export default function App() {
   }, []);
   const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
 
+  const mapRef = useRef<MapRef>();
+
   return (
     <>
       <div className="relative flex h-full w-full flex-col justify-between sm:justify-start">
         <div
           className={[
-            "absolute inset-0",
+            "absolute inset-0 border-2 border-app-500",
             isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
           ]
             .filter(Boolean)
@@ -165,11 +170,11 @@ export default function App() {
           {!!mapboxAccessToken && (
             <MapProvider>
               <Map
+                ref={mapRef}
                 mapboxAccessToken={mapboxAccessToken}
                 initialViewState={initialViewState}
                 reuseMaps
                 id="maproot"
-                style={{ border: "3px solid #FFBB01" }}
                 interactiveLayerIds={["shops"]}
                 onMouseMove={(e) => {
                   setIsHoveringFeature(!!e.features?.length);
@@ -330,18 +335,39 @@ export default function App() {
                         </ClientOnly>
                       </div>
                     </details>
+                    <button
+                      type="submit"
+                      formAction="/action/logout"
+                      formMethod="POST"
+                    >
+                      Log out
+                    </button>
                   </div>
                 )}
               </div>
 
-              {!params.shopSlug && (
-                <a
-                  href={newShopEmail()}
-                  className="absolute bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#FFBB01] text-3xl font-bold text-white drop-shadow-sm"
-                >
-                  <div className="absolute m-auto h-1 w-1/2 bg-white" />
-                  <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-white" />
-                </a>
+              {!params.shopId && (
+                <>
+                  <Link
+                    to="./new-shop"
+                    className="absolute bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-4 bg-app-500 text-3xl font-bold drop-shadow-sm"
+                  >
+                    <div className="absolute m-auto h-1 w-1/2 bg-gray-800" />
+                    <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-gray-800" />
+                  </Link>
+                  <MyCurrentLocation
+                    onSetCurrentLocation={({ lat, lng }) => {
+                      // fly with default options to null island
+                      mapRef?.current?.flyTo({
+                        center: [lng, lat],
+                        zoom: 13,
+                        speed: 10,
+                        curve: 1,
+                      });
+                    }}
+                    className="absolute bottom-20 right-4 z-50 drop-shadow-sm"
+                  />
+                </>
               )}
             </>
           )}
@@ -365,7 +391,7 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
 }) => {
-  if (currentParams.shopSlug !== nextParams.shopSlug) return true;
+  if (currentParams.shopId !== nextParams.shopId) return true;
   // if searchparms size differ, then we need to revalidate
 
   if (

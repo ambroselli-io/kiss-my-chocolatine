@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import { compileReviews, from020to22 } from "~/utils/review";
 import type { Shop } from "~/types/shop";
 import type { Chocolatine } from "~/types/chocolatine";
+import { prisma } from "~/db/prisma.server";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -24,15 +25,18 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   ];
 };
 export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const chocatine = await prisma.chocolatine.findUnique({
+    where: { shopId: params.shopId },
+  });
   const chocolatine = chocolatines.find(
-    (c) => c.belongsTo.identifier === params.shopSlug,
+    (c) => c.belongsTo.identifier === params.shopId,
   ) as Chocolatine;
   const quality = compileReviews(chocolatine?.reviews ?? []);
   const isHomemade = String(
     chocolatine?.additionalProperty.find((prop) => prop.name === "Homemade")
       ?.value,
   );
-  const shop = shops.find((s) => s.identifier === params.shopSlug) as Shop;
+  const shop = shops.find((s) => s.identifier === params.shopId) as Shop;
   return {
     chocolatine,
     isHomemade,

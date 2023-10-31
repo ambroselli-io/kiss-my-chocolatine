@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang=fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+  </head>
+  <body style="font-family: sans-serif">
+    <div style="margin: 0 auto; max-width: 450px">
+      <h2 style="text-align: center">
+        {WELCOME_MESSAGE}
+      </h2>
+
+      <h3 style="text-align: center">
+        Cliquez sur le bouton ci-dessous pour vous connecter à {APP_NAME}
+      </h3>
+
+      <a
+        href="{MAGIC_LINK}"
+        style="
+          display: block;
+          width: 50%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 8px 16px;
+          background: {APP_COLOR};
+          border-radius: 7px;
+          border-width: 0;
+          font-size: 1.1rem;
+          text-align: center;
+          font-family: sans-serif;
+          text-decoration: none;
+          color: #FFFFee;
+        "
+      >
+        {BUTTON_CAPTION}
+      </a>
+
+      <div style="text-align: center; margin-top: 1rem; font-size: 0.9rem">
+        <div style="color: grey">Ou bien copiez-collez le lien suivant dans votre navigateur ou dans la page que vous venez de quitter : {MAGIC_LINK}.<br>Il est valide pendant 30 minutes.</div>
+        <a href="{APP_URL}" style="margin-top: 0.4rem; display: block"
+          >Cliquez ici pour demander un nouveau lien.</a
+        >
+      </div>
+
+      <hr
+        style="
+          width: 20%;
+          height: 0px;
+          border: 1px solid lightgrey;
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        "
+      />
+
+      <div
+        style="
+          text-align: center;
+          color: grey;
+          font-size: 0.8rem;
+          line-height: 1.2rem;
+        "
+      >
+        Vous recevez cela parce que votre adresse email a été utilisée pour se connecter sur
+        <a href="{APP_URL}" style="color: grey"> {APP_NAME}</a>. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorez ce mail.
+      </div>
+    </div>
+  </body>
+</html>
