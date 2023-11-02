@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build && vite build --ssr",
     "dev": "npm run prisma-setup && vite dev",
-    "start": "npm run prisma-deploy && PORT=8080 remix-serve ./build/index.js",
+    "start": "npm run prisma-deploy && NODE_ENV=production PORT=8080 HOST=0.0.0.0 remix-serve ./build/index.js",
     "prisma-setup": "prisma generate && prisma migrate deploy",
     "prisma-create-migration": "NODE_ENV=development npx prisma migrate dev --name",
     "prisma-deploy": "NODE_ENV=production npx prisma migrate deploy",
