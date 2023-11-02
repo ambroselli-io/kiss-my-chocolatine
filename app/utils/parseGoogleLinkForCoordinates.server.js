@@ -1,5 +1,4 @@
-import { JSDOM } from "jsdom";
-import clipboardy from "clipboardy";
+// import clipboardy from "clipboardy";
 
 export default async function parseGoogleLinkForCoordinates(rawGoogleLink) {
   // google link can be
@@ -10,7 +9,7 @@ export default async function parseGoogleLinkForCoordinates(rawGoogleLink) {
     .then((res) => res.text())
     .then((html) => {
       // copy content to clipboard
-      clipboardy.writeSync(html);
+      // clipboardy.writeSync(html);
       // find all the occurences of string like "@48.8777186,2.3396138" in the test
       const coordintesRegexp =
         /@[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)?/g;
