@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "vite build && vite build --ssr --sourcemap && sentry-upload-sourcemaps --org arnaud-ambroselli --project kiss-my-chocolatine",
+    "build": "vite build && vite build --ssr",
     "dev": "npm run prisma-setup && vite dev",
     "start": "npm run prisma-deploy && remix-serve ./build/index.js",
     "prisma-setup": "prisma generate && prisma migrate deploy",
