@@ -70,35 +70,56 @@ export default function AboutOneActionOneShare({ allOpen = false }) {
           </div>
         </details>
         <details open={allOpen}>
-          <summary>
-            To earn a share, you need to either write a review, add a shop or
-            make a referral:
-          </summary>
+          <summary>To earn a share, you need to either:</summary>
           <div className="mt-2 flex flex-col gap-2 px-2">
             <ul className="list-inside px-4 text-left">
               <li>
+                ⏱️{" "}
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  Invest one hour of your time in building the platform /
+                  marketing.
+                </b>{" "}
+                For each hour invested, you earn one share, valid two years.
+              </li>
+              <li>
                 💰{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  A review.
+                  Invest one euro.
                 </b>{" "}
-                For each review you do, you earn one share.
+                For each euro invested, you earn one share from the investors
+                pool.
+              </li>
+              <li>
+                ✍️{" "}
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  Write a review.
+                </b>{" "}
+                For each review you do, you earn one share from the users pool.
               </li>
               <li>
                 💵{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
                   Add a shop.
                 </b>{" "}
-                For each shop you add, you earn one share.
+                For each shop you add, you earn one share from the users pool.
               </li>
               <li>
                 💸{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  A referral.
+                  Make a referral.
                 </b>{" "}
-                For each referral you do, you and the new user earn one share. A
-                referral is either inviting a friend to join the app and tell us
-                by email, or like/comment/repost a post of ours on social
-                networks
+                For each referral you do, you and the new user earn one share
+                from the users pool. A referral is either inviting a friend to
+                join the app and tell us by email, or like/comment/repost a post
+                of ours on social networks
+              </li>
+              <li>
+                🫶{" "}
+                <b className="font-medium underline decoration-[#FFBB01]">
+                  Share our social networks content.
+                </b>{" "}
+                For each like/comment/repost you do, you earn one share from the
+                users pool.
               </li>
             </ul>
           </div>

@@ -1,5 +1,4 @@
 import { captureRemixErrorBoundaryError } from "@sentry/remix";
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -11,8 +10,8 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import mapboxStyles from "mapbox-gl/dist/mapbox-gl.css";
-import stylesheet from "~/styles/tailwind.css";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "~/styles/tailwind.css";
 
 export function meta() {
   const url = "https://chocolatine.kiss-my.app";
@@ -79,12 +78,9 @@ export function meta() {
 }
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
-  { rel: "stylesheet", href: mapboxStyles },
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   {
     rel: "manifest",
-    type: "text/css",
+    type: "application/manifest+json",
     href: "/kiss-my-chocolatine.webmanifest",
   },
   { rel: "apple-touch-icon", href: "/assets/icon_512.png" },
@@ -132,11 +128,18 @@ export const loader = async () => {
 export const ErrorBoundary = () => {
   const error = useRouteError();
   captureRemixErrorBoundaryError(error);
-  return <div>Something went wrong</div>;
+  console.log(error);
+  return (
+    <html lang="en" className="h-full w-full">
+      <body>
+        <div>Something went wrong</div>
+      </body>
+    </html>
+  );
 };
 
 export default function App() {
-  const { ENV } = useLoaderData();
+  const { ENV } = useLoaderData<typeof loader>();
 
   return (
     <html lang="en" className="h-full w-full">
@@ -152,6 +155,7 @@ export default function App() {
         <Outlet />
 
         <ScrollRestoration />
+        <LiveReload />
         <Scripts />
         <script
           dangerouslySetInnerHTML={{
@@ -163,7 +167,6 @@ export default function App() {
           data-domain="chocolatine.kiss-my.app"
           src="https://plausible.io/js/script.tagged-events.js"
         ></script>
-        <LiveReload />
       </body>
     </html>
   );

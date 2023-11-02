@@ -1,5 +1,12 @@
-import { Fragment, forwardRef, useRef } from "react";
+import React, {
+  Fragment,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useNavigate } from "@remix-run/react";
 
 // inspired by https://tailwindui.com/components/application-ui/overlays/modals#component-47a5888a08838ad98779d50878d359b3
 
@@ -27,15 +34,55 @@ interface ModalContainerProps {
   blurryBackground?: boolean; // if true, the background will be blurred
 }
 
+// omit open
+interface ModalRouteContainerProps extends Omit<ModalContainerProps, "open"> {
+  title: string;
+}
+
+const ModalRouteContainer = ({ title, ...props }: ModalRouteContainerProps) => {
+  const [open, setOpen] = useState(false);
+  const alreadyOpenedRef = useRef(false);
+  useEffect(() => {
+    if (!open && !alreadyOpenedRef.current) {
+      alreadyOpenedRef.current = true;
+      const timeout = setTimeout(() => {
+        setOpen(true);
+      });
+      // return () => clearTimeout(timeout);
+    }
+  }, [open]);
+
+  function onDismiss() {
+    setOpen(false);
+  }
+  const navigate = useNavigate();
+
+  function onGoBack() {
+    navigate("/..");
+  }
+
+  return (
+    <ModalContainer
+      open={open}
+      onClose={onDismiss}
+      onAfterLeave={onGoBack}
+      {...props}
+    >
+      {!!title && <ModalHeader title={title} onClose={onDismiss} />}
+      {props.children}
+    </ModalContainer>
+  );
+};
+
 const ModalContainer = ({
   children,
   open,
   onClose = null,
   // setOpen,
   className = "",
-  onAfterEnter = () => null,
-  onAfterLeave = () => null,
-  onBeforeLeave = () => null,
+  onAfterEnter = nullFunction,
+  onAfterLeave = nullFunction,
+  onBeforeLeave = nullFunction,
   size = "lg", // lg, xl, 3xl, full, prose
   blurryBackground = false,
 }: ModalContainerProps) => {
@@ -89,7 +136,7 @@ const ModalContainer = ({
               >
                 <Dialog.Panel
                   className={[
-                    "relative flex max-h-[90vh] transform flex-col overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full",
+                    "relative flex h-full max-h-[90vh] w-full transform flex-col overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8",
                     size === "lg" ? "sm:max-w-lg" : "",
                     size === "xl" ? "sm:max-w-xl" : "",
                     size === "3xl" ? "sm:max-w-3xl" : "",
@@ -102,7 +149,7 @@ const ModalContainer = ({
                     <button
                       type="button"
                       aria-label="Fermer"
-                      className="absolute right-0 top-4 text-gray-900 sm:px-6"
+                      className="absolute right-0 top-4 z-[103] text-gray-900 sm:px-6"
                       onClick={onClose}
                     >
                       <svg
@@ -134,12 +181,25 @@ const nullFunction = () => null;
 interface ModalHeaderProps {
   children?: React.ReactNode;
   title?: string;
+  className?: string;
   onClose?: null | (() => void);
 }
 
-const ModalHeader = ({ children, title, onClose }: ModalHeaderProps) => {
+const ModalHeader = ({
+  children,
+  title,
+  className,
+  onClose,
+}: ModalHeaderProps) => {
   return (
-    <div className="z-[103] order-1 flex w-full max-w-full shrink-0 items-center justify-between rounded-t-lg border-b border-gray-200 bg-white">
+    <div
+      className={[
+        "z-[103] order-1 flex w-full max-w-full shrink-0 items-center justify-between rounded-t-lg bg-white",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <div className="w-full py-4 sm:flex sm:items-start">
         <div className="mt-3 w-full text-center sm:mt-0 sm:text-left">
           {!!title && (
@@ -221,4 +281,10 @@ const ModalFooter = ({ children }: ModalFooterProps) => {
   );
 };
 
-export { ModalHeader, ModalBody, ModalFooter, ModalContainer };
+export {
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalContainer,
+  ModalRouteContainer,
+};

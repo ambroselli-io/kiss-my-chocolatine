@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { isOpenedNow } from "~/utils/isOpenedNow";
-import type { Shop } from "~/types/shop";
+import type { Shop } from "@prisma/client";
 
 const Availability = ({
   shop,
@@ -15,10 +15,7 @@ const Availability = ({
   closedCaption?: string;
 }) => {
   const [showMoreAvailability, setShowMoreAvailability] = useState(false);
-  const [isOpened, hoursPerDay, hoursToday] = useMemo(
-    () => isOpenedNow(shop),
-    [shop],
-  );
+  const [isOpened, hoursPerDay, hoursToday] = isOpenedNow(shop);
 
   return (
     <>

@@ -7,7 +7,7 @@ type Day =
   | "Saturday"
   | "Sunday";
 
-interface OpeningHoursSpecification {
+export interface OpeningHoursSpecification {
   "@type": string;
   dayOfWeek: Array<Day>;
   opens: string;
@@ -34,7 +34,7 @@ interface AggregateRating {
   reviewCount: number;
 }
 
-export interface Shop {
+export interface SchemaOrgShop {
   "@context": string;
   "@type": string;
   name: string;
@@ -43,10 +43,10 @@ export interface Shop {
   telephone: string;
   url: string;
   geo: GeoCoordinates;
-  openingHoursSpecification: OpeningHoursSpecification[];
+  openingHoursSpecification: Array<OpeningHoursSpecification>;
   servesCuisine: string;
   priceRange: string;
-  paymentAccepted: string[];
-  additionalType: string[];
+  paymentAccepted: Array<string>;
+  additionalType: Array<string>;
   aggregateRating: AggregateRating;
 }

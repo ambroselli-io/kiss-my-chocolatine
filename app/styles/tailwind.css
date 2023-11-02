@@ -15,3 +15,16 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   @apply bg-gray-100;
 }
+
+/* Hide the default arrow */
+details.question > summary {
+  @apply relative list-none;
+}
+details.question > summary::-webkit-details-marker {
+  @apply hidden;
+}
+
+details.question > summary::after {
+  content: "?";
+  @apply mx-auto ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full border border-black text-xs font-bold text-black;
+}

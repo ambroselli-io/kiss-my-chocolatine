@@ -1,59 +1,63 @@
-import type {
-  LoaderFunctionArgs,
-  MetaArgs,
-  MetaFunction,
+import {
+  redirect,
+  type LoaderFunctionArgs,
+  type MetaArgs,
+  type MetaFunction,
 } from "@remix-run/node";
+import type { Shop, ChocolatineReview, Chocolatine } from "@prisma/client";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
-import chocolatines from "~/data/chocolatines.json";
-import shops from "~/data/shops.json";
 import Availability from "~/components/Availability";
 import BalancedRate from "~/components/BalancedRate";
 import { newFeedback, newIngredient, newReview } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { compileReviews, from020to22 } from "~/utils/review";
-import type { Shop } from "~/types/shop";
-import type { Chocolatine } from "~/types/chocolatine";
+import { prisma } from "~/db/prisma.server";
+import { from020to22 } from "~/utils/review";
 
-export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
-  const parentMeta = matches[matches.length - 2].meta ?? [];
-  return [
-    ...parentMeta,
-    { "script:ld+json": data?.chocolatine, key: "chocolatine" },
-  ];
-};
+// export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
+//   const parentMeta = matches[matches.length - 2].meta ?? [];
+//   return [
+//     ...parentMeta,
+//     { "script:ld+json": data?.chocolatine, key: "chocolatine" },
+//   ];
+// };
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const chocolatine = chocolatines.find(
-    (c) => c.belongsTo.identifier === params.shopSlug,
-  ) as Chocolatine;
-  const quality = compileReviews(chocolatine?.reviews ?? []);
-  const isHomemade = String(
-    chocolatine?.additionalProperty.find((prop) => prop.name === "Homemade")
-      ?.value,
-  );
-  const shop = shops.find((s) => s.identifier === params.shopSlug) as Shop;
+  const shopPopulated = await prisma.shop.findUnique({
+    where: {
+      id: params.shopId,
+    },
+    include: {
+      chocolatine: {
+        include: {
+          chocolatineReviews: true,
+        },
+      },
+    },
+  });
+
+  if (!shopPopulated) {
+    return redirect("/404");
+  }
+
+  const { chocolatine: chocolatinePopulated, ...shop } = shopPopulated;
+
+  const { chocolatineReviews, ...chocolatine } = chocolatinePopulated ?? {};
+
   return {
-    chocolatine,
-    isHomemade,
-    quality: chocolatine?.reviews.length ? quality : null,
-    ingredients: chocolatine?.additionalType.find(
-      (type) => type.name === "Ingredients",
-    )?.value,
-    shop,
-    detailedReviews: chocolatine?.reviews.filter((r) => r.reviewBody),
+    chocolatine: chocolatine as Chocolatine,
+    shop: shop as Shop,
+    ingredients: [], // TODO
+    detailedReviews:
+      chocolatineReviews?.filter((r: ChocolatineReview) => !!r.comment) ?? [],
   };
 };
 
-export default function Shop() {
-  const {
-    chocolatine,
-    detailedReviews,
-    quality,
-    shop,
-    isHomemade,
-    ingredients,
-  } = useLoaderData<typeof loader>();
+export default function ChocolatineAndShop() {
+  const data = useLoaderData<typeof loader>();
+  const { chocolatine, detailedReviews } = data;
+  const shop = data.shop as unknown as Shop;
+
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
   const [searchParams] = useSearchParams();
   useEffect(() => {
@@ -71,23 +75,33 @@ export default function Shop() {
         className="mt-1 flex cursor-pointer pl-6 text-sm opacity-70"
         onClick={() => {
           window.open(
-            `https://www.google.com/maps/dir/?api=1&destination=${shop.geo.latitude},${shop.geo.longitude}&travelmode=walking`,
+            `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
             "_blank",
           );
         }}
       >
         <img src="/assets/pin-grey.svg" className="mr-1 w-5 sm:mr-3" />
-        {shop.address.streetAddress}
-        <br />
-        {shop.address.postalCode} {shop.address.addressLocality}{" "}
-        {shop.address.addressCountry}
+        {!!shop.streetAddress ? (
+          <>
+            {shop.streetAddress}
+            <br />
+            {shop.addresspostalCode} {shop.addressLocality}{" "}
+            {shop.addressCountry}
+          </>
+        ) : (
+          <>{shop.addressLocality}</>
+        )}
       </span>
       <span
         aria-details="opening hours"
         className="mt-1 flex pl-6 text-sm opacity-70"
       >
         <img src="/assets/clock-grey.svg" className="mr-1 w-5 sm:mr-3" />
-        <Availability shop={shop} />
+        {shop.openingHoursSpecification ? (
+          <Availability shop={shop} />
+        ) : (
+          "No opening hours available"
+        )}
       </span>
       <Link
         className="absolute right-2 top-2 font-light text-black"
@@ -113,32 +127,36 @@ export default function Shop() {
         <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
           <h3
             className={`mt-1 ${
-              ["I don't think so", "No"].includes(isHomemade)
+              ["I don't think so", "No"].includes(chocolatine.homemade)
                 ? "font-bold text-red-500"
                 : "font-semibold"
             }`}
           >
-            Homemade: {isHomemade}
-            {["I think so", "Yes"].includes(isHomemade) && " 🧑‍🍳 "}
-            {["I don't think so", "No"].includes(isHomemade) && " 🏭 "}
+            Homemade: {chocolatine.homemade}
+            {["I think so", "Yes"].includes(chocolatine.homemade) && " 🧑‍🍳 "}
+            {["I don't think so", "No"].includes(chocolatine.homemade) &&
+              " 🏭 "}
           </h3>
           <p className="mb-0 mt-3">
             Price:{" "}
-            {chocolatine?.offers?.price
-              ? `${chocolatine?.offers.price} ${chocolatine?.offers.priceCurrency}`
+            {chocolatine.price
+              ? `${chocolatine.price} ${chocolatine.priceCurrency}`
               : "N/A"}
           </p>
           <div className="mb-2 mt-10 flex items-center justify-between">
             <h3 className="font-bold">How is it like?</h3>
             <ClientOnly>
               {() => (
-                <a href={newReview(shop.name)} className="ml-auto text-xs">
+                <Link
+                  to={`/chocolatine/review/${shop.id}`}
+                  className="ml-auto text-xs"
+                >
                   🙋 Add my review
-                </a>
+                </Link>
               )}
             </ClientOnly>
           </div>
-          {!quality ? (
+          {!chocolatine.has_been_reviewed_once ? (
             "No review yet"
           ) : (
             <>
@@ -154,7 +172,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Not at all"}
                   maxCaption={"Anything but butter"}
-                  value={quality.buttery}
+                  value={chocolatine.average_buttery}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -168,7 +186,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Flaky/Feuilleuté"}
                   maxCaption={"Brioche"}
-                  value={quality.flaky_or_brioche}
+                  value={chocolatine.average_flaky_or_brioche}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -181,7 +199,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Golden"}
                   maxCaption={"Pale"}
-                  value={quality.golden_or_pale}
+                  value={chocolatine.average_golden_or_pale}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -195,7 +213,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Crispy"}
                   maxCaption={"Soft"}
-                  value={quality.crispy_or_soft}
+                  value={chocolatine.average_crispy_or_soft}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -208,7 +226,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Light"}
                   maxCaption={"Dense"}
-                  value={quality.light_or_dense}
+                  value={chocolatine.average_light_or_dense}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -221,12 +239,12 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Superimposed"}
                   maxCaption={"On each edges"}
-                  value={quality.chocolate_disposition}
+                  value={chocolatine.average_chocolate_disposition}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Big or small</summary>
+                  <summary>Small or big</summary>
                   <p className="text-xs italic opacity-70">
                     this is maly to point out the too small ones, tbh&nbsp;👎
                   </p>
@@ -234,7 +252,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"Very small"}
                   maxCaption={"Very big"}
-                  value={quality.big_or_small}
+                  value={chocolatine.average_big_or_small}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -248,7 +266,7 @@ export default function Shop() {
                 <BalancedRate
                   minCaption={"🤢"}
                   maxCaption={"🤩"}
-                  value={from020to22(quality.good_or_not_good)}
+                  value={from020to22(chocolatine.average_good_or_not_good)}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -258,19 +276,18 @@ export default function Shop() {
                     {detailedReviews?.map((review, index) => (
                       <li key={index} className="mb-2">
                         <strong>
-                          {
-                            review.additionalProperty.find(
-                              (p) => p.name === "good_or_not_good",
-                            )?.value
-                          }
+                          {review.good_or_not_good}
                           /20
                         </strong>
-                        <span> - {review?.author.name}</span>
+                        <span> - {review?.user_username}</span>
                         <small className="opacity-50">
                           {" - "}
-                          {review?.datePublished}
+                          {new Intl.DateTimeFormat("en-GB", {
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          }).format(new Date(review.created_at))}
                         </small>
-                        <p>{review?.reviewBody}</p>
+                        <p>{review.comment}</p>
                         {/* You can also add other parts of the review here, like rating, etc. */}
                       </li>
                     ))}
@@ -284,12 +301,13 @@ export default function Shop() {
             <ClientOnly>
               {() => (
                 <a href={newIngredient(shop.name)} className="ml-auto text-xs">
-                  🥣 Update
+                  🥣 Update (by email)
                 </a>
               )}
             </ClientOnly>
           </div>
-          {!ingredients?.length
+          Ingredients not listed yet
+          {/* {!ingredients?.length
             ? "Ingredients not listed yet"
             : ingredients.map((ingredient) => {
                 return (
@@ -310,17 +328,17 @@ export default function Shop() {
                     </span>
                   </div>
                 );
-              })}
+              })} */}
         </section>
         <section className="w-full shrink-0  overflow-y-auto px-4 pb-6">
           <h3 className="mb-2 mt-10 font-bold">Shop infos</h3>
           <address className="mt-5 flex flex-col items-start justify-start gap-2 px-4 pb-11 text-sm font-light not-italic text-[#3c4043]">
             <span aria-details="address" className="flex">
               <img src="/assets/pin-grey.svg" className="mr-3 w-5" />
-              {shop.address.streetAddress}
+              {shop.streetAddress}
               <br />
-              {shop.address.postalCode} {shop.address.addressLocality}{" "}
-              {shop.address.addressCountry}
+              {shop.addresspostalCode} {shop.addressLocality}{" "}
+              {shop.addressCountry}
             </span>
             <span aria-details="opening hours" className="flex text-sm">
               <img src="/assets/clock-grey.svg" className="mr-3 w-5" />

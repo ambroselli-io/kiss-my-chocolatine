@@ -1,19 +1,24 @@
-import * as Sentry from "@sentry/remix";
 /**
  * By default, Remix will handle generating the HTTP Response for you.
  * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
  * For more information, see https://remix.run/file-conventions/entry.server
  */
 
+import * as Sentry from "@sentry/remix";
 import { PassThrough } from "node:stream";
 
-import type { AppLoadContext, EntryContext } from "@remix-run/node";
+import type {
+  AppLoadContext,
+  EntryContext,
+  DataFunctionArgs,
+} from "@remix-run/node";
 import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import { prisma } from "./db/prisma.server";
 
-export function handleError(error, { request }) {
+export function handleError(error: unknown, { request }: DataFunctionArgs) {
   Sentry.captureRemixServerException(error, "remix.server", request);
 }
 
@@ -21,6 +26,7 @@ Sentry.init({
   dsn: "https://39ab0a39d6324c2e93e3ff2f9ae8a48d@o117731.ingest.sentry.io/6103537",
   enabled: process.env.NODE_ENV === "production",
   tracesSampleRate: 0.05,
+  integrations: [new Sentry.Integrations.Prisma({ client: prisma })],
 });
 
 const ABORT_DELAY = 5_000;

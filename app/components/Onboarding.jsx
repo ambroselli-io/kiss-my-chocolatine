@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { ModalBody, ModalContainer, ModalFooter, ModalHeader } from "./Modal";
 

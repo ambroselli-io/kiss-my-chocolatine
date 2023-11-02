@@ -45,7 +45,7 @@ interface Offer {
   priceCurrency: string;
 }
 
-export interface Chocolatine {
+export interface SchemaOrgChocolatine {
   "@context": string;
   "@type": string;
   identifier: string;

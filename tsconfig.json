@@ -1,10 +1,17 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "app/routes/_index.jsx"],
+  "include": [
+    "env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/routes/chocolatine.register.jsx",
+    "app/routes/chocolatine.review.$shop_id.tsx"
+  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "skipLibCheck": true,
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "target": "ES2022",

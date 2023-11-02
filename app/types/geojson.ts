@@ -2,7 +2,7 @@ import type { Feature, FeatureCollection, Point } from "geojson";
 
 // Define your custom properties
 interface CustomProperties {
-  identifier: string;
+  id: string;
   is_active_shop: number;
   is_included_by_filters: number;
   sort_key: number;
