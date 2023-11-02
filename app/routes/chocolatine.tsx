@@ -388,20 +388,23 @@ export default function App() {
                     <div className="absolute m-auto h-1 w-1/2 bg-gray-800" />
                     <div className="absolute m-auto h-1 w-1/2 rotate-90 bg-gray-800" />
                   </Link>
-                  <MyCurrentLocation
-                    onSetCurrentLocation={({ lat, lng }) => {
-                      // fly with default options to null island
-                      mapRef?.current?.flyTo({
-                        center: [lng, lat],
-                        zoom: 13,
-                        speed: 10,
-                        curve: 1,
-                      });
-                    }}
-                    className="absolute bottom-20 right-4 z-50 drop-shadow-sm"
-                  />
                 </>
               )}
+              <MyCurrentLocation
+                onSetCurrentLocation={({ lat, lng }) => {
+                  // fly with default options to null island
+                  mapRef?.current?.flyTo({
+                    center: [lng, lat],
+                    zoom: 13,
+                    speed: 10,
+                    curve: 1,
+                  });
+                }}
+                className={[
+                  "absolute bottom-20 right-4 z-50 drop-shadow-sm",
+                  params.shopId ? "hidden" : "",
+                ].join(" ")}
+              />
             </>
           )}
         </ClientOnly>

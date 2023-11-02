@@ -1,16 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 function MyCurrentLocation({
   onSetCurrentLocation = console.log,
   className = "",
 }) {
+  const initGeolocation = useRef(null);
   useEffect(() => {
-    if (window.localStorage.getItem("canUseGeolocation") === "true") {
+    if (
+      window.localStorage.getItem("canUseGeolocation") === "true" &&
+      !initGeolocation.current
+    ) {
+      initGeolocation.current = true;
       centerMapAtCurrentLocation();
     }
   }, []);
 
   const centerMapAtCurrentLocation = () => {
+    console.log("centerMapAtCurrentLocation");
     const handleCenter = (position) => {
       if (!position) return;
       window.localStorage.setItem("canUseGeolocation", "true");
