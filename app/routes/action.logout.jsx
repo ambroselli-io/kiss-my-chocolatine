@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { destroySession, getSession } from "../services/auth.server";
+import { destroySession, getSession } from "~/services/auth.server";
 
 export const action = async ({ request }) => {
   console.log("action.logout.jsx");
