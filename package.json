@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build --sourcemap && sentry-upload-sourcemaps --org arnaud-ambroselli --project kiss-my-chocolatine",
-    "dev": "npm run prisma-setup && remix dev --manual",
+    "build": "vite build && vite build --ssr --sourcemap && sentry-upload-sourcemaps --org arnaud-ambroselli --project kiss-my-chocolatine",
+    "dev": "npm run prisma-setup && vite dev",
     "start": "npm run prisma-deploy && remix-serve ./build/index.js",
     "prisma-setup": "prisma generate && prisma migrate deploy",
     "prisma-create-migration": "NODE_ENV=development npx prisma migrate dev --name",
@@ -17,10 +17,9 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@prisma/client": "^5.5.2",
-    "@remix-run/css-bundle": "^2.1.0",
-    "@remix-run/node": "^2.1.0",
-    "@remix-run/react": "^2.1.0",
-    "@remix-run/serve": "^2.1.0",
+    "@remix-run/node": "^2.2.0",
+    "@remix-run/react": "^2.2.0",
+    "@remix-run/serve": "^2.2.0",
     "@sentry/remix": "^7.76.0",
     "@tailwindcss/forms": "^0.5.6",
     "bcryptjs": "^2.4.3",
@@ -37,8 +36,8 @@
     "short-unique-id": "^5.0.3"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.1.0",
-    "@remix-run/eslint-config": "^2.1.0",
+    "@remix-run/dev": "^2.2.0",
+    "@remix-run/eslint-config": "^2.2.0",
     "@types/bcryptjs": "^2.4.5",
     "@types/js-cookie": "^3.0.4",
     "@types/jsdom": "^21.1.4",
@@ -51,7 +50,9 @@
     "prettier-plugin-tailwindcss": "^0.5.5",
     "prisma": "^5.5.2",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vite": "^4.5.0",
+    "vite-tsconfig-paths": "^4.2.1"
   },
   "engines": {
     "node": ">=20.0.0"

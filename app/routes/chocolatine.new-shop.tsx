@@ -12,6 +12,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigate,
+  useNavigation,
 } from "@remix-run/react";
 import parseGoogleLinkForCoordinates from "~/utils/parseGoogleLinkForCoordinates.server";
 import {
@@ -20,7 +21,7 @@ import {
   ModalRouteContainer,
 } from "~/components/Modal";
 import { prisma } from "~/db/prisma.server";
-import { getUserIdFromCookie } from "~/services/auth.server";
+import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 
 type ActionReturnType = {
   ok: boolean;
@@ -44,15 +45,6 @@ export const action = async ({
   const { latitude, longitude } =
     await parseGoogleLinkForCoordinates(googleLink);
 
-  console.log({
-    name: shopName,
-    addressLocality,
-    google_map_link: googleLink,
-    latitude,
-    longitude,
-    createdByUserId: userId,
-  });
-
   const shop = await prisma.shop.create({
     data: {
       name: shopName,
@@ -60,7 +52,7 @@ export const action = async ({
       google_map_link: googleLink,
       latitude,
       longitude,
-      createdByUserId: userId,
+      created_by_user_id: userId,
     },
   });
 
@@ -71,39 +63,41 @@ export const action = async ({
 export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
-  await getUserIdFromCookie(request, {
+  await getUserFromCookie(request, {
     failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
   });
   return null;
 };
 
-export default function Add() {
+export default function AddNewShop() {
+  const { state } = useNavigation();
+  const busy = state === "submitting";
   const actionData = useActionData<typeof action>();
 
   return (
     <ModalRouteContainer aria-label="Add new shop" title="Add new shop">
       <ModalBody>
         <Form id="add-shop-form" method="post" className="m-4">
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2">
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
             <input
               name="shop_name"
               type="text"
               id="shop_name"
               required
-              className="block w-full rounded border border-black bg-transparent p-2.5 text-black outline-app-500 transition-all placeholder:opacity-30 focus:ring-app-500"
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="La Boulangerie trop bonne"
             />
             <label htmlFor="shop_name">
               Name<sup className="ml-1 text-red-500">*</sup>
             </label>
           </div>
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2">
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
             <input
               name="addressLocality"
               type="text"
               id="addressLocality"
               required
-              className="block w-full rounded border border-black bg-transparent p-2.5 text-black outline-app-500 transition-all placeholder:opacity-30 focus:ring-app-500"
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="Paris"
             />
             <label htmlFor="addressLocality">
@@ -118,10 +112,10 @@ export default function Add() {
               name="google_map_link"
               type="text"
               id="google_map_link"
-              className="block w-full rounded border border-black bg-transparent p-2.5 text-black outline-app-500 transition-all placeholder:opacity-30"
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="https://maps.app.goo.gl/tue6ejyGQ66oHfVH7"
             />
-            <details className="question">
+            <details className="question text-left">
               <summary>
                 <label htmlFor="google_map_link">Google Maps link</label>
               </summary>
@@ -136,7 +130,12 @@ export default function Add() {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <button type="submit" form="add-shop-form">
+        <button
+          type="submit"
+          className="rounded-lg bg-[#FFBB01] px-4 py-2 disabled:opacity-25"
+          form="add-shop-form"
+          disabled={busy}
+        >
           Add shop
         </button>
       </ModalFooter>

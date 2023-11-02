@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import type { HeadersFunction } from "@remix-run/node";
 import {
   TIPIMAIL_API_USER,
   TIPIMAIL_API_KEY,
@@ -33,14 +32,14 @@ export const sendEmail = async ({
     return;
   }
   if (process.env.NODE_ENV !== "production" && !force) return;
-  const headers: HeadersFunction = () => ({
+  const headers: HeadersInit = {
     "X-Tipimail-ApiUser": TIPIMAIL_API_USER,
     "X-Tipimail-ApiKey": TIPIMAIL_API_KEY,
     "Content-Type": "application/json",
-  });
+  };
   return fetch("https://api.tipimail.com/v1/messages/send", {
     method: "POST",
-    headers: headers(),
+    headers,
     body: JSON.stringify({
       apiKey: TIPIMAIL_API_KEY,
       to: emails.map((address) => ({ address })),
@@ -98,7 +97,7 @@ If you did not request a password reset, please ignore this email.
     .join(APP_URL)
     .replace("{FORGOT_PASSWORD}", forgetPasswordLink)
     .replace("{FORGOT_PASSWORD}", forgetPasswordLink)
-    .replace("{APP_COLOR}", fullConfig.theme.colors.app);
+    .replace("{APP_COLOR}", fullConfig.theme.extend.colors.app["500"]);
 
   return {
     emails: [emailAddress],

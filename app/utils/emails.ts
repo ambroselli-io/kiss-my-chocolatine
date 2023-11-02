@@ -54,7 +54,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
--Big or small:
+-Small or big:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
 
 -Chocolate Disposition:
@@ -142,7 +142,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
--Big or small:
+-Small or big:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
 
 -Chocolate Disposition:
@@ -209,7 +209,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Crispy or Soft (croustillant ou moelleux):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
--Big or small:
+-Small or big:
   (-2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big)
 
 -Chocolate Disposition:

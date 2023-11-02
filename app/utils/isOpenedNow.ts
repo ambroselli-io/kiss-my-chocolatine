@@ -1,4 +1,5 @@
-import type { Shop } from "../types/shop";
+import type { Shop } from "@prisma/client";
+import type { OpeningHoursSpecification } from "~/types/schemaOrgShop";
 
 type Day =
   | "Monday"
@@ -9,9 +10,12 @@ type Day =
   | "Saturday"
   | "Sunday";
 
-type HoursPerDay = Record<Day, { opens: string | null; closes: string | null }>;
+type HoursForOneDay = { opens: string | null; closes: string | null };
+type HoursPerDay = Record<Day, HoursForOneDay>;
 
-export function isOpenedNow(shop: Shop) {
+export function isOpenedNow(
+  shop: Shop,
+): [boolean, HoursPerDay, HoursForOneDay] {
   const hoursPerDay: HoursPerDay = (() => {
     const days: HoursPerDay = {
       Monday: { opens: null, closes: null },
@@ -22,9 +26,11 @@ export function isOpenedNow(shop: Shop) {
       Saturday: { opens: null, closes: null },
       Sunday: { opens: null, closes: null },
     };
-    for (const spec of shop.openingHoursSpecification) {
+    if (!shop.openingHoursSpecification) return days;
+    const openingHoursSpecifications =
+      shop.openingHoursSpecification as unknown as Array<OpeningHoursSpecification>;
+    for (const spec of openingHoursSpecifications) {
       // {
-      //   "@type": "OpeningHoursSpecification",
       //   "dayOfWeek": ["Saturday"],
       //   "opens": "09:00",
       //   "closes": "16:00"
@@ -41,7 +47,7 @@ export function isOpenedNow(shop: Shop) {
     weekday: "long",
   }) as Day;
   const now = Date.now();
-  const hoursToday = hoursPerDay[today];
+  const hoursToday = hoursPerDay[today] ?? { opens: null, closes: null };
   const isOpened = (() => {
     if (!hoursToday.opens) return false;
     if (!hoursToday.closes) return false;

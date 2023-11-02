@@ -1,4 +1,10 @@
-import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
+import React, {
+  Fragment,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
 
@@ -130,7 +136,7 @@ const ModalContainer = ({
               >
                 <Dialog.Panel
                   className={[
-                    "relative flex h-full max-h-[90vh] transform flex-col overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full",
+                    "relative flex h-full max-h-[90vh] w-full transform flex-col overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8",
                     size === "lg" ? "sm:max-w-lg" : "",
                     size === "xl" ? "sm:max-w-xl" : "",
                     size === "3xl" ? "sm:max-w-3xl" : "",

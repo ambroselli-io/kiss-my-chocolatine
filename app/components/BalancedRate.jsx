@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function BalancedRate({ minCaption, maxCaption, value }) {
   // value is between -2 and 2
   return (

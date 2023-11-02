@@ -1,5 +1,5 @@
 import { Form, useSearchParams, useSubmit } from "@remix-run/react";
-import { CustomFeatureCollection } from "~/types/geojson";
+import type { CustomFeatureCollection } from "~/types/geojson";
 
 type Props = {
   geojson: CustomFeatureCollection;
@@ -59,7 +59,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="buttery"
+          name="average_buttery"
           title="🧈 Buttery"
           values={[
             { label: "Not at all", value: -2 },
@@ -70,7 +70,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="flaky_or_brioche"
+          name="average_flaky_or_brioche"
           title="🔪 Flaky/Feuilleuté or Brioche-like"
           values={[
             { label: "Very flaky", value: -2 },
@@ -81,7 +81,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="golden_or_pale"
+          name="average_golden_or_pale"
           title="👑 Golden or Pale"
           values={[
             { label: "Very golden", value: -2 },
@@ -92,7 +92,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="crispy_or_soft"
+          name="average_crispy_or_soft"
           title="🍦 Crispy or Soft"
           values={[
             { label: "Very crispy", value: -2 },
@@ -103,7 +103,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="light_or_dense"
+          name="average_light_or_dense"
           title="🧱 Light or Dense"
           values={[
             { label: "Very light", value: -2 },
@@ -114,7 +114,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="chocolate_disposition"
+          name="average_chocolate_disposition"
           title="🍫 Chocolate Disposition"
           values={[
             { label: "Superimposed", value: -2 },
@@ -125,7 +125,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
           ]}
         />
         <CheckBoxesCategory
-          name="big_or_small"
+          name="average_big_or_small"
           title="🤏 Big or Small"
           values={[
             { label: "Very small", value: -2 },
@@ -133,17 +133,6 @@ export default function ChocolatinesFilters({ geojson }: Props) {
             { label: "Balanced ⚖️", value: 0 },
             { label: "Big", value: 1 },
             { label: "Very big", value: 2 },
-          ]}
-        />
-        <CheckBoxesCategory
-          name="good_or_not_good"
-          title="🤩 Good or Not Good"
-          values={[
-            { label: "Very bad", value: -2 },
-            { label: "Bad", value: -1 },
-            { label: "OK", value: 0 },
-            { label: "Good", value: 1 },
-            { label: "Very good", value: 2 },
           ]}
         />
       </Form>

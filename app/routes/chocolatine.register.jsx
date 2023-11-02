@@ -1,5 +1,5 @@
 import { json, redirect } from "@remix-run/node";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ShortUniqueId from "short-unique-id";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import { ClientOnly } from "remix-utils/client-only";
@@ -74,17 +74,17 @@ export const action = async ({ request }) => {
   }
 
   if (page === "signup") {
-    // const username = formData.get("name");
-    // if (!username) {
-    //   return json(
-    //     {
-    //       ok: false,
-    //       errorField: "password",
-    //       error: "Please provide a username.",
-    //     },
-    //     { status: 403 },
-    //   );
-    // }
+    const username = formData.get("name");
+    if (!username) {
+      return json(
+        {
+          ok: false,
+          errorField: "password",
+          error: "Please provide a username.",
+        },
+        { status: 403 },
+      );
+    }
     const existingUser = await prisma.user.findFirst({ where: { email } });
     if (existingUser?.password?.length > 0) {
       return json(
@@ -97,25 +97,25 @@ export const action = async ({ request }) => {
         { status: 403 },
       );
     }
-    // const existingUsername = await prisma.user.findFirst({
-    //   where: { username },
-    // });
-    // if (!!existingUsername) {
-    //   return json(
-    //     {
-    //       ok: false,
-    //       errorField: "username",
-    //       error:
-    //         "This username is already registered in our database. Please choose another one!",
-    //     },
-    //     { status: 403 },
-    //   );
-    // }
+    const existingUsername = await prisma.user.findFirst({
+      where: { username },
+    });
+    if (!!existingUsername) {
+      return json(
+        {
+          ok: false,
+          errorField: "username",
+          error:
+            "This username is already registered in our database. Please choose another one!",
+        },
+        { status: 403 },
+      );
+    }
 
     const user = await prisma.user.create({
       data: {
         email,
-        // username,
+        username,
         password: await bcrypt.hash(password, 10),
         referral_id: new ShortUniqueId({ length: 6 }).randomUUID(),
       },
@@ -435,22 +435,22 @@ export default function Register() {
                       placeholder="Email address"
                     />
                   </div>
-                  {/* {form === "signup" && (
-                  <div>
-                    <label htmlFor="name" className="sr-only">
-                      Name
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      required
-                      className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-sm sm:leading-6"
-                      placeholder="User name"
-                    />
-                  </div>
-                )} */}
+                  {form === "signup" && (
+                    <div>
+                      <label htmlFor="name" className="sr-only">
+                        Pseudo (for showing on reviews)
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        autoComplete="name"
+                        required
+                        className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-sm sm:leading-6"
+                        placeholder="Pseudo"
+                      />
+                    </div>
+                  )}
                   {form !== "forgot-password" && (
                     <div className="relative">
                       <label htmlFor="password" className="sr-only">
@@ -480,22 +480,6 @@ export default function Register() {
                       )}
                     </div>
                   )}
-                  {/* {form === "signup" && (
-                <div>
-                  <label htmlFor="confirm-password" className="sr-only">
-                    Confirm Password
-                  </label>
-                  <input
-                    id="confirm-password"
-                    name="confirm-password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-sm sm:leading-6"
-                    placeholder="Confirm password"
-                  />
-                </div>
-              )} */}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">
