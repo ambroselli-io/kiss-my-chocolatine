@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { type LoaderFunctionArgs } from "@remix-run/node";
+import { NumericFormat } from "react-number-format";
 import { Link, useLoaderData } from "@remix-run/react";
 import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
@@ -63,6 +64,93 @@ export default function NewShareholderAction() {
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto p-4">
       <h1 className="text-4xl font-semibold">Shareholders</h1>
+      <details open className="px-4">
+        <summary className="mb-4 pl-4">
+          <h2 className="inline-flex text-2xl">My Shares</h2>
+        </summary>
+        <p className="mb-4">
+          We can simulate your shares based on your actions on the platform.
+          Write your email below, and a potential company's benefit, and see how
+          much you get in your pocket.
+        </p>
+        <div>
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+            <input
+              type="text"
+              id="email"
+              required
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+              placeholder="arnaud@ambroselli.io"
+              onChange={(e) => setEmail(e.currentTarget.value)}
+            />
+            <label htmlFor="email">
+              Email
+              <sup className="ml-1 text-red-500">*</sup>
+            </label>
+          </div>
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+            <NumericFormat
+              value={benefits}
+              onValueChange={(values) => setBenefits(values.value)}
+              thousandsGroupStyle="thousand"
+              thousandSeparator=" "
+              prefix={"€ "}
+              id="company_benefit"
+              required
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+              onBlur={(e) => e.currentTarget.blur()}
+            />
+            <label htmlFor="company_benefit">Company's benefit</label>
+          </div>
+
+          {!!email && (
+            <>
+              {!!user && (
+                <p>
+                  User's actions: {user?.number_of_actions} -- benefit:{" "}
+                  {new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                    maximumFractionDigits: 0,
+                    minimumFractionDigits: 0,
+                  }).format(userBenefit)}
+                </p>
+              )}
+              {!!builder && (
+                <p>
+                  Builder's actions: {builder?.number_of_actions} -- benefit:{" "}
+                  {new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                    maximumFractionDigits: 0,
+                    minimumFractionDigits: 0,
+                  }).format(investorBenefit)}
+                </p>
+              )}
+              {!!investor && (
+                <p>
+                  Builder's actions: {investor?.number_of_actions} -- benefit:{" "}
+                  {new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                    maximumFractionDigits: 0,
+                    minimumFractionDigits: 0,
+                  }).format(builderBenefit)}
+                </p>
+              )}
+              <p className="font-semibold">
+                Total dividend:{" "}
+                {new Intl.NumberFormat("fr-FR", {
+                  style: "currency",
+                  currency: "EUR",
+                  maximumFractionDigits: 0,
+                  minimumFractionDigits: 0,
+                }).format(userBenefit + builderBenefit + investorBenefit)}
+              </p>
+            </>
+          )}
+        </div>
+      </details>
       <details className="px-4">
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">Stakeholders</h2>
@@ -121,86 +209,7 @@ export default function NewShareholderAction() {
           />
         </div>
       </details>
-      <details open className="px-4">
-        <summary className="mb-4 pl-4">
-          <h2 className="inline-flex text-2xl">My Shares</h2>
-        </summary>
-        <p className="mb-4">
-          We can simulate your shares based on your actions on the platform.
-          Write your email below, and a potential company's benefit, and see how
-          much you get in your pocket.
-        </p>
-        <div>
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
-            <input
-              type="text"
-              id="email"
-              required
-              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
-              placeholder="arnaud@ambroselli.io"
-              onChange={(e) => setEmail(e.currentTarget.value)}
-            />
-            <label htmlFor="email">
-              Email
-              <sup className="ml-1 text-red-500">*</sup>
-            </label>
-          </div>
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
-            <input
-              name="company_benefit"
-              type="number"
-              min="0"
-              step="1"
-              id="company_benefit"
-              onWheel={(e) => e.currentTarget.blur()}
-              required
-              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
-              placeholder="1"
-              value={benefits}
-              onChange={(e) => setBenefits(e.currentTarget.value)}
-            />
-            <label htmlFor="company_benefit">Company's benefit</label>
-          </div>
-          {!!email && (
-            <>
-              {!!user && (
-                <p>
-                  User's actions: {user?.number_of_actions} -- benefit:{" "}
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(userBenefit)}
-                </p>
-              )}
-              {!!builder && (
-                <p>
-                  Builder's actions: {builder?.number_of_actions} -- benefit:{" "}
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(investorBenefit)}
-                </p>
-              )}
-              {!!investor && (
-                <p>
-                  Builder's actions: {investor?.number_of_actions} -- benefit:{" "}
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(builderBenefit)}
-                </p>
-              )}
-              <p className="font-semibold">
-                Total:{" "}
-                {new Intl.NumberFormat("fr-FR", {
-                  style: "currency",
-                  currency: "EUR",
-                }).format(userBenefit + builderBenefit + investorBenefit)}
-              </p>
-            </>
-          )}
-        </div>
-      </details>
+
       <details className="px-4">
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
