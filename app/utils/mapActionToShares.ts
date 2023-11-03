@@ -21,7 +21,13 @@ export const mapActionToShares: Record<Action, number> = {
 export const reduceAllDBActionsToShares = (
   userActions: Array<UserAction>,
   actions: Array<Action>,
-) => {
+): [
+  Array<{
+    user_email: string;
+    number_of_actions: number;
+  }>,
+  number,
+] => {
   const uaObject = userActions
     .filter((ua) => actions.includes(ua.action))
     .reduce((builders: any, ua) => {
