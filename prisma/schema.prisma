@@ -130,21 +130,21 @@ enum Action {
   USER_SHOP_UPDATE
   USER_REFERRAL_CREATER
   USER_REFERRAL_RECEIVER
-  USER_CHOCOLATINE_NEW
-  USER_CHOCOLATINE_UPDATE
-  USER_CHOCOLATINE_REVIEW
+  USER_CHOCOLATINE_NEW // when a user create a chocolatine criterias
+  USER_CHOCOLATINE_UPDATE // when a user create a chocolatine criterias
+  USER_CHOCOLATINE_REVIEW // when a user review with comment
   USER_LINKEDIN_LIKE
   USER_LINKEDIN_COMMENT
   USER_LINKEDIN_SHARE
   INVESTOR_EURO_AMOUNT
   BUILDER_HOUR_AMOUNT
+  FEEDBACK
 }
 
 model UserAction {
   id                String    @id @default(uuid())
   action            Action
   number_of_actions Int       @default(1)
-  shares            Int       @default(1)
   created_at        DateTime  @default(now())
   updated_at        DateTime  @updatedAt
   deleted_at        DateTime?

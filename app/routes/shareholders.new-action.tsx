@@ -23,16 +23,18 @@ export async function action({ request }: ActionFunctionArgs) {
   const mapActionToShares: Record<Action, number> = {
     USER_SHOP_NEW: 1,
     USER_SHOP_UPDATE: 1,
-    USER_REFERRAL_CREATER: 1,
+    USER_REFERRAL_CREATER: 3,
     USER_REFERRAL_RECEIVER: 1,
     USER_CHOCOLATINE_NEW: 1,
     USER_CHOCOLATINE_UPDATE: 1,
-    USER_CHOCOLATINE_REVIEW: 2,
+    USER_CHOCOLATINE_REVIEW: 1,
     USER_LINKEDIN_LIKE: 1,
-    USER_LINKEDIN_COMMENT: 1,
-    USER_LINKEDIN_SHARE: 1,
+    USER_LINKEDIN_COMMENT: 2,
+    USER_LINKEDIN_SHARE: 3,
+    USER_LINKEDIN_POST: 4,
     INVESTOR_EURO_AMOUNT: 1,
-    BUILDER_HOUR_AMOUNT: 1,
+    BUILDER_HOUR_AMOUNT: 2,
+    FEEDBACK: 1,
   };
 
   const actionUser = await prisma.user.findUnique({
@@ -41,14 +43,12 @@ export async function action({ request }: ActionFunctionArgs) {
     },
   });
 
-  const shares = mapActionToShares[action];
   const userAction = await prisma.userAction.create({
     data: {
       user_email,
       number_of_actions: parseInt(numberOfActions),
       user_id: actionUser?.id ? actionUser.id : undefined,
       action,
-      shares,
     },
   });
 
