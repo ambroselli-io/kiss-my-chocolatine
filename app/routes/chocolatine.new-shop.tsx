@@ -52,7 +52,14 @@ export const action = async ({
       created_by_user_email: userEmail,
     },
   });
-
+  await prisma.userAction.create({
+    data: {
+      action: "USER_REGISTRATION",
+      user_id: userId,
+      number_of_actions: 1,
+      user_email: userEmail,
+    },
+  });
   // This is just so we can see the transition
   return redirect(`/chocolatine/review/${shop.id}`);
 };

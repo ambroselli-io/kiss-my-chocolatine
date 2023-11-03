@@ -164,7 +164,7 @@ export default function ChocolatinesMenu({
           {!params.shopId && (
             <>
               <Link
-                to="./new-shop"
+                to="/chocolatine/new-shop"
                 className="absolute bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-4 bg-app-500 text-3xl font-bold drop-shadow-sm"
               >
                 <div className="absolute m-auto h-1 w-1/2 bg-gray-800" />

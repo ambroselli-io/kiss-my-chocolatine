@@ -125,6 +125,22 @@ export const action = async ({
       average_good_or_not_good: quality.average_good_or_not_good,
     },
   });
+  await prisma.userAction.create({
+    data: {
+      action: "USER_CHOCOLATINE_CRITERIAS_REVIEW",
+      user_id: user.id,
+      number_of_actions: 1,
+      user_email: user.email,
+    },
+  });
+  await prisma.userAction.create({
+    data: {
+      action: "USER_CHOCOLATINE_COMMENT_SCORE",
+      user_id: user.id,
+      number_of_actions: 1,
+      user_email: user.email,
+    },
+  });
 
   return redirect(`/chocolatine/${shop.id}`);
 };

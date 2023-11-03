@@ -120,6 +120,14 @@ export const action = async ({ request }) => {
         referral_id: new ShortUniqueId({ length: 6 }).randomUUID(),
       },
     });
+    await prisma.userAction.create({
+      data: {
+        action: "USER_REGISTRATION",
+        user_id: user.id,
+        number_of_actions: 1,
+        user_email: user.email,
+      },
+    });
     const is_mobile = formData.get("is_mobile");
     const is_homescreen = formData.get("is_homescreen");
     const is_app = formData.get("is_app");
