@@ -28,7 +28,6 @@ model User {
   shops                  Shop[]
   chocolatines           Chocolatine[]
   chocolatineReviews     ChocolatineReview[]
-  userActions            UserAction[]
   userOs                 UserOs[]
 }
 
@@ -142,12 +141,13 @@ enum Action {
 }
 
 model UserAction {
-  id         String    @id @default(uuid())
-  action     Action
-  shares     Int       @default(1)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  deleted_at DateTime?
-  user       User      @relation(fields: [user_id], references: [id])
-  user_id    String
+  id                String    @id @default(uuid())
+  action            Action
+  number_of_actions Int       @default(1)
+  shares            Int       @default(1)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  deleted_at        DateTime?
+  user_id           String?
+  user_email        String?
 }

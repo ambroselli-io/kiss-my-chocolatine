@@ -41,8 +41,6 @@ export const action = async ({
   const { latitude, longitude } =
     await parseGoogleLinkForCoordinates(googleLink);
 
-  return redirect(`/chocolatine`);
-
   const shop = await prisma.shop.create({
     data: {
       name: shopName,

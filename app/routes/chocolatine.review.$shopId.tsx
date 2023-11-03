@@ -15,7 +15,7 @@ import {
 import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 import Cookies from "js-cookie";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { compileReviews } from "~/utils/review";
 
 type ActionReturnType = {
@@ -94,7 +94,9 @@ export const action = async ({
       chocolatine_id: chocolatine.id,
       user_id: user.id,
       user_username: user.username,
+      user_email: user.email,
       shop_id: shop.id,
+      shop_name: shop.name,
       ...review,
     },
     update: review,
@@ -274,6 +276,8 @@ export default function Add() {
               name="good_or_not_good"
               type="number"
               id="good_or_not_good"
+              min="0"
+              step="0.5"
               required
               onWheel={(e) => e.currentTarget.blur()}
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"

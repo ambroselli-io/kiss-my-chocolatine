@@ -1,5 +1,4 @@
 import { isOpenedNow } from "./isOpenedNow";
-import { criterias } from "./review";
 import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import type { Chocolatine, Shop } from "@prisma/client";
 
