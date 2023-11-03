@@ -1,0 +1,14 @@
+/*
+  Warnings:
+
+  - The values [USER_CHOCOLATINE_NEW,USER_CHOCOLATINE_REVIEW] on the enum `Action` will be removed. If these variants are still used in the database, this will fail.
+
+*/
+-- AlterEnum
+BEGIN;
+CREATE TYPE "Action_new" AS ENUM ('USER_SHOP_NEW', 'USER_SHOP_UPDATE', 'USER_REFERRAL_CREATER', 'USER_REFERRAL_RECEIVER', 'USER_CHOCOLATINE_CRITERIAS_REVIEW', 'USER_CHOCOLATINE_COMMENT_SCORE', 'USER_LINKEDIN_LIKE', 'USER_LINKEDIN_COMMENT', 'USER_LINKEDIN_SHARE', 'USER_LINKEDIN_POST', 'USER_LINKEDIN_FOLLOW_PAGE', 'INVESTOR_EURO_AMOUNT', 'BUILDER_HOUR_AMOUNT', 'FEEDBACK');
+ALTER TABLE "UserAction" ALTER COLUMN "action" TYPE "Action_new" USING ("action"::text::"Action_new");
+ALTER TYPE "Action" RENAME TO "Action_old";
+ALTER TYPE "Action_new" RENAME TO "Action";
+DROP TYPE "Action_old";
+COMMIT;

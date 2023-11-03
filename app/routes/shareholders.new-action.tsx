@@ -10,6 +10,7 @@ import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
 import type { Action } from "@prisma/client";
+import { mapActionToShares } from "~/utils/mapActionToShares";
 
 export async function action({ request }: ActionFunctionArgs) {
   const user = (await getUserFromCookie(request)) as User;
@@ -19,24 +20,6 @@ export async function action({ request }: ActionFunctionArgs) {
   const action = form.get("action") as Action;
   const numberOfActions = form.get("number_of_actions") as string;
   const user_email = form.get("user_email") as string;
-
-  const mapActionToShares: Record<Action, number> = {
-    USER_SHOP_NEW: 1,
-    USER_SHOP_UPDATE: 1,
-    USER_REFERRAL_CREATER: 3,
-    USER_REFERRAL_RECEIVER: 1,
-    USER_CHOCOLATINE_NEW: 1,
-    USER_CHOCOLATINE_UPDATE: 1,
-    USER_CHOCOLATINE_REVIEW: 1,
-    USER_LINKEDIN_LIKE: 1,
-    USER_LINKEDIN_COMMENT: 2,
-    USER_LINKEDIN_SHARE: 3,
-    USER_LINKEDIN_POST: 4,
-    USER_LINKEDIN_FOLLOW_PAGE: 5,
-    INVESTOR_EURO_AMOUNT: 1,
-    BUILDER_HOUR_AMOUNT: 2,
-    FEEDBACK: 1,
-  };
 
   const actionUser = await prisma.user.findUnique({
     where: {
@@ -82,23 +65,7 @@ export default function NewShareholderAction() {
             required
             className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
           >
-            {[
-              "USER_SHOP_NEW",
-              "USER_SHOP_UPDATE",
-              "USER_REFERRAL_CREATER",
-              "USER_REFERRAL_RECEIVER",
-              "USER_CHOCOLATINE_NEW",
-              "USER_CHOCOLATINE_UPDATE",
-              "USER_CHOCOLATINE_REVIEW",
-              "USER_LINKEDIN_LIKE",
-              "USER_LINKEDIN_COMMENT",
-              "USER_LINKEDIN_SHARE",
-              "USER_LINKEDIN_POST",
-              "USER_LINKEDIN_FOLLOW_PAGE",
-              "INVESTOR_EURO_AMOUNT",
-              "BUILDER_HOUR_AMOUNT",
-              "FEEDBACK",
-            ].map((action) => {
+            {Object.keys(mapActionToShares).map((action) => {
               return (
                 <option key={action} value={action}>
                   {action}
