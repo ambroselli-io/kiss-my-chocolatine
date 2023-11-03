@@ -92,8 +92,10 @@ export default function NewShareholderAction() {
               "USER_LINKEDIN_LIKE",
               "USER_LINKEDIN_COMMENT",
               "USER_LINKEDIN_SHARE",
+              "USER_LINKEDIN_POST",
               "INVESTOR_EURO_AMOUNT",
               "BUILDER_HOUR_AMOUNT",
+              "FEEDBACK",
             ].map((action) => {
               return (
                 <option key={action} value={action}>
