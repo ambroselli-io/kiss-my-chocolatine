@@ -15,7 +15,8 @@ global.__prisma
   })
   .then(async () => {
     // migrations
-    console.log("start migration");
+    console.log("start migration !!");
+    // create shops
 
     console.log("done migration");
   })

@@ -64,7 +64,9 @@ export const action = async ({
     },
     create: {
       shop_id: shop.id,
+      shop_name: shop.name,
       created_by_user_id: user.id,
+      created_by_user_email: user.email,
       has_been_reviewed_once: true,
       ...chocolatineParams,
     },
@@ -188,6 +190,8 @@ export default function Add() {
             <input
               name="price"
               type="number"
+              min="0"
+              step="0.01"
               id="price"
               onWheel={(e) => e.currentTarget.blur()}
               required

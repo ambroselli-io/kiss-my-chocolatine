@@ -1,19 +1,10 @@
 import {
   ActionFunctionArgs,
-  ActionFunction,
-  json,
   redirect,
   LoaderFunctionArgs,
   LoaderFunction,
 } from "@remix-run/node";
-import ShortUniqueId from "short-unique-id";
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigate,
-  useNavigation,
-} from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 import parseGoogleLinkForCoordinates from "~/utils/parseGoogleLinkForCoordinates.server";
 import {
   ModalBody,
@@ -21,7 +12,11 @@ import {
   ModalRouteContainer,
 } from "~/components/Modal";
 import { prisma } from "~/db/prisma.server";
-import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
+import {
+  getUserEmailFromCookie,
+  getUserFromCookie,
+  getUserIdFromCookie,
+} from "~/services/auth.server";
 
 type ActionReturnType = {
   ok: boolean;
@@ -37,6 +32,7 @@ export const action = async ({
   const shopName = form.get("shop_name") as string;
   const addressLocality = form.get("addressLocality") as string;
   const userId = await getUserIdFromCookie(request);
+  const userEmail = await getUserEmailFromCookie(request);
 
   // google link can be
   // -> https://maps.app.goo.gl/2PScR6bSNXJUyns57
@@ -44,6 +40,8 @@ export const action = async ({
 
   const { latitude, longitude } =
     await parseGoogleLinkForCoordinates(googleLink);
+
+  return redirect(`/chocolatine`);
 
   const shop = await prisma.shop.create({
     data: {
@@ -53,6 +51,7 @@ export const action = async ({
       latitude,
       longitude,
       created_by_user_id: userId,
+      created_by_user_email: userEmail,
     },
   });
 
