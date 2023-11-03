@@ -126,6 +126,7 @@ model ChocolatineReview {
 }
 
 enum Action {
+  USER_REGISTRATION
   USER_SHOP_NEW
   USER_SHOP_UPDATE
   USER_REFERRAL_CREATER
