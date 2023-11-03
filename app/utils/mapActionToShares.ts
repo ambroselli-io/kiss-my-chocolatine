@@ -8,6 +8,7 @@ export const mapActionToShares: Record<Action, number> = {
   USER_REFERRAL_RECEIVER: 1,
   USER_CHOCOLATINE_CRITERIAS_REVIEW: 100,
   USER_CHOCOLATINE_COMMENT_SCORE: 50,
+  USER_CHOCOLATINE_INGREDIENTS: 500,
   USER_LINKEDIN_LIKE: 10,
   USER_LINKEDIN_COMMENT: 20,
   USER_LINKEDIN_SHARE: 30,
@@ -40,12 +41,14 @@ export const reduceAllDBActionsToShares = (
       return builders;
     }, {});
 
-  const allStakeholders = Object.keys(uaObject).map((user_email) => {
-    return {
-      user_email,
-      number_of_actions: uaObject[user_email],
-    };
-  });
+  const allStakeholders = Object.keys(uaObject)
+    .map((user_email) => {
+      return {
+        user_email,
+        number_of_actions: uaObject[user_email],
+      };
+    })
+    .sort((a, b) => b.number_of_actions - a.number_of_actions);
   const totalStakeholdersActions = allStakeholders.reduce((total, builder) => {
     return total + builder.number_of_actions;
   }, 0);

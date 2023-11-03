@@ -73,7 +73,7 @@ export default function NewShareholderAction() {
           Write your email below, and a potential company's benefit, and see how
           much you get in your pocket.
         </p>
-        <div>
+        <div className="border border-gray-500 p-4 drop-shadow-sm">
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
             <input
               type="text"
@@ -82,6 +82,7 @@ export default function NewShareholderAction() {
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="arnaud@ambroselli.io"
               onChange={(e) => setEmail(e.currentTarget.value)}
+              value={email}
             />
             <label htmlFor="email">
               Email
@@ -104,7 +105,7 @@ export default function NewShareholderAction() {
           </div>
 
           {!!email && (
-            <>
+            <div className="mt-4 text-2xl">
               {!!user && (
                 <p>
                   User's actions: {user?.number_of_actions} -- benefit:{" "}
@@ -138,7 +139,7 @@ export default function NewShareholderAction() {
                   }).format(builderBenefit)}
                 </p>
               )}
-              <p className="font-semibold">
+              <p className="my-6 font-semibold">
                 Total dividend:{" "}
                 {new Intl.NumberFormat("fr-FR", {
                   style: "currency",
@@ -147,7 +148,7 @@ export default function NewShareholderAction() {
                   minimumFractionDigits: 0,
                 }).format(userBenefit + builderBenefit + investorBenefit)}
               </p>
-            </>
+            </div>
           )}
         </div>
       </details>
@@ -229,6 +230,7 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
+            onClick={(data) => setEmail(data.id)}
             data={builders[0].map((ua) => {
               return {
                 id: ua.user_email,
@@ -267,6 +269,7 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
+            onClick={(data) => setEmail(data.id)}
             data={investors[0].map((ua) => {
               return {
                 id: ua.user_email,
@@ -295,6 +298,7 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
+            onClick={(data) => setEmail(data.id)}
             data={users[0].map((ua, index) => {
               return {
                 id: ua.user_email,
