@@ -73,7 +73,7 @@ export default function NewShareholderAction() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <h1 className="text-xl font-semibold">Shareholders action</h1>
-      <Form method="post" key={actionData?.data.id}>
+      <Form method="post">
         <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
           <select
             id="action"
@@ -126,7 +126,10 @@ export default function NewShareholderAction() {
             <sup className="ml-1 text-red-500">*</sup>
           </label>
         </div>
-        <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+        <div
+          className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left"
+          key={actionData?.data.id}
+        >
           <input
             name="user_email"
             type="email"
