@@ -17,6 +17,7 @@ import {
   getUserFromCookie,
   getUserIdFromCookie,
 } from "~/services/auth.server";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 type ActionReturnType = {
   ok: boolean;
@@ -121,7 +122,20 @@ export default function AddNewShop() {
             />
             <details className="question text-left">
               <summary>
-                <label htmlFor="google_map_link">Google Maps link</label>
+                <label
+                  htmlFor="google_map_link"
+                  className="inline-flex items-center gap-x-2"
+                >
+                  <a
+                    href="https://maps.google.com"
+                    target="_blank"
+                    className="inline-flex items-center gap-x-2"
+                    rel="noopener noreferrer"
+                  >
+                    <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                    Google Maps link
+                  </a>
+                </label>
               </summary>
               <p className="pl-4 text-sm opacity-40">
                 We're interested in the Google Maps link because it provides all
