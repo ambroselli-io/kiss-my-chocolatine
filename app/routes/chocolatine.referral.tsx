@@ -46,21 +46,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     });
   }
 
-  // await prisma.userAction.create({
-  //   data: {
-  //     action: "USER_REFERRAL_CREATER",
-  //     user_id: userId,
-  //     number_of_actions: 1,
-  //     user_email: userEmail,
-  //   },
-  // });
-  // await prisma.userAction.create({
-  //   data: {
-  //     action: "USER_REFERRAL_RECEIVER",
-  //     number_of_actions: 1,
-  //     user_email: user_referral_creater,
-  //   },
-  // });
+  await prisma.userAction.create({
+    data: {
+      action: "USER_REFERRAL_CREATER",
+      user_id: userId,
+      number_of_actions: 1,
+      user_email: userEmail,
+    },
+  });
+  await prisma.userAction.create({
+    data: {
+      action: "USER_REFERRAL_RECEIVER",
+      number_of_actions: 1,
+      user_email: user_referral_creater,
+    },
+  });
 
   const admin = await prisma.user.findFirst({
     where: {
