@@ -82,65 +82,81 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     filters[filterKey] = url.searchParams.getAll(filterKey as string);
   }
 
+  const features = shops
+    .map((shop): CustomFeature | null => {
+      if (!shop.longitude) return null;
+      if (!shop.latitude) return null;
+
+      const { chocolatine } = shop;
+
+      const isActiveShop = shop.id === params?.shop_id;
+      const isIncludedByFilters = isChocolatineIncludedByFilters(
+        filters,
+        shop,
+        chocolatine,
+      );
+
+      return {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [shop.longitude, shop.latitude],
+        },
+        properties: {
+          id: shop.id,
+          is_active_shop: isActiveShop ? 1 : 0,
+          is_included_by_filters: isIncludedByFilters ? 1 : 0,
+          sort_key: isActiveShop
+            ? 4
+            : isIncludedByFilters
+            ? 3
+            : chocolatine?.has_been_reviewed_once
+            ? 2
+            : 1,
+          has_review: !!chocolatine?.has_been_reviewed_once,
+        },
+      };
+    })
+    .filter(Boolean)
+    .map((feature) => {
+      feature = feature as CustomFeature;
+      return feature;
+    });
+
   const data: {
     initialViewState: any;
     total: number;
-    geojson: CustomFeatureCollection;
+    geojson_included_by_filters: CustomFeatureCollection;
+    geojson_excluded_by_filters: CustomFeatureCollection;
     user_id?: string;
   } = {
     user_id: await getUserIdFromCookie(request, { optional: true }),
     initialViewState,
     total: shops.length,
-    geojson: {
+    geojson_included_by_filters: {
       type: "FeatureCollection",
-      features: shops
-        .map((shop): CustomFeature | null => {
-          if (!shop.longitude) return null;
-          if (!shop.latitude) return null;
-
-          const { chocolatine } = shop;
-
-          const isActiveShop = shop.id === params?.shop_id;
-          const isIncludedByFilters = isChocolatineIncludedByFilters(
-            filters,
-            shop,
-            chocolatine,
-          );
-
-          return {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [shop.longitude, shop.latitude],
-            },
-            properties: {
-              id: shop.id,
-              is_active_shop: isActiveShop ? 1 : 0,
-              is_included_by_filters: isIncludedByFilters ? 1 : 0,
-              sort_key: isActiveShop
-                ? 4
-                : isIncludedByFilters
-                ? 3
-                : chocolatine?.has_been_reviewed_once
-                ? 2
-                : 1,
-              has_review: !!chocolatine?.has_been_reviewed_once,
-            },
-          };
-        })
-        .filter(Boolean)
-        .map((feature) => {
-          feature = feature as CustomFeature;
-          return feature;
-        }),
+      features: features.filter(
+        (feature) => feature.properties.is_included_by_filters === 1,
+      ),
+    },
+    geojson_excluded_by_filters: {
+      type: "FeatureCollection",
+      features: features.filter(
+        (feature) => feature.properties.is_included_by_filters === 0,
+      ),
     },
   };
   return data;
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  let { user_id, initialViewState, total, geojson } =
-    useLoaderData<typeof loader>();
+  let {
+    user_id,
+    initialViewState,
+    total,
+    geojson_included_by_filters,
+    geojson_excluded_by_filters,
+  } = useLoaderData<typeof loader>();
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [searchParams] = useSearchParams();
@@ -194,9 +210,9 @@ export default function App() {
               >
                 <MapImage>
                   <Source
-                    id="shops"
+                    id="shops_include"
                     type="geojson"
-                    data={geojson}
+                    data={geojson_included_by_filters}
                     cluster
                     clusterMaxZoom={14}
                     clusterRadius={50}
@@ -204,7 +220,7 @@ export default function App() {
                     <Layer /* Layer for the clusters */
                       id="clusters"
                       type="circle"
-                      source="shops"
+                      source="shops_include"
                       filter={["has", "point_count"]}
                       paint={{
                         "circle-color": "#FFBB01",
@@ -224,7 +240,7 @@ export default function App() {
                     <Layer /* Layer for the cluster count labels */
                       id="cluster-count"
                       type="symbol"
-                      source="shops"
+                      source="shops_include"
                       filter={["has", "point_count"]}
                       layout={{
                         "text-field": "{point_count_abbreviated}",
@@ -237,7 +253,7 @@ export default function App() {
                     />
 
                     <Layer
-                      id="shops"
+                      id="shops_include"
                       type="symbol"
                       layout={{
                         "icon-image": [
@@ -267,6 +283,47 @@ export default function App() {
                       }}
                     />
                   </Source>
+                  <Source
+                    id="shops_exclude"
+                    type="geojson"
+                    data={geojson_excluded_by_filters}
+                  >
+                    <Layer
+                      id="shops_exclude"
+                      type="symbol"
+                      layout={{
+                        "icon-image": [
+                          "case",
+                          ["==", ["get", "is_active_shop"], 1],
+                          "marker-full-black",
+                          ["to-boolean", ["get", "has_review"]],
+                          "marker-black",
+                          "marker-white",
+                        ],
+                        "icon-allow-overlap": true,
+                        "icon-ignore-placement": true,
+                        "icon-size": 0.2,
+                        "icon-offset": [0, -75],
+                        "symbol-sort-key": ["get", "sort_key"],
+                      }}
+                      filter={[
+                        "all",
+                        ["!", ["has", "point_count"]],
+                        ["!=", ["get", "is_included_by_filters"], true],
+                        [">=", ["zoom"], 11],
+                      ]}
+                      paint={{
+                        "icon-opacity": [
+                          "case",
+                          ["==", ["get", "is_active_shop"], 1], // Check if shop is active
+                          1,
+                          ["==", ["get", "is_included_by_filters"], 1],
+                          1,
+                          0.15,
+                        ],
+                      }}
+                    />
+                  </Source>
                 </MapImage>
                 <NavigationControl
                   showCompass={false}
@@ -282,7 +339,7 @@ export default function App() {
           total={total}
           setIsOnboardingOpen={setIsOnboardingOpen}
           user_id={user_id}
-          geojson={geojson}
+          geojson_included_by_filters={geojson_included_by_filters}
         />
 
         <Outlet />

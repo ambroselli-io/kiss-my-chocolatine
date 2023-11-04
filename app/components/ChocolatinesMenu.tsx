@@ -16,7 +16,7 @@ interface ChocolatinesMenuProps {
   setIsOnboardingOpen: (isOpen: boolean) => void;
   user_id: string | undefined;
   total: number;
-  geojson: CustomFeatureCollection;
+  geojson_included_by_filters: CustomFeatureCollection;
 }
 
 export default function ChocolatinesMenu({
@@ -24,12 +24,12 @@ export default function ChocolatinesMenu({
   setIsOnboardingOpen,
   user_id,
   total,
-  geojson,
+  geojson_included_by_filters,
 }: ChocolatinesMenuProps) {
   const [showMore, setShowMore] = useState(false);
   const params = useParams();
 
-  const { chocolatineName } = useChocolatineName();
+  const { chocolatineName, chocolatinesName } = useChocolatineName();
 
   return (
     <ClientOnly>
@@ -41,7 +41,7 @@ export default function ChocolatinesMenu({
                 className="max-w-lg cursor-pointer md:max-w-none"
                 onClick={() => setIsOnboardingOpen(true)}
               >
-                All the <b>{chocolatineName}</b> from the world 🌍{" "}
+                All the <b>{chocolatinesName}</b> from the world 🌍{" "}
                 <small className="opacity-30">
                   Well, it's {total} for now, but the world is coming step by
                   step 🤜
@@ -54,7 +54,9 @@ export default function ChocolatinesMenu({
             </div>
             {showMore && (
               <div className="flex flex-col overflow-y-auto border-t border-t-gray-200">
-                <ChocolatinesFilters geojson={geojson} />
+                <ChocolatinesFilters
+                  geojson_included_by_filters={geojson_included_by_filters}
+                />
                 <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                   <summary>
                     <a

@@ -2,17 +2,15 @@ import { Form, useSearchParams, useSubmit } from "@remix-run/react";
 import type { CustomFeatureCollection } from "~/types/geojson";
 
 type Props = {
-  geojson: CustomFeatureCollection;
+  geojson_included_by_filters: CustomFeatureCollection;
 };
 
-export default function ChocolatinesFilters({ geojson }: Props) {
+export default function ChocolatinesFilters({
+  geojson_included_by_filters,
+}: Props) {
   const submit = useSubmit();
   const [searchParams] = useSearchParams();
   const total = Array.from(searchParams).length;
-
-  const filteredGeojson = geojson?.features?.filter(
-    (feature) => !!feature.properties?.is_included_by_filters,
-  )?.length;
 
   return (
     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
@@ -21,7 +19,7 @@ export default function ChocolatinesFilters({ geojson }: Props) {
         {total > 0 ? (
           <small className="font-normal opacity-25">
             {" "}
-            - {filteredGeojson} shops
+            - {geojson_included_by_filters.features.length} shops
           </small>
         ) : (
           ""
