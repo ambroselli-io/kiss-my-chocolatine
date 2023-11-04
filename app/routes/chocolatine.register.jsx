@@ -12,6 +12,7 @@ import { createForgetPasswordEmail, sendEmail } from "~/services/email.server";
 import Cookies from "js-cookie";
 import { ModalBody, ModalRouteContainer } from "~/components/Modal";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -288,10 +289,10 @@ export default function Register() {
   useEffect(() => {
     if (actionData?.error) alert(actionData?.error);
   }, [actionData]);
-
+  const fromCookies = useChocolatineName();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
   useEffect(() => {
-    setChocolatineName(Cookies.get("chocolatine-name") || "pain au chocolat");
+    setChocolatineName(fromCookies.chocolatineName);
   }, []);
 
   const initEmail = useMemo(() => {

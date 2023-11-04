@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { ModalBody, ModalContainer, ModalFooter, ModalHeader } from "./Modal";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 export default function Onboarding({ open, onClose }) {
   const [step, setStep] = useState(0);
 
-  const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
-  const chocolatinesName =
-    Cookies.get("chocolatines-name") || "pains au chocolat";
+  const { chocolatinesName, newAppName } = useChocolatineName();
 
   return (
     <ModalContainer
@@ -121,7 +120,7 @@ export default function Onboarding({ open, onClose }) {
       )}
       {step === 1 && (
         <>
-          <ModalHeader title="Welcome tooo Kiss My Chocolatine ! 🍫" />
+          <ModalHeader title={`Welcome tooo ${newAppName}\u00A0!\u00A0🍫`} />
           <ModalBody className="flex flex-col items-center overflow-y-auto py-4 sm:p-8">
             <p className="w-full px-4 text-center">You'll find here </p>
             <ul className="mt-3 list-inside px-4 text-left">
@@ -183,7 +182,7 @@ export default function Onboarding({ open, onClose }) {
       )}
       {step === 2 && (
         <>
-          <ModalHeader title="Make money by using Kiss&nbsp;My&nbsp;Chocolatine&nbsp;🏦" />
+          <ModalHeader title={`Make money by using ${newAppName}\u00A0🏦`} />
           <ModalBody className="flex flex-col items-center overflow-y-auto sm:p-8">
             <p className="w-full p-4 text-center">
               All users are shareholders 🤑 🤑 🤑
@@ -209,10 +208,10 @@ export default function Onboarding({ open, onClose }) {
               </li>
             </ul>
             <p className="p-4">
-              If one day Kiss My Chocolatine makes money, you'll get your fair
-              share. Because for Kiss My Chocolatine to make money, we need you
-              to do more content (shops and reviews), and more other users to do
-              event more content.
+              If one day {newAppName} makes money, you'll get your fair share.
+              Because for {newAppName} to make money, we need you to do more
+              content (shops and reviews), and more other users to do event more
+              content.
             </p>
           </ModalBody>
           <ModalFooter>

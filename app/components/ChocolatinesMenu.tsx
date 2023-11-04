@@ -1,7 +1,6 @@
 import { Form, Link, useParams } from "@remix-run/react";
 import type { MapRef } from "react-map-gl";
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { ClientOnly } from "remix-utils/client-only";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import ButtonArrowMenu from "~/components/ButtonArrowMenu";
@@ -10,6 +9,7 @@ import AboutOneActionOneShare from "~/components/AboutOneActionOneShare";
 import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import MyCurrentLocation from "~/components/MyCurrentLocation";
 import type { CustomFeatureCollection } from "~/types/geojson";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 interface ChocolatinesMenuProps {
   mapRef: React.MutableRefObject<MapRef | null>;
@@ -29,7 +29,7 @@ export default function ChocolatinesMenu({
   const [showMore, setShowMore] = useState(false);
   const params = useParams();
 
-  const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
+  const { chocolatineName } = useChocolatineName();
 
   return (
     <ClientOnly>

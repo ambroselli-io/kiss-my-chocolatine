@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { prisma } from "~/db/prisma.server";
 import { from020to22 } from "~/utils/review";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 // export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
 //   const parentMeta = matches[matches.length - 2].meta ?? [];
@@ -57,11 +58,11 @@ export default function ChocolatineAndShop() {
   const data = useLoaderData<typeof loader>();
   const { chocolatine, detailedReviews } = data;
   const shop = data.shop as unknown as Shop;
-
+  const fromCookies = useChocolatineName();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
   const [searchParams] = useSearchParams();
   useEffect(() => {
-    setChocolatineName(Cookies.get("chocolatine-name") || "pain au chocolat");
+    setChocolatineName(fromCookies.chocolatineName);
   }, []);
 
   return (

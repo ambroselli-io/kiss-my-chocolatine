@@ -17,6 +17,7 @@ import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 import Cookies from "js-cookie";
 import type { User } from "@prisma/client";
 import { compileReviews } from "~/utils/review";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 type ActionReturnType = {
   ok: boolean;
@@ -177,7 +178,7 @@ export default function Add() {
   const busy = state === "submitting";
   const { shop, chocolatine, myReview } = useLoaderData<typeof loader>();
 
-  const chocolatineName = Cookies.get("chocolatine-name") || "pain au chocolat";
+  const { chocolatineName } = useChocolatineName();
 
   return (
     <ModalRouteContainer

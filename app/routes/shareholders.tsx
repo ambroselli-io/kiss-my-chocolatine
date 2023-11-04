@@ -15,6 +15,7 @@ import {
   reduceAllDBActionsToShares,
 } from "~/utils/mapActionToShares";
 import ChartStakeholders from "~/components/ChartStakeholders";
+import useChocolatineName from "~/utils/useChocolatineName";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches
@@ -100,10 +101,11 @@ export default function NewShareholderAction() {
       )
     : 0;
 
+  const { newAppName } = useChocolatineName();
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50">
       <h1 className="bg-app-500 px-6 py-10 text-4xl font-semibold">
-        Kiss My Chocolatine's Shareholders
+        {newAppName}'s Shareholders
       </h1>
       <details open className="border-b border-b-gray-300 px-8 pb-4">
         <summary className="mb-4 pl-4">
