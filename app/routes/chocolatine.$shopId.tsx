@@ -70,40 +70,8 @@ export default function ChocolatineAndShop() {
       id="drawer"
       className="relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-auto sm:max-h-full sm:max-w-sm sm:flex-1 sm:basis-full"
     >
-      <h2 className="mt-4 px-4 text-xl font-bold">{shop.name} </h2>
-      <span
-        aria-details="address"
-        className="mt-1 flex cursor-pointer pl-6 text-sm opacity-70"
-        onClick={() => {
-          window.open(
-            `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
-            "_blank",
-          );
-        }}
-      >
-        <img src="/assets/pin-grey.svg" className="mr-1 w-5 sm:mr-3" />
-        {!!shop.streetAddress ? (
-          <>
-            {shop.streetAddress}
-            <br />
-            {shop.addresspostalCode} {shop.addressLocality}{" "}
-            {shop.addressCountry}
-          </>
-        ) : (
-          <>{shop.addressLocality}</>
-        )}
-      </span>
-      <span
-        aria-details="opening hours"
-        className="mt-1 flex pl-6 text-sm opacity-70"
-      >
-        <img src="/assets/clock-grey.svg" className="mr-1 w-5 sm:mr-3" />
-        {shop.openingHoursSpecification ? (
-          <Availability shop={shop} />
-        ) : (
-          "No opening hours available"
-        )}
-      </span>
+      <h2 className="mt-4 px-4 text-xl font-bold">{shop.name}</h2>
+
       <Link
         className="absolute right-2 top-2 font-light text-black"
         to={`/chocolatine?${searchParams.toString()}`}
@@ -125,6 +93,39 @@ export default function ChocolatineAndShop() {
         </svg>
       </Link>
       <div className="h-full w-full flex-col overflow-x-auto overflow-y-auto">
+        <span
+          aria-details="address"
+          className="mt-1 flex cursor-pointer pl-6 text-sm opacity-70"
+          onClick={() => {
+            window.open(
+              `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
+              "_blank",
+            );
+          }}
+        >
+          <img src="/assets/pin-grey.svg" className="mr-1 w-5 sm:mr-3" />
+          {!!shop.streetAddress ? (
+            <>
+              {shop.streetAddress}
+              <br />
+              {shop.addresspostalCode} {shop.addressLocality}{" "}
+              {shop.addressCountry}
+            </>
+          ) : (
+            <>{shop.addressLocality}</>
+          )}
+        </span>
+        <span
+          aria-details="opening hours"
+          className="mt-1 flex pl-6 text-sm opacity-70"
+        >
+          <img src="/assets/clock-grey.svg" className="mr-1 w-5 sm:mr-3" />
+          {shop.openingHoursSpecification ? (
+            <Availability shop={shop} />
+          ) : (
+            "No opening hours available"
+          )}
+        </span>
         <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
           <h3
             className={`mt-1 ${
@@ -178,7 +179,9 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Flaky/Feuilleuté or Brioche-like</summary>
+                  <summary>
+                    Is it more Flaky (feuilleuté) or Brioche-like?
+                  </summary>
                   <p className="text-xs italic opacity-70">
                     the original {chocolatineName} IS flaky. Butterly flaky. But
                     it takes everything to make a world&nbsp;🤷
@@ -192,7 +195,7 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Golden or Pale</summary>
+                  <summary>Golden or Pale?</summary>
                   <p className="text-xs italic opacity-70">
                     The more golden the more cooked.&nbsp;❤️‍🔥
                   </p>
@@ -205,7 +208,7 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Crispy or Soft</summary>
+                  <summary>Crispy or Soft?</summary>
                   <p className="text-xs italic opacity-70">
                     A combinaison of buttery, flakiness and and time to
                     cook&nbsp;🤯
@@ -219,7 +222,7 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Light or Dense</summary>
+                  <summary>Light or Dense?</summary>
                   <p className="text-xs italic opacity-70">
                     This is a signature&nbsp;🧑‍🍳
                   </p>
@@ -232,7 +235,7 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Chocolate disposition</summary>
+                  <summary>How is the chocolate disposition?</summary>
                   <p className="text-xs italic opacity-70">
                     superimposed or well distributed?&nbsp;🖖
                   </p>
@@ -245,9 +248,9 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Small or big</summary>
+                  <summary>Small or big?</summary>
                   <p className="text-xs italic opacity-70">
-                    this is maly to point out the too small ones, tbh&nbsp;👎
+                    this is mainly to point out the too small ones, tbh&nbsp;👎
                   </p>
                 </details>
                 <BalancedRate
