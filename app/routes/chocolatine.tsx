@@ -195,7 +195,7 @@ export default function App() {
                 initialViewState={initialViewState}
                 reuseMaps
                 id="maproot"
-                interactiveLayerIds={["shops"]}
+                interactiveLayerIds={["shops_include", "shops_exclude"]}
                 onMouseMove={(e) => {
                   setIsHoveringFeature(!!e.features?.length);
                 }}
@@ -210,7 +210,7 @@ export default function App() {
               >
                 <MapImage>
                   <Source
-                    id="shops"
+                    id="shops_include"
                     type="geojson"
                     data={geojson_included_by_filters}
                     cluster
@@ -220,7 +220,7 @@ export default function App() {
                     <Layer /* Layer for the clusters */
                       id="clusters"
                       type="circle"
-                      source="shops"
+                      source="shops_include"
                       filter={["has", "point_count"]}
                       paint={{
                         "circle-color": "#FFBB01",
@@ -240,7 +240,7 @@ export default function App() {
                     <Layer /* Layer for the cluster count labels */
                       id="cluster-count"
                       type="symbol"
-                      source="shops"
+                      source="shops_include"
                       filter={["has", "point_count"]}
                       layout={{
                         "text-field": "{point_count_abbreviated}",
@@ -253,7 +253,7 @@ export default function App() {
                     />
 
                     <Layer
-                      id="shops"
+                      id="shops_include"
                       type="symbol"
                       layout={{
                         "icon-image": [
@@ -271,6 +271,47 @@ export default function App() {
                         "symbol-sort-key": ["get", "sort_key"],
                       }}
                       filter={["!", ["has", "point_count"]]}
+                      paint={{
+                        "icon-opacity": [
+                          "case",
+                          ["==", ["get", "is_active_shop"], 1], // Check if shop is active
+                          1,
+                          ["==", ["get", "is_included_by_filters"], 1],
+                          1,
+                          0.15,
+                        ],
+                      }}
+                    />
+                  </Source>
+                  <Source
+                    id="shops_exclude"
+                    type="geojson"
+                    data={geojson_excluded_by_filters}
+                  >
+                    <Layer
+                      id="shops_exclude"
+                      type="symbol"
+                      layout={{
+                        "icon-image": [
+                          "case",
+                          ["==", ["get", "is_active_shop"], 1],
+                          "marker-full-black",
+                          ["to-boolean", ["get", "has_review"]],
+                          "marker-black",
+                          "marker-white",
+                        ],
+                        "icon-allow-overlap": true,
+                        "icon-ignore-placement": true,
+                        "icon-size": 0.2,
+                        "icon-offset": [0, -75],
+                        "symbol-sort-key": ["get", "sort_key"],
+                      }}
+                      filter={[
+                        "all",
+                        ["!", ["has", "point_count"]],
+                        ["!=", ["get", "is_included_by_filters"], true],
+                        [">=", ["zoom"], 11],
+                      ]}
                       paint={{
                         "icon-opacity": [
                           "case",
