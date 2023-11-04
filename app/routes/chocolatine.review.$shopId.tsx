@@ -228,7 +228,7 @@ export default function Add() {
             minCaption={"Not at all"}
             maxCaption={"Anything but butter"}
             defaultValue={myReview?.buttery}
-            legend="Buttery"
+            legend="Is there any butter in it?"
           >
             Some people like with A LOT, some other with just a touch. In any
             case, it's an important ingredient of the {chocolatineName}&nbsp;🧈

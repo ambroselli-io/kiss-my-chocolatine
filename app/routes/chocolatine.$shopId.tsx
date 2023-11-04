@@ -163,7 +163,7 @@ export default function ChocolatineAndShop() {
             <>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Butter:</summary>
+                  <summary>Is there any butter in it?</summary>
                   <p className="text-xs italic opacity-70">
                     Some people like with A LOT, some other with just a touch.
                     In any case, it's an important ingredient of the{" "}
