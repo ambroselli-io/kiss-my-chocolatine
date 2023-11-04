@@ -75,15 +75,6 @@ export default function ChocolatinesMenu({
                 >
                   See how many shares you got 🤑
                 </Link>
-                <Link
-                  to="/shareholders"
-                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
-                  onClick={() => {
-                    setShowMore(false);
-                  }}
-                >
-                  See how many shares you got 🤑
-                </Link>
                 <button
                   type="button"
                   className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 text-left"
