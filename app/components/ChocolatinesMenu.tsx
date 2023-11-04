@@ -59,13 +59,15 @@ export default function ChocolatinesMenu({
                 />
                 <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
                   <summary>
-                    <a
-                      href={makeAReferral()}
+                    <Link
+                      to="/chocolatine/referral"
                       className="inline-flex items-center gap-x-2 font-bold"
+                      onClick={() => {
+                        setShowMore(false);
+                      }}
                     >
                       Make a referral and earn one share
-                      <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    </a>
+                    </Link>
                   </summary>
                   <div className="mt-2 flex flex-col gap-2 px-2">
                     <p>

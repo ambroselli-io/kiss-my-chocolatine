@@ -8,6 +8,7 @@ import {
 } from "~/config.server";
 import tailwindConfig from "../../tailwind.config.js";
 import resolveConfig from "tailwindcss/resolveConfig.js";
+import { mapActionToShares } from "~/utils/mapActionToShares.js";
 const fullConfig = resolveConfig(tailwindConfig);
 
 export const sendEmail = async ({
@@ -37,7 +38,7 @@ export const sendEmail = async ({
     "X-Tipimail-ApiKey": TIPIMAIL_API_KEY,
     "Content-Type": "application/json",
   };
-  return fetch("https://api.tipimail.com/v1/messages/send", {
+  const response = await fetch("https://api.tipimail.com/v1/messages/send", {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -57,6 +58,7 @@ export const sendEmail = async ({
       },
     }),
   });
+  return response.json();
 };
 
 // user is Prisma.user
@@ -104,5 +106,86 @@ If you did not request a password reset, please ignore this email.
     subject: `${APP_NAME} - Reset your password`,
     text,
     html,
+  };
+};
+
+export const friendToInviteEmail = (
+  sender: string,
+  emailAddress: string,
+  chocolatineName: string,
+) => {
+  if (!emailAddress) throw new Error("No email provided for password reset");
+
+  const text = `
+Hello!
+
+${sender} as invited you to join ${APP_NAME}!
+
+Go to ${APP_URL} to create your account.
+
+With ${APP_NAME}, you can find all the ${chocolatineName} from the world, and review them!
+
+Remember: doing one thing for Kiss My Chocolatine rewards some shares. One review, one addition of ingredients, one new shop or one referral is different amount of shares.
+The more you do, the more share you get, the more money you'll get when the company become profitable!
+
+
+Sincerely yours,
+Arnaud from the ${APP_NAME} team.
+`.trim();
+
+  return {
+    emails: [emailAddress],
+
+    subject: `${sender} invites you to join ${APP_NAME}!`,
+    text,
+  };
+};
+
+export const friendInvitedEmail = (sender: string, emailAddress: string) => {
+  if (!emailAddress) throw new Error("No email provided for password reset");
+
+  const text = `
+Hello!
+
+You invited ${emailAddress} to join ${APP_NAME}!
+Good job, you earned ${mapActionToShares.USER_REFERRAL_CREATER} shares of the company!
+And ${emailAddress} earned ${mapActionToShares.USER_REFERRAL_RECEIVER} share of the company.
+
+Remember: doing one thing for Kiss My Chocolatine rewards some shares. One review, one addition of ingredients, one new shop or one referral is different amount of shares.
+The more you do, the more share you get, the more money you'll get when the company become profitable!
+
+
+Sincerely yours,
+Arnaud from ${APP_NAME} team.
+`.trim();
+
+  return {
+    emails: [sender],
+    subject: `You invited ${emailAddress} to join ${APP_NAME}!`,
+    text,
+  };
+};
+
+export const adminEMail = (
+  sender: string,
+  emailAddress: string,
+  adminEmail: string,
+) => {
+  if (!adminEmail) throw new Error("No email provided for password reset");
+
+  const text = `
+Hello!
+
+USER_REFERRAL_CREATER: ${sender}
+USER_REFERRAL_RECEIVER: ${emailAddress}
+
+Sincerely mine,
+Arnaud from ${APP_NAME} team.
+`.trim();
+
+  return {
+    emails: [adminEmail],
+    subject: `Invitation to join ${APP_NAME}!`,
+    text,
   };
 };
