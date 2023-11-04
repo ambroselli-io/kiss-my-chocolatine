@@ -195,16 +195,41 @@ export default function App() {
                 initialViewState={initialViewState}
                 reuseMaps
                 id="maproot"
-                interactiveLayerIds={["shops_include", "shops_exclude"]}
+                interactiveLayerIds={[
+                  "shops_include",
+                  "shops_exclude",
+                  "poi-label",
+                  "symbol",
+                  "city-label",
+                ]}
                 onMouseMove={(e) => {
                   setIsHoveringFeature(!!e.features?.length);
                 }}
                 onClick={(e) => {
+                  console.log(e);
+                  console.log(e.features);
                   if (e.features?.length) {
                     const feature = e.features[0] as any;
-                    const { id } = feature.properties;
-                    navigate(`/chocolatine/${id}?${searchParams.toString()}`);
+                    if (!!feature.properties.id) {
+                      const { id } = feature.properties;
+                      navigate(`/chocolatine/${id}?${searchParams.toString()}`);
+                    } else if (feature.properties?.type === "Bakery") {
+                      const name = feature.properties?.name;
+                      const lngLat = e.lngLat;
+                      navigate(
+                        `/chocolatine/new-shop?name=${name}&coordinates=${lngLat.lat},${lngLat.lng}`,
+                      );
+                    }
                   }
+                }}
+                onContextMenu={(e) => {
+                  // log the coordinates like: { longitude: -122.084990, latitude: 37.426929}
+                  const lngLat = e.lngLat;
+                  console.log(e);
+                  console.log(e.features);
+                  navigate(
+                    `/chocolatine/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
+                  );
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
               >

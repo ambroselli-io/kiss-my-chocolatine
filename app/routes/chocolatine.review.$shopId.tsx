@@ -213,7 +213,6 @@ export default function Add() {
               step="0.01"
               id="price"
               onWheel={(e) => e.currentTarget.blur()}
-              required
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="1.50"
               defaultValue={chocolatine?.price}

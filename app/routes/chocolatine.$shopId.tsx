@@ -336,17 +336,28 @@ export default function ChocolatineAndShop() {
         </section>
         <section className="w-full shrink-0  overflow-y-auto px-4 pb-6">
           <h3 className="mb-2 mt-10 font-bold">Shop infos</h3>
+          <dl className="px-4 opacity-70">{shop.description}</dl>
           <address className="mt-5 flex flex-col items-start justify-start gap-2 px-4 pb-11 text-sm font-light not-italic text-[#3c4043]">
             <span aria-details="address" className="flex">
               <img src="/assets/pin-grey.svg" className="mr-3 w-5" />
-              {shop.streetAddress}
-              <br />
-              {shop.addresspostalCode} {shop.addressLocality}{" "}
-              {shop.addressCountry}
+              {!!shop.streetAddress ? (
+                <>
+                  {shop.streetAddress}
+                  <br />
+                  {shop.addresspostalCode} {shop.addressLocality}{" "}
+                  {shop.addressCountry}
+                </>
+              ) : (
+                <>{shop.addressLocality}</>
+              )}
             </span>
             <span aria-details="opening hours" className="flex text-sm">
               <img src="/assets/clock-grey.svg" className="mr-3 w-5" />
-              <Availability shop={shop} />
+              {shop.openingHoursSpecification ? (
+                <Availability shop={shop} />
+              ) : (
+                "No opening hours available"
+              )}
             </span>
             {shop.telephone && (
               <span aria-details="phone" className="flex">

@@ -4,7 +4,13 @@ import {
   LoaderFunctionArgs,
   LoaderFunction,
 } from "@remix-run/node";
-import { Form, useActionData, useNavigation } from "@remix-run/react";
+import * as Sentry from "@sentry/remix";
+import {
+  Form,
+  useActionData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import parseGoogleLinkForCoordinates from "~/utils/parseGoogleLinkForCoordinates.server";
 import {
   ModalBody,
@@ -30,6 +36,8 @@ export const action = async ({
   // Here we can update our database with the new invoice
   const form = await request.formData();
   const googleLink = form.get("google_map_link") as string | null | undefined;
+  const coordinates = form.get("coordinates") as string | null | undefined;
+  const description = form.get("description") as string | null | undefined;
   const shopName = form.get("shop_name") as string;
   const addressLocality = form.get("addressLocality") as string;
   const userId = await getUserIdFromCookie(request);
@@ -39,12 +47,24 @@ export const action = async ({
   // -> https://maps.app.goo.gl/2PScR6bSNXJUyns57
   // ->https://www.google.com/maps/place/Le+Pain+Retrouvé/@48.8777186,2.3396138,17z/data=!3m2!4b1!5s0x47e66e473872ba6b:0xf7d926070e69fc39!4m6!3m5!1s0x47e66f897294d69b:0x37816e98cb091727!8m2!3d48.8777186!4d2.3396138!16s%2Fg%2F11qqj676ry?entry=ttu
 
-  const { latitude, longitude } =
-    await parseGoogleLinkForCoordinates(googleLink);
+  let latitude = null;
+  let longitude = null;
+  try {
+    if (coordinates) {
+      [latitude, longitude] = coordinates.split(",").map(Number);
+    } else if (googleLink) {
+      const googleParsing = await parseGoogleLinkForCoordinates(googleLink);
+      latitude = googleParsing.latitude;
+      longitude = googleParsing.longitude;
+    }
+  } catch (e) {
+    Sentry.captureException(e, { extra: { googleLink, coordinates } });
+  }
 
   const shop = await prisma.shop.create({
     data: {
       name: shopName,
+      description,
       addressLocality,
       google_map_link: googleLink,
       latitude,
@@ -78,6 +98,7 @@ export default function AddNewShop() {
   const { state } = useNavigation();
   const busy = state === "submitting";
   const actionData = useActionData<typeof action>();
+  const [searchParams] = useSearchParams();
 
   return (
     <ModalRouteContainer aria-label="Add new shop" title="Add new shop">
@@ -91,6 +112,7 @@ export default function AddNewShop() {
               required
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="La Boulangerie trop bonne"
+              defaultValue={searchParams.get("name") ?? undefined}
             />
             <label htmlFor="shop_name">
               Name<sup className="ml-1 text-red-500">*</sup>
@@ -144,6 +166,58 @@ export default function AddNewShop() {
                 it here below:
               </p>
             </details>
+          </div>
+          <p className="mb-4 px-4 text-sm opacity-40">
+            Or, if you <i>reaaally</i> don't want to go on Google Map and you're
+            sure about your coordinates:{" "}
+          </p>
+          <div className="mb-3 flex max-w-screen-lg flex-col-reverse gap-2">
+            <input
+              name="coordinates"
+              type="text"
+              id="coordinates"
+              title="Coordinates (like `45.540596,2.493823`)"
+              pattern="-?\d{1,3}\.\d+,-?\d{1,3}\.\d+"
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 valid:bg-green-50 invalid:bg-red-50 focus:border-app-500 focus:ring-app-500"
+              placeholder="45.540596,2.493823"
+              defaultValue={searchParams.get("coordinates") ?? undefined}
+            />
+            <details className="question text-left">
+              <summary>
+                <label
+                  htmlFor="coordinates"
+                  className="inline-flex items-center gap-x-2"
+                >
+                  <a
+                    href="https://maps.google.com"
+                    target="_blank"
+                    className="inline-flex items-center gap-x-2"
+                    rel="noopener noreferrer"
+                  >
+                    <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                    Coordinates{" "}
+                    <span className="opacity-40">
+                      (like "45.540596,2.493823")
+                    </span>
+                  </a>
+                </label>
+              </summary>
+              <p className="pl-4 text-sm opacity-40">
+                You have two options for finding the coordinates: long click on
+                our map or right click on Google Maps.
+              </p>
+            </details>
+          </div>
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+            <input
+              name="description"
+              type="text"
+              id="description"
+              required
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+              placeholder="Une courte description"
+            />
+            <label htmlFor="description">Description</label>
           </div>
         </Form>
       </ModalBody>
