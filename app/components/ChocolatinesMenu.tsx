@@ -57,86 +57,62 @@ export default function ChocolatinesMenu({
                 <ChocolatinesFilters
                   geojson_included_by_filters={geojson_included_by_filters}
                 />
-                <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                  <summary>
-                    <Link
-                      to="/chocolatine/referral"
-                      className="inline-flex items-center gap-x-2 font-bold"
-                      onClick={() => {
-                        setShowMore(false);
-                      }}
-                    >
-                      Make a referral and earn one share
-                    </Link>
-                  </summary>
-                  <div className="mt-2 flex flex-col gap-2 px-2">
-                    <p>
-                      If you bring a new user to the platform, you earn one
-                      share - so does the new coming user.
-                    </p>
-                  </div>
-                </details>
-                <AboutOneActionOneShare />
-                <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                  <summary>Don't like the word "{chocolatineName}"?</summary>
-                  <div className="mt-2 flex flex-col gap-2 px-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsOnboardingOpen(true)}
-                      aria-label="Change the name of the chocolatine"
-                    >
-                      Click <u>here</u> to change its name.
-                    </button>
-                  </div>
-                </details>
-                <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                  <summary>Open Source</summary>
-                  <div className="mt-2 flex flex-col divide-y divide-[#FFBB01] divide-opacity-20">
-                    <a
-                      href="https://github.com/ambroselli-io/kiss-my-chocolatine/blob/main/app/data/chocolatines.json"
-                      className="inline-flex items-center gap-x-2 px-4 py-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      All the {chocolatineName} data - reviews, ingredients,
-                      prices, etc.
-                      <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    </a>
-                    <a
-                      href="https://github.com/ambroselli-io/kiss-my-chocolatine/blob/main/app/data/shops.json"
-                      className="inline-flex items-center gap-x-2 px-4 py-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      All the shops data - name, address, geo, opening hours,
-                      etc.
-                      <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    </a>
-                    <a
-                      href="https://github.com/ambroselli-io/kiss-my-chocolatine"
-                      className="inline-flex items-center gap-x-2 px-4 py-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      All the source code
-                      <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    </a>
-                  </div>
-                </details>
-                <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
-                  <summary>Feedback</summary>
-                  <div className="mt-2 flex flex-col gap-2 px-2">
-                    <ClientOnly>
-                      {() => (
-                        <a href={newFeedback()} className="px-4 py-2">
-                          Any feedback? Good, bad, review, wrong or missing
-                          information... Please <u>click here</u> to shoot us an
-                          email!
-                        </a>
-                      )}
-                    </ClientOnly>
-                  </div>
-                </details>
+                <Link
+                  to="/chocolatine/referral"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
+                  onClick={() => {
+                    setShowMore(false);
+                  }}
+                >
+                  Make a referral and earn one share
+                </Link>
+                <Link
+                  to="/shareholders"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
+                  onClick={() => {
+                    setShowMore(false);
+                  }}
+                >
+                  See how many shares you got 🤑
+                </Link>
+                <Link
+                  to="/shareholders"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
+                  onClick={() => {
+                    setShowMore(false);
+                  }}
+                >
+                  See how many shares you got 🤑
+                </Link>
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 text-left"
+                  aria-label="Change the name of the chocolatine"
+                  onClick={() => {
+                    setShowMore(false);
+                    setIsOnboardingOpen(true);
+                  }}
+                >
+                  Don't like the word "{chocolatineName}"?
+                </button>
+                <a
+                  href="https://github.com/ambroselli-io/kiss-my-chocolatine"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 px-4 py-2 py-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  All the source code
+                  <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                </a>
+                <Link
+                  to="/chocolatine/feedback"
+                  className="inline-block items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2"
+                  onClick={() => {
+                    setShowMore(false);
+                  }}
+                >
+                  Any feedback?
+                </Link>
                 {!!user_id ? (
                   <Form method="post" action="/action/logout">
                     <button

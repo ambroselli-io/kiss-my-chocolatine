@@ -32,7 +32,7 @@ export const sendEmail = async ({
     );
     return;
   }
-  if (process.env.NODE_ENV !== "production" && !force) return;
+  // if (process.env.NODE_ENV !== "production" && !force) return;
   const headers: HeadersInit = {
     "X-Tipimail-ApiUser": TIPIMAIL_API_USER,
     "X-Tipimail-ApiKey": TIPIMAIL_API_KEY,
@@ -186,6 +186,31 @@ Arnaud from ${APP_NAME} team.
   return {
     emails: [adminEmail],
     subject: `Invitation to join ${APP_NAME}!`,
+    text,
+  };
+};
+
+export const feedbackEmail = (
+  feedback: string,
+  emailAddress: string,
+  adminEmail: string,
+) => {
+  if (!adminEmail) throw new Error("No email provided for password reset");
+
+  const text = `
+Hello!
+
+Feedback from: ${emailAddress}
+
+${feedback}
+
+Sincerely mine,
+Arnaud from ${APP_NAME} team.
+`.trim();
+
+  return {
+    emails: [adminEmail],
+    subject: `Feedback from ${emailAddress}!`,
     text,
   };
 };

@@ -104,9 +104,15 @@ export default function NewShareholderAction() {
   const { newAppName } = useChocolatineName();
   return (
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50">
-      <h1 className="bg-app-500 px-6 py-10 text-4xl font-semibold">
-        {newAppName}'s Shareholders
-      </h1>
+      <div className="flex flex-col justify-between gap-2 bg-app-500 px-6 py-10 sm:flex-row">
+        <h1 className="text-4xl font-semibold">{newAppName}'s Shareholders</h1>
+        <Link className="underline sm:ml-auto" to="/shareholders-new-action">
+          New shareholder action
+        </Link>
+        <Link className="underline" to="/">
+          Go back home
+        </Link>
+      </div>
       <details open className="border-b border-b-gray-300 px-8 pb-4">
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">My Shares</h2>
@@ -411,9 +417,6 @@ export default function NewShareholderAction() {
           />
         </div>
       </details>
-      <Link className="underline" to="/">
-        Go back home
-      </Link>
     </div>
   );
 }

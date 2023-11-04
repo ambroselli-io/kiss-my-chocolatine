@@ -124,19 +124,6 @@ export default function AboutOneActionOneShare({ allOpen = false }) {
             </ul>
           </div>
         </details>
-        <details open={allOpen}>
-          <summary>How do we track this without auth system yet?</summary>
-          <div className="mt-2 flex flex-col gap-2 px-2">
-            <p>
-              By email. A review, adding a new shop or doing a referral is made
-              by email. The email is the unique "id" that groups the end user.
-              When dividends are paid, you'll need to prove that you are the
-              owner of the email by providing an id. An id can't be linked to
-              multiple emails. If it's the case, then only one email will be
-              able to claim the id. An email without ID can't claim any share.
-            </p>
-          </div>
-        </details>
       </div>
     </details>
   );
