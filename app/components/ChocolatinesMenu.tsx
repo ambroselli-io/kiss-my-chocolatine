@@ -111,7 +111,9 @@ export default function ChocolatinesMenu({
                       className="mr-auto px-4 py-2"
                       onClick={() => {
                         // reload the page to get the new data
-                        window.location.reload();
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 500);
                       }}
                     >
                       Log out

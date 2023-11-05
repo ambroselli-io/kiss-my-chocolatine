@@ -75,7 +75,7 @@ export const action = async ({
   });
   await prisma.userAction.create({
     data: {
-      action: "USER_REGISTRATION",
+      action: "USER_SHOP_NEW",
       user_id: userId,
       number_of_actions: 1,
       user_email: userEmail,
