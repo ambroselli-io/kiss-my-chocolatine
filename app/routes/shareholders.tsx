@@ -212,6 +212,18 @@ export default function NewShareholderAction() {
                     Investor's actions: <b>{investor?.number_of_actions}</b>
                   </div>
                   <div>
+                    Money invested:{" "}
+                    <b>
+                      {" "}
+                      {new Intl.NumberFormat("fr-FR", {
+                        style: "currency",
+                        currency: "EUR",
+                        maximumFractionDigits: 0,
+                        minimumFractionDigits: 0,
+                      }).format(investor?.number_of_actions)}
+                    </b>
+                  </div>
+                  <div>
                     Benefit:{" "}
                     <b>
                       {new Intl.NumberFormat("fr-FR", {

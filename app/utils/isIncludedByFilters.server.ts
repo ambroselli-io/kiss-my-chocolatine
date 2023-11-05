@@ -26,6 +26,9 @@ export function isChocolatineIncludedByFilters(
   shop: Shop,
   chocolatine: Chocolatine | null,
 ) {
+  const debug = shop.name === "Fort Negen";
+  console.log(debug);
+
   let isIncludedByFilters = Object.keys(filters).length === 0;
   if (Object.keys(filters).length > 0) {
     for (const filterKey of Object.keys(filters)) {
@@ -36,6 +39,15 @@ export function isChocolatineIncludedByFilters(
         const criteria = key as keyof Chocolatine;
         const value = String(chocolatine[criteria]);
         if (!filters[criteria]?.includes(value)) {
+          if (debug)
+            console.log(
+              "criteria",
+              criteria,
+              "value",
+              value,
+              "filters[criteria]",
+              filters[criteria],
+            );
           return false;
         }
       }
@@ -63,11 +75,16 @@ export function isChocolatineIncludedByFilters(
     return "null";
   })();
 
+  if (debug) console.log("openedNowValue", openedNowValue);
+
   if (Object.keys(filters).includes("homemade")) {
     if (!filters.homemade?.includes(String(homemadeNumberValue))) return false;
   }
   if (Object.keys(filters).includes("opened_now")) {
-    if (!filters.opened_now?.includes(String(openedNowValue))) return false;
+    if (!filters.opened_now?.includes(String(openedNowValue))) {
+      console.log("opened_now", filters.opened_now, openedNowValue);
+      return false;
+    }
   }
 
   if (!chocolatine?.price) return true;
