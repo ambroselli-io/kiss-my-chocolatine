@@ -386,7 +386,34 @@ export default function ChocolatineAndShop() {
           </address>
           <ClientOnly>
             {() => (
-              <a href={newFeedback(shop.name)} className="ml-auto text-xs">
+              <button
+                type="button"
+                className="my-2 block text-xs underline"
+                onClick={() => {
+                  // open share UI
+                  if (navigator.share) {
+                    navigator.share({
+                      title: `${shop.name} - Kiss My Chocolatine`,
+                      text: "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+                      url: window.location.href,
+                    });
+                    return;
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied to clipboard");
+                  }
+                }}
+              >
+                Click here to share link
+              </button>
+            )}
+          </ClientOnly>
+          <ClientOnly>
+            {() => (
+              <a
+                href={newFeedback(shop.name)}
+                className="my-2 ml-auto block text-xs"
+              >
                 Any feedback? Good, bad, review, wrong or missing information...
                 Please <u>click here</u> to shoot us an email!
               </a>
