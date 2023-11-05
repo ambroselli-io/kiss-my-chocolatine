@@ -81,6 +81,7 @@ export default function LOeufOuLaPoule() {
       </h2>
       <ol className="list-inside list-disc">
         <li>Et on a ouvert en Espagne 🤠 🇪🇸 </li>
+        <li>pain-au-chocolat.kiss-my.app</li>
         <li>Objectif: vendre les pains au chocolat plus cher.</li>
         <li>
           80% de pains au choc industriels: on veut être un label de qualité

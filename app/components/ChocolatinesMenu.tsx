@@ -88,7 +88,7 @@ export default function ChocolatinesMenu({
                 </button>
                 <a
                   href="https://github.com/ambroselli-io/kiss-my-chocolatine"
-                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 px-4 py-2 py-2"
+                  className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 "
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -103,6 +103,15 @@ export default function ChocolatinesMenu({
                   }}
                 >
                   Any feedback?
+                </Link>
+                <Link
+                  to="/blog"
+                  className="inline-block items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2"
+                  onClick={() => {
+                    setShowMore(false);
+                  }}
+                >
+                  Blog
                 </Link>
                 {!!user_id ? (
                   <Form method="post" action="/action/logout">
