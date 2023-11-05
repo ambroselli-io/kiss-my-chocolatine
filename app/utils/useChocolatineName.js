@@ -9,8 +9,9 @@ export default function useChocolatineName() {
   const [newAppName, setNewAppName] = useState("Kiss\u00A0My\u00A0Chocolatine");
 
   useEffect(() => {
-    const newChocolatineName = Cookies.get("chocolatine-name");
-    setChocolatineName(newChocolatineName || "pain au chocolat");
+    const newChocolatineName =
+      Cookies.get("chocolatine-name") || "pain au chocolat";
+    setChocolatineName(newChocolatineName);
     setChocolatinesName(
       Cookies.get("chocolatines-name") || "pains au chocolat",
     );
