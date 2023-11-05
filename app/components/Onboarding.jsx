@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { ModalBody, ModalContainer, ModalFooter, ModalHeader } from "./Modal";
 import useChocolatineName from "~/utils/useChocolatineName";
+import aroundtheworld from "~/data/around-the-world.json";
 
 export default function Onboarding({ open, onClose }) {
   const [step, setStep] = useState(0);
@@ -29,92 +30,20 @@ export default function Onboarding({ open, onClose }) {
               className="mx-auto my-4 w-[70vw]"
               alt="chocolatine"
             />
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="pain au chocolat"
-              plural="pains au chocolat"
-            >
-              <span aria-roledescription="flag">🇫🇷</span>
-              <span aria-roledescription="chocolatine-name">
-                Pain au chocolat
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="chocolatine"
-              plural="chocolatines"
-            >
-              <span aria-roledescription="flag">🇫🇷</span>
-              <span aria-roledescription="chocolatine-name"> Chocolatine</span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="petit pain"
-              plural="petits pains"
-            >
-              <span aria-roledescription="flag">🇫🇷</span>
-              <span aria-roledescription="chocolatine-name"> Petit pain</span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="petit pain au chocolat"
-              plural="petits pains au chocolat"
-            >
-              <span aria-roledescription="flag">🇫🇷</span>
-              <span aria-roledescription="chocolatine-name">
-                Petit pain au chocolat
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="croissant au chocolat"
-              plural="croissants au chocolat"
-            >
-              <span aria-roledescription="flag">🇫🇷</span>
-              <span aria-roledescription="chocolatine-name">
-                Croissant au chocolat
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="couque au chocolat"
-              plural="couques au chocolat"
-            >
-              <span aria-roledescription="flag">🇧🇪</span>
-              <span aria-roledescription="chocolatine-name">
-                Couque au chocolat
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="pain auw chowcowlat"
-              plural="pains auw chowcowlat"
-            >
-              <span aria-roledescription="flag">🇬🇧</span>
-              <span aria-roledescription="chocolatine-name">
-                Pain auw chowcowlat
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="chocolate croissant"
-              plural="chocolate croissants"
-            >
-              <span aria-roledescription="flag">🇬🇧</span>
-              <span aria-roledescription="chocolatine-name">
-                Chocolate croissant
-              </span>
-            </ChocolatineButton>
-            <ChocolatineButton
-              onClick={() => setStep(1)}
-              value="chocolade broodje"
-              plural="chocolade broodjes"
-            >
-              <span aria-roledescription="flag">🇳🇱</span>
-              <span aria-roledescription="chocolatine-name">
-                Chocolade broodje
-              </span>
-            </ChocolatineButton>
+            {aroundtheworld.map((name) => (
+              <ChocolatineButton
+                onClick={() => setStep(1)}
+                value={name.singular}
+                plural={name.plural}
+                key={name.singular}
+              >
+                <span aria-roledescription="flag">{name.flag}</span>
+                <span aria-roledescription="chocolatine-name">
+                  {name.singular.slice(0, 1).toUpperCase() +
+                    name.singular.slice(1)}
+                </span>
+              </ChocolatineButton>
+            ))}
           </ModalBody>
         </>
       )}

@@ -23,6 +23,13 @@ export default {
       borderColor: {
         DEFAULT: "#000000",
       },
+      maxWidth: (theme) => {
+        const extendedMaxWidthFromWidth: any = {};
+        for (const [key, value] of Object.entries(theme("width"))) {
+          extendedMaxWidthFromWidth[key] = value;
+        }
+        return extendedMaxWidthFromWidth;
+      },
     },
   },
   plugins: [forms],
