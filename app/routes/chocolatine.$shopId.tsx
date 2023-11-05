@@ -15,14 +15,18 @@ import Cookies from "js-cookie";
 import { prisma } from "~/db/prisma.server";
 import { from020to22 } from "~/utils/review";
 import useChocolatineName from "~/utils/useChocolatineName";
+import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
+import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 
-// export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
-//   const parentMeta = matches[matches.length - 2].meta ?? [];
-//   return [
-//     ...parentMeta,
-//     { "script:ld+json": data?.chocolatine, key: "chocolatine" },
-//   ];
-// };
+export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
+  const parentMeta = matches[matches.length - 2].meta ?? [];
+  const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
+    .chocolatineSchemaOrg as SchemaOrgChocolatine;
+  return [
+    ...parentMeta,
+    { "script:ld+json": chocolatineSchemaOrg, key: "chocolatine" },
+  ];
+};
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const shopPopulated = await prisma.shop.findUnique({
     where: {
@@ -45,12 +49,18 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   const { chocolatineReviews, ...chocolatine } = chocolatinePopulated ?? {};
 
+  const detailedReviews =
+    chocolatineReviews?.filter((r: ChocolatineReview) => !!r.comment) ?? [];
+
   return {
     chocolatine: chocolatine as Chocolatine,
+    chocolatineSchemaOrg: chocolatineFromRowToSchemaOrg(
+      chocolatine as Chocolatine,
+      chocolatineReviews as Array<ChocolatineReview>,
+    ),
     shop: shop as Shop,
     ingredients: [], // TODO
-    detailedReviews:
-      chocolatineReviews?.filter((r: ChocolatineReview) => !!r.comment) ?? [],
+    detailedReviews,
   };
 };
 

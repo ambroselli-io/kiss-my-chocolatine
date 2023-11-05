@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import shops from "~/data/shops.json";
-import chocolatines from "~/data/chocolatines.json";
 import { compileReviews } from "~/utils/review";
 declare global {
   var __prisma: PrismaClient;

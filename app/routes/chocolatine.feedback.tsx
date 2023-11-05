@@ -65,7 +65,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     ),
   ).then(console.log);
 
-  return json({ ok: true });
+  return json({ ok: true, error: "" });
 };
 
 export const loader: LoaderFunction = async ({

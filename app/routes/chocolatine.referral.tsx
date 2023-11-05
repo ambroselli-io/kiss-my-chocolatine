@@ -43,6 +43,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({
       ok: false,
       error: "You need to provide an email",
+      data: null,
     });
   }
 
@@ -79,7 +80,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       console.log,
     );
 
-  return json({ ok: true, data: { id: user_referral_creater } });
+  return json({ ok: true, error: "", data: { id: user_referral_creater } });
 };
 
 export const loader: LoaderFunction = async ({
@@ -116,7 +117,7 @@ export default function AddNewShop() {
           />
           <div
             className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left"
-            key={actionData?.data.id}
+            key={actionData?.data?.id}
           >
             <input
               name="user_referral_creater"

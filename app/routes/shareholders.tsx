@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   type MetaFunction,
   type MetaArgs,
@@ -11,6 +11,7 @@ import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
 import type { Action } from "@prisma/client";
 import {
+  fromSecondsToHoursMinSec,
   mapActionToShares,
   reduceAllDBActionsToShares,
 } from "~/utils/mapActionToShares";
@@ -102,8 +103,12 @@ export default function NewShareholderAction() {
     : 0;
 
   const { newAppName } = useChocolatineName();
+  const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50">
+    <div
+      ref={containerRef}
+      className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50"
+    >
       <div className="flex flex-col justify-between gap-2 bg-app-500 px-6 py-10 sm:flex-row">
         <h1 className="text-4xl font-semibold">{newAppName}'s Shareholders</h1>
         <Link className="underline sm:ml-auto" to="/shareholders-new-action">
@@ -163,6 +168,10 @@ export default function NewShareholderAction() {
                     User's actions: <b>{userSharholder?.number_of_actions}</b>
                   </div>
                   <div>
+                    Time spent:{" "}
+                    <b>{fromSecondsToHoursMinSec(userSharholder.time_spent)}</b>
+                  </div>
+                  <div>
                     Benefit:{" "}
                     <b>
                       {new Intl.NumberFormat("fr-FR", {
@@ -179,6 +188,10 @@ export default function NewShareholderAction() {
                 <div className="mb-2 flex items-center justify-between rounded border border-gray-200 bg-[#f5be41] bg-opacity-5 p-3">
                   <div>
                     Builder's actions: <b>{builder?.number_of_actions}</b>
+                  </div>
+                  <div>
+                    Time spent:{" "}
+                    <b>{fromSecondsToHoursMinSec(builder.time_spent)}</b>
                   </div>
                   <div>
                     Benefit:{" "}
@@ -305,7 +318,10 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
-            onClick={(data) => setEmail(data.id)}
+            onClick={(data: any) => {
+              setEmail(data.id);
+              containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             data={users[0].map((ua, index) => {
               return {
                 id: ua.user_email,
@@ -359,7 +375,10 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
-            onClick={(data) => setEmail(data.id)}
+            onClick={(data: any) => {
+              setEmail(data.id);
+              containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             data={builders[0].map((ua) => {
               return {
                 id: ua.user_email,
@@ -401,7 +420,10 @@ export default function NewShareholderAction() {
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
-            onClick={(data) => setEmail(data.id)}
+            onClick={(data: any) => {
+              setEmail(data.id);
+              containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             data={investors[0].map((ua) => {
               return {
                 id: ua.user_email,

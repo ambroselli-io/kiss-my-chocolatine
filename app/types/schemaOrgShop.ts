@@ -44,9 +44,9 @@ export interface SchemaOrgShop {
   url: string;
   geo: GeoCoordinates;
   openingHoursSpecification: Array<OpeningHoursSpecification>;
-  servesCuisine: string;
-  priceRange: string;
-  paymentAccepted: Array<string>;
-  additionalType: Array<string>;
-  aggregateRating: AggregateRating;
+  servesCuisine?: string;
+  priceRange?: string;
+  paymentAccepted?: Array<string>;
+  additionalType?: Array<string>;
+  aggregateRating?: AggregateRating;
 }

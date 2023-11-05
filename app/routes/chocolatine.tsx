@@ -18,6 +18,8 @@ import {
   Source,
 } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
+import type { Shop } from "@prisma/client";
+import type { SchemaOrgShop } from "../types/schemaOrgShop";
 import { useEffect, useRef, useState } from "react";
 import MapImage from "~/components/MapImage";
 import Onboarding from "~/components/Onboarding";
@@ -30,22 +32,32 @@ import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import { prisma } from "~/db/prisma.server";
 import { getUserIdFromCookie } from "~/services/auth.server";
 import ChocolatinesMenu from "~/components/ChocolatinesMenu";
+import { Record } from "@prisma/client/runtime/library";
+import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
 
-export const meta: MetaFunction = ({ matches }: MetaArgs) => {
+type loaderData = {
+  initialViewState: {
+    longitude: number;
+    latitude: number;
+    zoom: number;
+  };
+  total: number;
+  geojson_included_by_filters: CustomFeatureCollection;
+  geojson_excluded_by_filters: CustomFeatureCollection;
+  user_id?: string;
+  shopSchemaOrg: Array<SchemaOrgShop>;
+};
+
+export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const parentMeta = matches[matches.length - 2].meta ?? [];
+  const shopSchemaOrg = (data as loaderData)
+    .shopSchemaOrg as Array<SchemaOrgShop>;
 
   return [
     ...parentMeta,
-    // ...chocolatines
-    //   .map((chocolatine) => {
-    //     const shop = shops.find(
-    //       (shop) => shop.id === chocolatine.belongsTo.id,
-    //     );
-    //     if (!shop) return null;
-    //     return shop;
-    //   })
-    //   .filter(Boolean)
-    //   .map((shop) => ({ "script:ld+json": shop })),
+    ...shopSchemaOrg.map((shop) => ({
+      "script:ld+json": shop,
+    })),
   ];
 };
 
@@ -62,13 +74,18 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     },
   });
 
+  const shopObject: Record<string, Shop> = {};
+  for (const shop of shops) {
+    shopObject[shop.id] = shop;
+  }
+
   const currentShop = shops.find((f) => f.id === params?.shop_id);
   const initialViewState = (() => {
     if (!params.shopId) return europe;
     if (!currentShop) return europe;
     return {
-      longitude: currentShop.longitude,
-      latitude: currentShop.latitude,
+      longitude: currentShop.longitude as number,
+      latitude: currentShop.latitude as number,
       zoom: 14,
     };
   })();
@@ -123,21 +140,21 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
       return feature;
     });
 
-  const data: {
-    initialViewState: any;
-    total: number;
-    geojson_included_by_filters: CustomFeatureCollection;
-    geojson_excluded_by_filters: CustomFeatureCollection;
-    user_id?: string;
-  } = {
+  const featuresIncludedByFilters = features.filter(
+    (feature) => feature.properties.is_included_by_filters === 1,
+  );
+  const shopSchemaOrg = features.map((feature) => {
+    return shopFromRowToSchemaOrg(shopObject[feature.properties.id]);
+  });
+
+  const data: loaderData = {
     user_id: await getUserIdFromCookie(request, { optional: true }),
     initialViewState,
     total: shops.length,
+    shopSchemaOrg,
     geojson_included_by_filters: {
       type: "FeatureCollection",
-      features: features.filter(
-        (feature) => feature.properties.is_included_by_filters === 1,
-      ),
+      features: featuresIncludedByFilters,
     },
     geojson_excluded_by_filters: {
       type: "FeatureCollection",
