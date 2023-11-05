@@ -9,19 +9,20 @@ export default function useChocolatineName() {
   const [newAppName, setNewAppName] = useState("Kiss\u00A0My\u00A0Chocolatine");
 
   useEffect(() => {
-    const newChocolatineName =
-      Cookies.get("chocolatine-name") || "pain au chocolat";
-    setChocolatineName(newChocolatineName);
-    setChocolatinesName(
-      Cookies.get("chocolatines-name") || "pains au chocolat",
-    );
-    setNewAppName(
-      `Kiss\u00A0My\u00A0${newChocolatineName
-        .split(" ")
-        .map(capitalize)
-        .join("\u00A0")}`,
-    );
-  }, []);
+    const newChocolatineName = Cookies.get("chocolatine-name");
+    if (!!newChocolatineName) {
+      setChocolatineName(newChocolatineName);
+      setChocolatinesName(
+        Cookies.get("chocolatines-name") || "pains au chocolat",
+      );
+      setNewAppName(
+        `Kiss\u00A0My\u00A0${newChocolatineName
+          .split(" ")
+          .map(capitalize)
+          .join("\u00A0")}`,
+      );
+    }
+  }, [Cookies.get("chocolatine-name")]);
 
   return {
     chocolatineName,
