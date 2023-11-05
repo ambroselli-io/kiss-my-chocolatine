@@ -19,11 +19,28 @@ import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
-  const parentMeta = matches[matches.length - 2].meta ?? [];
   const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
     .chocolatineSchemaOrg as SchemaOrgChocolatine;
   return [
-    ...parentMeta,
+    ...matches
+      .flatMap((match) => match.meta ?? [])
+      .filter((meta) => {
+        if ("title" in meta) return false;
+        if (meta.property === "og:title") return false;
+        if (meta.property === "twitter:title") return false;
+        return true;
+      }),
+    {
+      title: `${chocolatineSchemaOrg.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+    },
+    {
+      property: "og:title",
+      content: `${chocolatineSchemaOrg.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+    },
+    {
+      property: "twitter:title",
+      content: `${chocolatineSchemaOrg.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+    },
     { "script:ld+json": chocolatineSchemaOrg, key: "chocolatine" },
   ];
 };
