@@ -16,7 +16,6 @@ function MyCurrentLocation({
   }, []);
 
   const centerMapAtCurrentLocation = () => {
-    console.log("centerMapAtCurrentLocation");
     const handleCenter = (position) => {
       if (!position) return;
       window.localStorage.setItem("canUseGeolocation", "true");

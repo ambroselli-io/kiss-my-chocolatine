@@ -31,9 +31,11 @@ export function shopFromRowToSchemaOrg(shop: Shop): SchemaOrgShop {
 }
 
 export function chocolatineFromRowToSchemaOrg(
-  chocolatine: Chocolatine,
-  chocolatineReviews: Array<ChocolatineReview>,
-): SchemaOrgChocolatine {
+  chocolatine?: Chocolatine,
+  chocolatineReviews: Array<ChocolatineReview> = [],
+): SchemaOrgChocolatine | null {
+  if (!chocolatine?.id) return null;
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",

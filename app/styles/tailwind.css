@@ -28,3 +28,7 @@ details.question > summary::after {
   content: "?";
   @apply mx-auto ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full border border-black text-xs font-bold text-black;
 }
+
+.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
+  @apply mb-16 mr-6 rounded-full shadow-none drop-shadow;
+}

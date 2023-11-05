@@ -213,7 +213,6 @@ export default function AddNewShop() {
               name="description"
               type="text"
               id="description"
-              required
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="Une courte description"
             />

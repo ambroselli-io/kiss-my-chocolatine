@@ -16,6 +16,7 @@ import {
   MapProvider,
   NavigationControl,
   Source,
+  GeolocateControl,
 } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
 import type { Shop } from "@prisma/client";
@@ -230,7 +231,10 @@ export default function App() {
                     if (!!feature.properties.id) {
                       const { id } = feature.properties;
                       navigate(`/chocolatine/${id}?${searchParams.toString()}`);
-                    } else if (feature.properties?.type === "Bakery") {
+                    } else if (
+                      feature.properties?.type === "Bakery" ||
+                      feature.properties?.class === "food_and_drink"
+                    ) {
                       const name = feature.properties?.name;
                       const lngLat = e.lngLat;
                       navigate(
@@ -242,8 +246,8 @@ export default function App() {
                 onContextMenu={(e) => {
                   // log the coordinates like: { longitude: -122.084990, latitude: 37.426929}
                   const lngLat = e.lngLat;
-                  console.log(e);
-                  console.log(e.features);
+                  // console.log(e);
+                  // console.log(e.features);
                   navigate(
                     `/chocolatine/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
                   );
@@ -372,6 +376,16 @@ export default function App() {
                   showZoom={false}
                   visualizePitch={true}
                 />
+                <GeolocateControl
+                  positionOptions={{ enableHighAccuracy: true }}
+                  position="bottom-right"
+                  trackUserLocation={true}
+                  // style={{
+                  //   // top: 80,
+                  //   position: "relative",
+                  //   marginBottom: 80,
+                  // }}
+                />
               </Map>
             </MapProvider>
           )}
@@ -403,13 +417,16 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
 }) => {
-  if (currentParams.shop_id !== nextParams.shop_id) return true;
+  if (currentParams.shopId !== nextParams.shopId) {
+    return true;
+  }
   // if searchparms size differ, then we need to revalidate
 
   if (
     Array.from(currentUrl.searchParams).length !==
     Array.from(nextUrl.searchParams).length
-  )
+  ) {
     return true;
+  }
   return false;
 };

@@ -145,7 +145,7 @@ export default function ChocolatinesMenu({
               </Link>
             </>
           )}
-          <MyCurrentLocation
+          {/* <MyCurrentLocation
             onSetCurrentLocation={({ lat, lng }) => {
               // fly with default options to null island
               mapRef?.current?.flyTo({
@@ -159,7 +159,7 @@ export default function ChocolatinesMenu({
               "absolute bottom-20 right-4 z-50 drop-shadow-sm",
               params.shopId ? "hidden" : "",
             ].join(" ")}
-          />
+          /> */}
         </>
       )}
     </ClientOnly>
