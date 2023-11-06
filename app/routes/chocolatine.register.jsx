@@ -302,9 +302,9 @@ export default function Register() {
     if (
       typeof window !== "undefined" &&
       process.env.NODE_ENV === "production" && // this line to prevent ssr hydration error
-      window.localStorage.getItem("email")
+      window.localStorage.getItem("signin-email")
     ) {
-      return window.localStorage.getItem("email");
+      return window.localStorage.getItem("signin-email");
     }
     return "";
   }, [searchParams]);
@@ -375,7 +375,11 @@ export default function Register() {
                 method="POST"
                 onSubmit={(e) => {
                   // save email in localstorage
-                  window.localStorage.setItem("email", e?.target?.email?.value);
+                  console.log(e?.target?.username?.value);
+                  window.localStorage.setItem(
+                    "signin-email",
+                    e?.target?.email?.value,
+                  );
                 }}
               >
                 <input type="hidden" name="page" value={form} />
