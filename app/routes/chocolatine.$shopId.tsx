@@ -20,7 +20,8 @@ import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
-    .chocolatineSchemaOrg as SchemaOrgChocolatine | undefined;
+    .chocolatineSchemaOrg as SchemaOrgChocolatine;
+  const shop = (data as Record<string, Shop>).shop as Shop;
   return [
     ...matches
       .flatMap((match) => match.meta ?? [])
@@ -31,15 +32,15 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
         return true;
       }),
     {
-      title: `${chocolatineSchemaOrg?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      title: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     {
       property: "og:title",
-      content: `${chocolatineSchemaOrg?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      content: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     {
       property: "twitter:title",
-      content: `${chocolatineSchemaOrg?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      content: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     { "script:ld+json": chocolatineSchemaOrg, key: "chocolatine" },
   ];
