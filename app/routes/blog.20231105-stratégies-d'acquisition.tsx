@@ -87,6 +87,9 @@ export default function LOeufOuLaPoule() {
         <li>
           Confédération Nationale de la Boulangerie-Pâtisserie Française (CNBPF)
         </li>
+        <li>
+          https://www.viennoiseries-maison-valdeloire.fr/pages/trouver-votre-artisan-3.html
+        </li>
       </ol>
       <p>Et vous, qu'en pensez-vous&nbsp;?</p>
     </BlogWrapper>
