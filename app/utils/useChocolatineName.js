@@ -3,8 +3,8 @@ import Cookies from "js-cookie";
 export default function useChocolatineName() {
   const chocolatineName =
     typeof window === "undefined"
-      ? Cookies.get("chocolatine-name") || "chocolatine"
-      : "chocolatine";
+      ? "chocolatine"
+      : Cookies.get("chocolatine-name") || "chocolatine";
   const chocolatinesName = Cookies.get("chocolatines-name") || "chocolatines";
 
   const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);

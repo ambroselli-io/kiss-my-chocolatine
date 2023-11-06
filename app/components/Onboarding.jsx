@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { ModalBody, ModalContainer, ModalFooter, ModalHeader } from "./Modal";
 import useChocolatineName from "~/utils/useChocolatineName";
 import aroundtheworld from "~/data/around-the-world.json";
+import { mapActionToShares } from "~/utils/mapActionToShares";
 
 export default function Onboarding({ open, onClose }) {
   const [step, setStep] = useState(0);
@@ -120,19 +121,23 @@ export default function Onboarding({ open, onClose }) {
               <li>
                 💰{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One review = one share
+                  One complete review ={" "}
+                  {mapActionToShares.USER_CHOCOLATINE_CRITERIAS_REVIEW +
+                    mapActionToShares.USER_CHOCOLATINE_COMMENT_SCORE}{" "}
+                  shares
                 </b>
               </li>
               <li>
                 💵{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One new shop = one share
+                  One new shop = {mapActionToShares.USER_SHOP_NEW} shares
                 </b>
               </li>
               <li>
                 💸{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One referral = one share
+                  One referral = {mapActionToShares.USER_REFERRAL_CREATER}{" "}
+                  shares
                 </b>
               </li>
             </ul>
