@@ -32,15 +32,15 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
         return true;
       }),
     {
-      title: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      title: `${shop?.name} | Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     {
       property: "og:title",
-      content: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      content: `${shop?.name} | Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     {
       property: "twitter:title",
-      content: `${shop?.name} Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
+      content: `${shop?.name} | Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
     { "script:ld+json": chocolatineSchemaOrg, key: "chocolatine" },
   ];
