@@ -52,7 +52,40 @@ export default function Onboarding({ open, onClose }) {
         <>
           <ModalHeader title={`Welcome tooo ${newAppName}\u00A0!\u00A0🍫`} />
           <ModalBody className="flex flex-col items-center overflow-y-auto py-4 sm:p-8">
-            <p className="w-full px-4 text-center">You'll find here </p>
+            <ul className="flex w-full justify-evenly">
+              <li className="flex flex-col items-center">
+                <img
+                  src="/assets/marker-white.svg"
+                  className="h-8 w-8"
+                  alt="chocolatine"
+                />
+                <p className="text-center font-semibold">🤷 To be reviewed</p>
+              </li>
+              <li className="flex flex-col items-center">
+                <img
+                  src="/assets/marker-black.svg"
+                  className="h-8 w-8"
+                  alt="chocolatine"
+                />
+                <p className="text-center font-semibold">🧑‍🍳 Homemade</p>
+              </li>
+              <li className="flex flex-col items-center">
+                <img
+                  src="/assets/marker-gray.svg"
+                  className="h-8 w-8"
+                  alt="chocolatine"
+                />
+                <p className="text-center font-semibold">🏭 Industrial</p>
+              </li>
+            </ul>
+            <img
+              src="/assets/pain-au-choc-feuillete.webp"
+              className="mx-auto my-4 h-40"
+              alt="3 chocolatines"
+            />
+            <p className="w-full px-4 text-center">
+              But you'll also find here{" "}
+            </p>
             <ul className="mt-3 list-inside px-4 text-left">
               <li>
                 🍽️&nbsp;&nbsp;
@@ -94,11 +127,6 @@ export default function Onboarding({ open, onClose }) {
                 from ALL OF YOU
               </li>
             </ul>
-            <img
-              src="/assets/pain-au-choc-feuillete.webp"
-              className="mx-auto my-4 h-40"
-              alt="3 chocolatines"
-            />
           </ModalBody>
           <ModalFooter>
             <button

@@ -71,7 +71,7 @@ model Shop {
   created_by_user           User                @relation(fields: [created_by_user_id], references: [id])
   chocolatine               Chocolatine?
   chocolatineReviews        ChocolatineReview[]
-  Award                     Award[]
+  awards                    Award[]
 }
 
 model Chocolatine {
@@ -159,6 +159,7 @@ model UserAction {
 
 enum AvailableAward {
   MASTER_PAIN_AU_CHOCOLAT
+  MEILLEURE_BOULANGERIE_DE_FRANCE_M6
 }
 
 enum Positions {

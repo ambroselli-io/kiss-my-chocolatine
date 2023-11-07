@@ -4,19 +4,24 @@ import {
   type MetaArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import type { Shop, ChocolatineReview, Chocolatine } from "@prisma/client";
+import type {
+  Shop,
+  ChocolatineReview,
+  Chocolatine,
+  Award,
+} from "@prisma/client";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import Availability from "~/components/Availability";
 import BalancedRate from "~/components/BalancedRate";
-import { newFeedback, newIngredient, newReview } from "~/utils/emails";
+import { newFeedback, newIngredient } from "~/utils/emails";
 import { ClientOnly } from "remix-utils/client-only";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { prisma } from "~/db/prisma.server";
 import { from020to22 } from "~/utils/review";
 import useChocolatineName from "~/utils/useChocolatineName";
 import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
+import { readableAwards, readablePositions } from "~/utils/awards";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
@@ -54,6 +59,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
           chocolatineReviews: true,
         },
       },
+      awards: {
+        orderBy: {
+          year: "desc",
+        },
+      },
     },
   });
 
@@ -61,7 +71,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     return redirect("/404");
   }
 
-  const { chocolatine: chocolatinePopulated, ...shop } = shopPopulated;
+  const { chocolatine: chocolatinePopulated, awards, ...shop } = shopPopulated;
 
   const { chocolatineReviews, ...chocolatine } = chocolatinePopulated ?? {};
 
@@ -75,6 +85,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       chocolatineReviews as Array<ChocolatineReview>,
     ),
     shop: shop as Shop,
+    awards: awards as Array<Award>,
     ingredients: [], // TODO
     detailedReviews,
   };
@@ -82,7 +93,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function ChocolatineAndShop() {
   const data = useLoaderData<typeof loader>();
-  const { chocolatine, detailedReviews } = data;
+  const { chocolatine, detailedReviews, awards } = data;
   const shop = data.shop as unknown as Shop;
   const fromCookies = useChocolatineName();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
@@ -360,10 +371,24 @@ export default function ChocolatineAndShop() {
                 );
               })} */}
         </section>
-        <section className="w-full shrink-0  overflow-y-auto px-4 pb-6">
+        <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
           <h3 className="mb-2 mt-10 font-bold">Shop infos</h3>
-          <dl className="px-4 opacity-70">{shop.description}</dl>
-          <address className="mt-5 flex flex-col items-start justify-start gap-2 px-4 pb-11 text-sm font-light not-italic text-[#3c4043]">
+          {!!awards.length && (
+            <dl className="px-4 font-semibold">
+              {awards.map(({ award, position, year, id }) => {
+                return (
+                  <p key={id} className="text-sm">
+                    {readablePositions[position]} - {readableAwards[award]}{" "}
+                    {year}
+                  </p>
+                );
+              })}
+            </dl>
+          )}
+          {!!shop.description && (
+            <dl className="px-4 text-sm opacity-70">{shop.description}</dl>
+          )}
+          <address className="mt-2 flex flex-col items-start justify-start gap-2 px-4 pb-11 text-sm font-light not-italic text-[#3c4043]">
             <span aria-details="address" className="flex">
               <img src="/assets/pin-grey.svg" className="mr-3 w-5" />
               {!!shop.streetAddress ? (

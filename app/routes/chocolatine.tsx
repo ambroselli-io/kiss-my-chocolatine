@@ -80,7 +80,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     shopObject[shop.id] = shop;
   }
 
-  const currentShop = shops.find((f) => f.id === params?.shop_id);
+  const currentShop = shops.find((f) => f.id === params?.shopId);
   const initialViewState = (() => {
     if (!params.shopId) return europe;
     if (!currentShop) return europe;
@@ -107,7 +107,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
       const { chocolatine } = shop;
 
-      const isActiveShop = shop.id === params?.shop_id;
+      const isActiveShop = shop.id === params?.shopId;
       const isIncludedByFilters = isChocolatineIncludedByFilters(
         filters,
         shop,
@@ -123,6 +123,16 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         properties: {
           id: shop.id,
           is_active_shop: isActiveShop ? 1 : 0,
+          is_home_made: ["I think so", "Yes"].includes(
+            chocolatine?.homemade as string,
+          )
+            ? 1
+            : 0,
+          is_industrial: ["I don't think so", "No"].includes(
+            chocolatine?.homemade as string,
+          )
+            ? 1
+            : 0,
           is_included_by_filters: isIncludedByFilters ? 1 : 0,
           sort_key: isActiveShop
             ? 4
@@ -306,6 +316,10 @@ export default function App() {
                           "case",
                           ["==", ["get", "is_active_shop"], 1],
                           "marker-full-black",
+                          ["==", ["get", "is_industrial"], 1],
+                          "marker-gray",
+                          ["==", ["get", "is_home_made"], 1],
+                          "marker-black",
                           ["to-boolean", ["get", "has_review"]],
                           "marker-black",
                           "marker-white",
@@ -342,6 +356,10 @@ export default function App() {
                           "case",
                           ["==", ["get", "is_active_shop"], 1],
                           "marker-full-black",
+                          ["==", ["get", "is_industrial"], 1],
+                          "marker-gray",
+                          ["==", ["get", "is_home_made"], 1],
+                          "marker-black",
                           ["to-boolean", ["get", "has_review"]],
                           "marker-black",
                           "marker-white",

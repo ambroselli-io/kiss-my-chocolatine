@@ -4,7 +4,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/routes/chocolatine.register.jsx",
-    "app/routes/chocolatine.review.$shop_id.tsx"
+    "app/routes/chocolatine.review.$shopId.tsx"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

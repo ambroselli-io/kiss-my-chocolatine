@@ -22,6 +22,14 @@ export default function MapImage({ children }) {
     };
     markerWhite.src = "/assets/marker-white.svg";
   }
+  if (!map.hasImage("marker-gray")) {
+    let markerWhite = new Image(133, 150);
+    markerWhite.onload = () => {
+      if (!map.hasImage("marker-gray"))
+        map.addImage("marker-gray", markerWhite);
+    };
+    markerWhite.src = "/assets/marker-gray.svg";
+  }
   if (!map.hasImage("marker-full-black")) {
     let markerFullBlack = new Image(133, 150);
     markerFullBlack.onload = () => {

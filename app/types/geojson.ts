@@ -4,6 +4,8 @@ import type { Feature, FeatureCollection, Point } from "geojson";
 interface CustomProperties {
   id: string;
   is_active_shop: number;
+  is_home_made: number;
+  is_industrial: number;
   is_included_by_filters: number;
   sort_key: number;
   has_review: boolean;

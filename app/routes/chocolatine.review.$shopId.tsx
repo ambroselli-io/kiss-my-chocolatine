@@ -54,6 +54,17 @@ export const action = async ({
   const good_or_not_good = form.get("good_or_not_good");
   const comment = form.get("comment");
 
+  const hasBeenReviewedOnce =
+    buttery !== null ||
+    flaky_or_brioche !== null ||
+    golden_or_pale !== null ||
+    crispy_or_soft !== null ||
+    light_or_dense !== null ||
+    chocolate_disposition !== null ||
+    big_or_small !== null ||
+    !!good_or_not_good ||
+    !!comment;
+
   const chocolatineParams = {
     homemade: String(homemade),
     price: Number(price),
@@ -68,7 +79,7 @@ export const action = async ({
       shop_name: shop.name,
       created_by_user_id: user.id,
       created_by_user_email: user.email,
-      has_been_reviewed_once: true,
+      has_been_reviewed_once: hasBeenReviewedOnce,
       ...chocolatineParams,
     },
     update: chocolatineParams,
@@ -173,7 +184,7 @@ export const loader: LoaderFunction = async ({
   return json({ shop, chocolatine, myReview });
 };
 
-export default function Add() {
+export default function ChocolatineReview() {
   const { state } = useNavigation();
   const busy = state === "submitting";
   const { shop, chocolatine, myReview } = useLoaderData<typeof loader>();
@@ -294,7 +305,6 @@ export default function Add() {
               id="good_or_not_good"
               min="0"
               step="0.5"
-              required
               onWheel={(e) => e.currentTarget.blur()}
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
               placeholder="A score from 0 to 20"
@@ -359,7 +369,6 @@ function RadioRate({
                 name={name}
                 type="radio"
                 id={name}
-                required
                 value={value}
                 className="block h-4 w-4 grow-0 border-0 bg-transparent p-2.5 text-app-500 outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
                 defaultChecked={defaultValue === value}

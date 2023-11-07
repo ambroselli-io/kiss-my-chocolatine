@@ -15,7 +15,7 @@ import {
 import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 import type { User, AvailableAward, Positions } from "@prisma/client";
-import { awards, positions } from "~/utils/awards";
+import { readableAwards, readablePositions } from "~/utils/awards";
 import useChocolatineName from "~/utils/useChocolatineName";
 
 type ActionReturnType = {
@@ -117,7 +117,7 @@ export default function Add() {
               required
               className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
             >
-              {Object.entries(awards).map(([key, name]) => {
+              {Object.entries(readableAwards).map(([key, name]) => {
                 return (
                   <option key={key} value={key}>
                     {name}
@@ -136,7 +136,7 @@ export default function Add() {
               required
               className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
             >
-              {Object.entries(positions).map(([key, name]) => {
+              {Object.entries(readablePositions).map(([key, name]) => {
                 return (
                   <option key={key} value={key}>
                     {name}
