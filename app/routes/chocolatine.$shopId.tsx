@@ -23,14 +23,12 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
     .chocolatineSchemaOrg as SchemaOrgChocolatine;
   const shop = (data as Record<string, Shop>).shop as Shop;
   return [
-    ...matches
-      .flatMap((match) => match.meta ?? [])
-      .filter((meta) => {
-        if (meta.hasOwnProperty("title")) return false;
-        if (meta.property === "og:title") return false;
-        if (meta.property === "twitter:title") return false;
-        return true;
-      }),
+    ...(matches[matches.length - 2].meta ?? []).filter((meta) => {
+      if (meta.hasOwnProperty("title")) return false;
+      if (meta.property === "og:title") return false;
+      if (meta.property === "twitter:title") return false;
+      return true;
+    }),
     {
       title: `${shop?.name} | Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍`,
     },
@@ -426,6 +424,12 @@ export default function ChocolatineAndShop() {
               </button>
             )}
           </ClientOnly>
+          <Link
+            to={`/chocolatine/award/${shop.id}`}
+            className="my-2 block text-xs underline"
+          >
+            🥇 Add an award
+          </Link>
           <ClientOnly>
             {() => (
               <a

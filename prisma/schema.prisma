@@ -67,10 +67,11 @@ model Shop {
   longitude                 Float?
   openingHoursSpecification Json?
   created_by_user_id        String
-  created_by_user           User                @relation(fields: [created_by_user_id], references: [id])
   created_by_user_email     String? // cache
+  created_by_user           User                @relation(fields: [created_by_user_id], references: [id])
   chocolatine               Chocolatine?
   chocolatineReviews        ChocolatineReview[]
+  Award                     Award[]
 }
 
 model Chocolatine {
@@ -91,12 +92,13 @@ model Chocolatine {
   average_chocolate_disposition Int                 @default(0)
   average_good_or_not_good      Int                 @default(0)
   created_by_user_id            String
+  created_by_user_email         String? // cache
   shop_id                       String              @unique
   shop_name                     String? // cache
   shop                          Shop                @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_by_user               User                @relation(fields: [created_by_user_id], references: [id])
-  created_by_user_email         String? // cache
   chocolatineReviews            ChocolatineReview[]
+  Award                         Award[]
 }
 
 model ChocolatineReview {
@@ -153,4 +155,30 @@ model UserAction {
   deleted_at        DateTime?
   user_id           String?
   user_email        String?
+}
+
+enum AvailableAward {
+  MASTER_PAIN_AU_CHOCOLAT
+}
+
+enum Positions {
+  WINNER
+  SECOND
+  THIRD
+  FINALIST
+}
+
+model Award {
+  id             String         @id @default(uuid())
+  award          AvailableAward
+  position       Positions
+  year           Int
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  deleted_at     DateTime?
+  shop_id        String?
+  shop_name      String? // cache
+  chocolatine_id String?
+  shop           Shop?          @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chocolatine    Chocolatine?   @relation(fields: [chocolatine_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
