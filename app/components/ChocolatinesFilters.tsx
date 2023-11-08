@@ -15,11 +15,11 @@ export default function ChocolatinesFilters({
   return (
     <details className="border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2">
       <summary className="font-bold">
-        Filters {total > 0 ? `(${total})` : "👀 "}{" "}
+        Filtres {total > 0 ? `(${total})` : "👀 "}{" "}
         {total > 0 ? (
           <small className="font-normal opacity-25">
             {" "}
-            - {geojson_included_by_filters.features.length} shops
+            - {geojson_included_by_filters.features.length} boulangeries
           </small>
         ) : (
           ""
@@ -31,106 +31,106 @@ export default function ChocolatinesFilters({
         onChange={(e) => submit(e.currentTarget)}
       >
         <CheckBoxesCategory
-          title="⏱️ Opened now"
+          title="⏱️ Ouvert maintenant"
           name="opened_now"
           values={[
-            { label: "Yes", value: 1 },
-            { label: "No", value: 0 },
+            { label: "Oui", value: 1 },
+            { label: "Non", value: 0 },
           ]}
         />
         <CheckBoxesCategory
-          title="🧑‍🍳 Homemade"
+          title="🧑‍🍳 Fait maison"
           name="homemade"
           values={[
-            { label: "Yes", value: 1 },
-            { label: "No", value: 0 },
+            { label: "Oui", value: 1 },
+            { label: "Non", value: 0 },
           ]}
         />
         <CheckBoxesCategory
-          title="🏷️ Price"
+          title="🏷️ Prix"
           name="price"
           values={[
-            { label: "Less than 1€", value: 1 },
-            { label: "1€ to 2€", value: 2 },
-            { label: "2€ to 3€", value: 3 },
-            { label: "More than 3€", value: 4 },
+            { label: "Moins de 1€", value: 1 },
+            { label: "1€ à 2€", value: 2 },
+            { label: "2€ à 3€", value: 3 },
+            { label: "Plus de 3€", value: 4 },
           ]}
         />
         <CheckBoxesCategory
           name="average_buttery"
-          title="🧈 Buttery"
+          title="🧈 Beurré"
           values={[
-            { label: "Not at all", value: -2 },
-            { label: "Not much", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
-            { label: "A lot", value: 1 },
-            { label: "Anything but butter", value: 2 },
+            { label: "Pas du tout", value: -2 },
+            { label: "Pas beaucoup", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
+            { label: "Beaucoup", value: 1 },
+            { label: "QUE du beurre", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_flaky_or_brioche"
-          title="🔪 Flaky/Feuilleuté or Brioche-like"
+          title="🔪 Feuilleuté ou Brioché"
           values={[
-            { label: "Very flaky", value: -2 },
-            { label: "Flaky", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
-            { label: "Brioche", value: 1 },
-            { label: "Very brioche", value: 2 },
+            { label: "Très feuilleté", value: -2 },
+            { label: "Feuilleté", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
+            { label: "Brioché", value: 1 },
+            { label: "Très brioché", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_golden_or_pale"
-          title="👑 Golden or Pale"
+          title="👑 Doré ou Pâle"
           values={[
-            { label: "Very golden", value: -2 },
-            { label: "Golden", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
-            { label: "Pale", value: 1 },
-            { label: "Very pale", value: 2 },
+            { label: "Très doré", value: -2 },
+            { label: "Doré", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
+            { label: "Pâle", value: 1 },
+            { label: "Très pâle", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_crispy_or_soft"
-          title="🍦 Crispy or Soft"
+          title="🍦 Croustillant ou moelleux"
           values={[
-            { label: "Very crispy", value: -2 },
-            { label: "Crispy", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
-            { label: "Soft", value: 1 },
-            { label: "Very soft", value: 2 },
+            { label: "Très croustillant", value: -2 },
+            { label: "Croustillant", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
+            { label: "Moelleux", value: 1 },
+            { label: "Très moelleux", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_light_or_dense"
-          title="🧱 Light or Dense"
+          title="🧱 Aéré ou dense"
           values={[
-            { label: "Very light", value: -2 },
-            { label: "Light", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
+            { label: "Très aéré", value: -2 },
+            { label: "Aéré", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
             { label: "Dense", value: 1 },
-            { label: "Very dense", value: 2 },
+            { label: "Très dense", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_chocolate_disposition"
-          title="🍫 Chocolate Disposition"
+          title="🍫 Disposition du chocolat"
           values={[
-            { label: "Superimposed", value: -2 },
-            { label: "Stuck side by side", value: -1 },
-            { label: "Well-distributed ⚖️", value: 0 },
-            { label: "Too far away", value: 1 },
-            { label: "On the edges", value: 2 },
+            { label: "Superposé", value: -2 },
+            { label: "Collé côte à côte", value: -1 },
+            { label: "Bien distribué ⚖️", value: 0 },
+            { label: "Un peu trop loin", value: 1 },
+            { label: "Sur les bords", value: 2 },
           ]}
         />
         <CheckBoxesCategory
           name="average_big_or_small"
-          title="🤏 Big or Small"
+          title="🤏 Petit ou gros"
           values={[
-            { label: "Very small", value: -2 },
-            { label: "Small", value: -1 },
-            { label: "Balanced ⚖️", value: 0 },
-            { label: "Big", value: 1 },
-            { label: "Very big", value: 2 },
+            { label: "Très petit", value: -2 },
+            { label: "Petit", value: -1 },
+            { label: "Équilibré ⚖️", value: 0 },
+            { label: "gros", value: 1 },
+            { label: "Très gros", value: 2 },
           ]}
         />
       </Form>

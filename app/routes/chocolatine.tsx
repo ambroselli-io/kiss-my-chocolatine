@@ -19,9 +19,10 @@ import {
   GeolocateControl,
 } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
+import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import type { Shop } from "@prisma/client";
 import type { SchemaOrgShop } from "../types/schemaOrgShop";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MapImage from "~/components/MapImage";
 import Onboarding from "~/components/Onboarding";
 import {
@@ -203,6 +204,15 @@ export default function App() {
   }, []);
 
   const mapRef = useRef<MapRef | null>(null);
+  const mapRefCallback = useCallback((ref: MapRef | null) => {
+    if (ref !== null) {
+      //Set the actual ref we use elsewhere
+      mapRef.current = ref;
+      //Add language control that updates map text i18n based on browser preferences
+      const language = new MapboxLanguage();
+      mapRef.current.addControl(language);
+    }
+  }, []);
 
   return (
     <>
@@ -218,10 +228,11 @@ export default function App() {
           {!!mapboxAccessToken && (
             <MapProvider>
               <Map
-                ref={mapRef}
+                ref={mapRefCallback}
                 mapboxAccessToken={mapboxAccessToken}
                 initialViewState={initialViewState}
                 reuseMaps
+                // locale={{ fr }}
                 id="maproot"
                 interactiveLayerIds={[
                   "shops_include",

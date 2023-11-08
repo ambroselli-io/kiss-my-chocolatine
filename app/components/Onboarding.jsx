@@ -22,14 +22,14 @@ export default function Onboarding({ open, onClose }) {
           <ModalHeader title="Welcome tooo Kiss My Chocolatine ! 🍫" />
           <ModalBody className="flex flex-col items-center overflow-y-auto sm:p-8">
             <p className="w-full px-4 text-center">
-              You'll find here ALL the places for...
+              Vous trouverez ici TOUS les...
               <br />
-              mmm wait, how do you call this👇?
+              mmm attendez, comment appelez-vous ça👇?
             </p>
             <img
               src="/assets/chocolatine-blurred.jpg"
               className="mx-auto my-4 w-[70vw]"
-              alt="chocolatine"
+              alt="pain au chocolatine"
             />
             {aroundtheworld.map((name) => (
               <ChocolatineButton
@@ -52,22 +52,17 @@ export default function Onboarding({ open, onClose }) {
         <>
           <ModalHeader title={`Welcome tooo ${newAppName}\u00A0!\u00A0🍫`} />
           <ModalBody className="flex flex-col items-center overflow-y-auto py-4 sm:p-8">
-            <ul className="flex w-full justify-evenly">
-              <li className="flex flex-col items-center">
-                <img
-                  src="/assets/marker-white.svg"
-                  className="h-8 w-8"
-                  alt="chocolatine"
-                />
-                <p className="text-center font-semibold">🤷 To be reviewed</p>
-              </li>
+            <p className="w-full px-4 text-center">
+              Vous verrez sur la carte différents pins qui veulent dire:
+            </p>
+            <ul className="my-4 flex w-full flex-col justify-evenly gap-y-4">
               <li className="flex flex-col items-center">
                 <img
                   src="/assets/marker-black.svg"
                   className="h-8 w-8"
                   alt="chocolatine"
                 />
-                <p className="text-center font-semibold">🧑‍🍳 Homemade</p>
+                <p className="text-center font-semibold">🧑‍🍳 Fait maison</p>
               </li>
               <li className="flex flex-col items-center">
                 <img
@@ -75,56 +70,17 @@ export default function Onboarding({ open, onClose }) {
                   className="h-8 w-8"
                   alt="chocolatine"
                 />
-                <p className="text-center font-semibold">🏭 Industrial</p>
+                <p className="text-center font-semibold">🏭 Industriel</p>
               </li>
-            </ul>
-            <img
-              src="/assets/pain-au-choc-feuillete.webp"
-              className="mx-auto my-4 h-40"
-              alt="3 chocolatines"
-            />
-            <p className="w-full px-4 text-center">
-              But you'll also find here{" "}
-            </p>
-            <ul className="mt-3 list-inside px-4 text-left">
-              <li>
-                🍽️&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  ALL the places
-                </b>{" "}
-                for {chocolatinesName}
-              </li>
-              <li>
-                ⏰&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  opening hours
-                </b>
-              </li>
-              <li>
-                🍫&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  ingredients
-                </b>
-              </li>
-              <li>
-                🏷️&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  price
-                </b>
-              </li>
-              <li>
-                🧑‍🍳&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  homemade
-                </b>{" "}
-                or not
-              </li>
-              <li>
-                🕵️&nbsp;&nbsp;
-                <b className="font-medium underline decoration-[#FFBB01]">
-                  detailed reviews
-                </b>{" "}
-                from ALL OF YOU
+              <li className="flex flex-col items-center">
+                <img
+                  src="/assets/marker-white.svg"
+                  className="h-8 w-8"
+                  alt="chocolatine"
+                />
+                <p className="text-center font-semibold">
+                  🤷 Pas encore visitée
+                </p>
               </li>
             </ul>
           </ModalBody>
@@ -133,47 +89,50 @@ export default function Onboarding({ open, onClose }) {
               className="rounded-lg bg-[#FFBB01] px-4 py-2"
               onClick={() => setStep(2)}
             >
-              Sounds good!&nbsp;😋
+              OK ça marche&nbsp;!&nbsp;😋
             </button>
           </ModalFooter>
         </>
       )}
       {step === 2 && (
         <>
-          <ModalHeader title={`Make money by using ${newAppName}\u00A0🏦`} />
+          <ModalHeader
+            title={`Gagnez de l'argent avec ${newAppName}\u00A0🏦`}
+          />
           <ModalBody className="flex flex-col items-center overflow-y-auto sm:p-8">
             <p className="w-full p-4 text-center">
-              All users are shareholders 🤑 🤑 🤑
+              Chaque utilisateur est actionnaire 🤑 🤑 🤑
             </p>
-            <ul className="list-inside px-4 text-left">
+            <ul className="flex list-inside flex-col items-center gap-y-1 px-4 text-left">
               <li>
                 💰{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One complete review ={" "}
+                  Une revue complète ={" "}
                   {mapActionToShares.USER_CHOCOLATINE_CRITERIAS_REVIEW +
                     mapActionToShares.USER_CHOCOLATINE_COMMENT_SCORE}{" "}
-                  shares
+                  actions
                 </b>
               </li>
               <li>
                 💵{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One new shop = {mapActionToShares.USER_SHOP_NEW} shares
+                  Un magasin ajouté = {mapActionToShares.USER_SHOP_NEW} actions
                 </b>
               </li>
               <li>
                 💸{" "}
                 <b className="font-medium underline decoration-[#FFBB01]">
-                  One referral = {mapActionToShares.USER_REFERRAL_CREATER}{" "}
-                  shares
+                  L'ajout d'un ami = {mapActionToShares.USER_REFERRAL_CREATER}{" "}
+                  actions
                 </b>
               </li>
             </ul>
-            <p className="p-4">
-              If one day {newAppName} makes money, you'll get your fair share.
-              Because for {newAppName} to make money, we need you to do more
-              content (shops and reviews), and more other users to do event more
-              content.
+            <p className="p-4 text-sm">
+              Si un jour {newAppName} fait de l'argent, vous aurez votre part.
+              <br />
+              Car pour que {newAppName} fasse de l'argent, il faut que vous
+              fassiez plus de contenu (magasins et avis), et que d'autres
+              utilisateurs fassent encore plus de contenu.
             </p>
           </ModalBody>
           <ModalFooter>
@@ -181,7 +140,7 @@ export default function Onboarding({ open, onClose }) {
               className="rounded-lg bg-[#FFBB01] px-4 py-2"
               onClick={onClose}
             >
-              Bring me there!&nbsp;🧑‍🍳
+              C'est bon j'ai pigé&nbsp;!&nbsp;🧑‍🍳
             </button>
           </ModalFooter>
         </>

@@ -10,6 +10,7 @@ import ChocolatinesFilters from "~/components/ChocolatinesFilters";
 import MyCurrentLocation from "~/components/MyCurrentLocation";
 import type { CustomFeatureCollection } from "~/types/geojson";
 import useChocolatineName from "~/utils/useChocolatineName";
+import { mapActionToShares } from "~/utils/mapActionToShares";
 
 interface ChocolatinesMenuProps {
   mapRef: React.MutableRefObject<MapRef | null>;
@@ -41,10 +42,10 @@ export default function ChocolatinesMenu({
                 className="max-w-lg cursor-pointer md:max-w-none"
                 onClick={() => setIsOnboardingOpen(true)}
               >
-                All the <b>{chocolatinesName}</b> from the world 🌍{" "}
+                Les <b>{chocolatinesName}</b> du monde entier 🌍{" "}
                 <small className="opacity-30">
-                  Well, it's {total} for now, but the world is coming step by
-                  step 🤜
+                  Bon, il y en {total} pour le moment, mais le monde entier
+                  arrive pas après pas 🤜
                 </small>
               </h1>
               <ButtonArrowMenu
@@ -64,7 +65,8 @@ export default function ChocolatinesMenu({
                     setShowMore(false);
                   }}
                 >
-                  Make a referral and earn one share
+                  Invitez vos amis et gagnez{" "}
+                  {mapActionToShares.USER_REFERRAL_CREATER}
                 </Link>
                 <Link
                   to="/shareholders"
@@ -73,7 +75,7 @@ export default function ChocolatinesMenu({
                     setShowMore(false);
                   }}
                 >
-                  See how many shares you got 🤑
+                  Regardez combien d'actions vous avez 🤑
                 </Link>
                 <button
                   type="button"
@@ -84,7 +86,7 @@ export default function ChocolatinesMenu({
                     setIsOnboardingOpen(true);
                   }}
                 >
-                  Don't like the word "{chocolatineName}"?
+                  Vous n'aimez pas "{chocolatineName}"?
                 </button>
                 <a
                   href="https://github.com/ambroselli-io/kiss-my-chocolatine"
@@ -92,7 +94,7 @@ export default function ChocolatinesMenu({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  All the source code
+                  Code source 🤓
                   <ArrowTopRightOnSquareIcon className="h-3 w-3" />
                 </a>
                 <Link
@@ -102,7 +104,7 @@ export default function ChocolatinesMenu({
                     setShowMore(false);
                   }}
                 >
-                  Any feedback?
+                  Un commentaire?
                 </Link>
                 <Link
                   to="/blog"
@@ -125,7 +127,7 @@ export default function ChocolatinesMenu({
                         }, 500);
                       }}
                     >
-                      Log out
+                      Déconnexion
                     </button>
                   </Form>
                 ) : (

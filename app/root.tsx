@@ -18,22 +18,22 @@ export function meta() {
   return [
     {
       title:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       name: "description",
       content:
-        "All about the Pains Au Chocolat in the world 🌍 The shops, the ingredients, the reviews",
+        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     {
       property: "og:title",
       content:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "og:description",
       content:
-        "Ingredients, reviews, prices, shop's opening hours of all the Pains au Chocolat around the world.",
+        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     { property: "og:url", content: url },
     { property: "og:image", content: `${url}/og-image-1200-630.jpg` },
@@ -47,23 +47,23 @@ export function meta() {
     {
       property: "og:image:alt",
       content:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "twitter:title",
       content:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "twitter:description",
       content:
-        "Ingredients, reviews, prices, shop's opening hours of all the Pains au Chocolat around the world.",
+        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     { property: "twitter:image", content: `${url}/og-image-1200-630.jpg` },
     {
       property: "twitter:image:alt",
       content:
-        "Kiss My Chocolatine - Find all the Pains au Chocolat all around the world 🌍",
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     { property: "twitter:card", content: "summary" },
     { property: "twitter:creator", content: "@arnaudambro" },

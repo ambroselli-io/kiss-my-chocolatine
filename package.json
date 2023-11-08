@@ -16,6 +16,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@mapbox/mapbox-gl-language": "^1.0.1",
     "@nivo/core": "0.80.0",
     "@nivo/line": "0.80.0",
     "@nivo/pie": "0.80.0",

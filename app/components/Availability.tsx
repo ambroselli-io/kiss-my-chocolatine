@@ -5,9 +5,9 @@ import type { Shop } from "@prisma/client";
 
 const Availability = ({
   shop,
-  title = "Opening hours",
-  openedCaption = "Opened now",
-  closedCaption = "Closed now",
+  title = "Horaires",
+  openedCaption = "Ouvert maintenant",
+  closedCaption = "Fermé maintenant",
 }: {
   shop: Shop;
   title?: string;

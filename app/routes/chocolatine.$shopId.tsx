@@ -22,6 +22,7 @@ import useChocolatineName from "~/utils/useChocolatineName";
 import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 import { readableAwards, readablePositions } from "~/utils/awards";
+import { readableHomemade } from "~/utils/homemade";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
@@ -130,39 +131,6 @@ export default function ChocolatineAndShop() {
         </svg>
       </Link>
       <div className="h-full w-full flex-col overflow-x-auto overflow-y-auto">
-        <span
-          aria-details="address"
-          className="mt-1 flex cursor-pointer pl-6 text-sm opacity-70"
-          onClick={() => {
-            window.open(
-              `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
-              "_blank",
-            );
-          }}
-        >
-          <img src="/assets/pin-grey.svg" className="mr-1 w-5 sm:mr-3" />
-          {!!shop.streetAddress ? (
-            <>
-              {shop.streetAddress}
-              <br />
-              {shop.addresspostalCode} {shop.addressLocality}{" "}
-              {shop.addressCountry}
-            </>
-          ) : (
-            <>{shop.addressLocality}</>
-          )}
-        </span>
-        <span
-          aria-details="opening hours"
-          className="mt-1 flex pl-6 text-sm opacity-70"
-        >
-          <img src="/assets/clock-grey.svg" className="mr-1 w-5 sm:mr-3" />
-          {shop.openingHoursSpecification ? (
-            <Availability shop={shop} />
-          ) : (
-            "No opening hours available"
-          )}
-        </span>
         <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
           <h3
             className={`mt-1 ${
@@ -171,208 +139,20 @@ export default function ChocolatineAndShop() {
                 : "font-semibold"
             }`}
           >
-            Homemade: {chocolatine.homemade}
+            Fait maison&nbsp;: {readableHomemade[chocolatine.homemade]}
             {["I think so", "Yes"].includes(chocolatine.homemade) && " 🧑‍🍳 "}
             {["I don't think so", "No"].includes(chocolatine.homemade) &&
               " 🏭 "}
           </h3>
           <p className="mb-0 mt-3">
-            Price:{" "}
+            Prix&nbsp;:{" "}
             {chocolatine.price
               ? `${chocolatine.price} ${chocolatine.priceCurrency}`
               : "N/A"}
           </p>
-          <div className="mb-2 mt-10 flex items-center justify-between">
-            <h3 className="font-bold">How is it like?</h3>
-            <ClientOnly>
-              {() => (
-                <Link
-                  to={`/chocolatine/review/${shop.id}`}
-                  className="ml-auto text-xs"
-                >
-                  🙋 Add my review
-                </Link>
-              )}
-            </ClientOnly>
-          </div>
-          {!chocolatine.has_been_reviewed_once ? (
-            "No review yet"
-          ) : (
-            <>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Is there any butter in it?</summary>
-                  <p className="text-xs italic opacity-70">
-                    Some people like with A LOT, some other with just a touch.
-                    In any case, it's an important ingredient of the{" "}
-                    {chocolatineName}&nbsp;🧈
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Not at all"}
-                  maxCaption={"Anything but butter"}
-                  value={chocolatine.average_buttery}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>
-                    Is it more Flaky (feuilleuté) or Brioche-like?
-                  </summary>
-                  <p className="text-xs italic opacity-70">
-                    the original {chocolatineName} IS flaky. Butterly flaky. But
-                    it takes everything to make a world&nbsp;🤷
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Flaky/Feuilleuté"}
-                  maxCaption={"Brioche"}
-                  value={chocolatine.average_flaky_or_brioche}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Golden or Pale?</summary>
-                  <p className="text-xs italic opacity-70">
-                    The more golden the more cooked.&nbsp;❤️‍🔥
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Golden"}
-                  maxCaption={"Pale"}
-                  value={chocolatine.average_golden_or_pale}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Crispy or Soft?</summary>
-                  <p className="text-xs italic opacity-70">
-                    A combinaison of buttery, flakiness and and time to
-                    cook&nbsp;🤯
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Crispy"}
-                  maxCaption={"Soft"}
-                  value={chocolatine.average_crispy_or_soft}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Light or Dense?</summary>
-                  <p className="text-xs italic opacity-70">
-                    This is a signature&nbsp;🧑‍🍳
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Light"}
-                  maxCaption={"Dense"}
-                  value={chocolatine.average_light_or_dense}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>How is the chocolate disposition?</summary>
-                  <p className="text-xs italic opacity-70">
-                    superimposed or well distributed?&nbsp;🖖
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Superimposed"}
-                  maxCaption={"On each edges"}
-                  value={chocolatine.average_chocolate_disposition}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Small or big?</summary>
-                  <p className="text-xs italic opacity-70">
-                    this is mainly to point out the too small ones, tbh&nbsp;👎
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Very small"}
-                  maxCaption={"Very big"}
-                  value={chocolatine.average_big_or_small}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Good or not good?</summary>
-                  <p className="text-xs italic opacity-70">
-                    the only subjective rating here - the other ones are
-                    science&nbsp;🥸
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"🤢"}
-                  maxCaption={"🤩"}
-                  value={from020to22(chocolatine.average_good_or_not_good)}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Eater's reviews ({detailedReviews?.length})</summary>
-                  <ul className="ml-8 mt-2 flex list-inside flex-col">
-                    {detailedReviews?.map((review, index) => (
-                      <li key={index} className="mb-2">
-                        <strong>
-                          {review.good_or_not_good}
-                          /20
-                        </strong>
-                        <span> - {review?.user_username}</span>
-                        <small className="opacity-50">
-                          {" - "}
-                          {new Intl.DateTimeFormat("en-GB", {
-                            dateStyle: "short",
-                            timeStyle: "short",
-                          }).format(new Date(review.created_at))}
-                        </small>
-                        <p>{review.comment}</p>
-                        {/* You can also add other parts of the review here, like rating, etc. */}
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-              </div>
-            </>
-          )}
-          <div className="mb-2 mt-10 flex items-center justify-between">
-            <h3 className="font-bold">Ingredients</h3>
-            <ClientOnly>
-              {() => (
-                <a href={newIngredient(shop.name)} className="ml-auto text-xs">
-                  🥣 Update (by email)
-                </a>
-              )}
-            </ClientOnly>
-          </div>
-          Ingredients not listed yet
-          {/* {!ingredients?.length
-            ? "Ingredients not listed yet"
-            : ingredients.map((ingredient) => {
-                return (
-                  <div
-                    className="ml-1 mt-2 flex text-sm"
-                    key={ingredient?.name}
-                  >
-                    <img
-                      className="mr-2 h-6 w-6"
-                      src={`/assets/${ingredient?.additionalProperties.find(
-                        (prop) => prop.name === "Icon",
-                      )?.value}`}
-                      loading="lazy"
-                    />
-                    <span>
-                      <span className="font-semibold">{ingredient.name}</span>:{" "}
-                      {ingredient.quantity}
-                    </span>
-                  </div>
-                );
-              })} */}
         </section>
         <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
-          <h3 className="mb-2 mt-10 font-bold">Shop infos</h3>
+          <h3 className="mb-2 mt-10 font-bold">Informations du magasin</h3>
           {!!awards.length && (
             <dl className="px-4 font-semibold">
               {awards.map(({ award, position, year, id }) => {
@@ -407,7 +187,7 @@ export default function ChocolatineAndShop() {
               {shop.openingHoursSpecification ? (
                 <Availability shop={shop} />
               ) : (
-                "No opening hours available"
+                "Horaires non renseignés"
               )}
             </span>
             {shop.telephone && (
@@ -445,7 +225,7 @@ export default function ChocolatineAndShop() {
                   }
                 }}
               >
-                Click here to share link
+                📤 Partagez le lien
               </button>
             )}
           </ClientOnly>
@@ -453,7 +233,7 @@ export default function ChocolatineAndShop() {
             to={`/chocolatine/award/${shop.id}`}
             className="my-2 block text-xs underline"
           >
-            🥇 Add an award
+            🥇 Ajoutez une récompense
           </Link>
           <ClientOnly>
             {() => (
@@ -461,8 +241,8 @@ export default function ChocolatineAndShop() {
                 href={newFeedback(shop.name)}
                 className="my-2 ml-auto block text-xs"
               >
-                Any feedback? Good, bad, review, wrong or missing information...
-                Please <u>click here</u> to shoot us an email!
+                Un commentaire? Bon, mauvais, avis, information manquante ou
+                erronée... <u>Cliquez ici</u> pour nous envoyer un email&nbsp;!
               </a>
             )}
           </ClientOnly>

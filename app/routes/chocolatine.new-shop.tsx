@@ -24,6 +24,7 @@ import {
   getUserIdFromCookie,
 } from "~/services/auth.server";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import { readableHomemade } from "~/utils/homemade";
 
 type ActionReturnType = {
   ok: boolean;
@@ -40,6 +41,9 @@ export const action = async ({
   const description = form.get("description") as string | null | undefined;
   const shopName = form.get("shop_name") as string;
   const addressLocality = form.get("addressLocality") as string;
+  const homemade = form.get("homemade");
+  const price = form.get("price");
+
   const userId = await getUserIdFromCookie(request);
   const userEmail = await getUserEmailFromCookie(request);
 
@@ -47,42 +51,56 @@ export const action = async ({
   // -> https://maps.app.goo.gl/2PScR6bSNXJUyns57
   // ->https://www.google.com/maps/place/Le+Pain+Retrouvé/@48.8777186,2.3396138,17z/data=!3m2!4b1!5s0x47e66e473872ba6b:0xf7d926070e69fc39!4m6!3m5!1s0x47e66f897294d69b:0x37816e98cb091727!8m2!3d48.8777186!4d2.3396138!16s%2Fg%2F11qqj676ry?entry=ttu
 
-  let latitude = null;
-  let longitude = null;
-  try {
-    if (coordinates) {
-      [latitude, longitude] = coordinates.split(",").map(Number);
-    } else if (googleLink) {
-      const googleParsing = await parseGoogleLinkForCoordinates(googleLink);
-      latitude = googleParsing.latitude;
-      longitude = googleParsing.longitude;
+  const shop = await prisma.$transaction(async (tx) => {
+    let latitude = null;
+    let longitude = null;
+    try {
+      if (coordinates) {
+        [latitude, longitude] = coordinates.split(",").map(Number);
+      } else if (googleLink) {
+        const googleParsing = await parseGoogleLinkForCoordinates(googleLink);
+        latitude = googleParsing.latitude;
+        longitude = googleParsing.longitude;
+      }
+    } catch (e) {
+      Sentry.captureException(e, { extra: { googleLink, coordinates } });
     }
-  } catch (e) {
-    Sentry.captureException(e, { extra: { googleLink, coordinates } });
-  }
+    const shop = await tx.shop.create({
+      data: {
+        name: shopName,
+        description,
+        addressLocality,
+        google_map_link: googleLink,
+        latitude,
+        longitude,
+        created_by_user_id: userId,
+        created_by_user_email: userEmail,
+      },
+    });
+    await tx.userAction.create({
+      data: {
+        action: "USER_SHOP_NEW",
+        user_id: userId,
+        number_of_actions: 1,
+        user_email: userEmail,
+      },
+    });
 
-  const shop = await prisma.shop.create({
-    data: {
-      name: shopName,
-      description,
-      addressLocality,
-      google_map_link: googleLink,
-      latitude,
-      longitude,
-      created_by_user_id: userId,
-      created_by_user_email: userEmail,
-    },
+    await tx.chocolatine.create({
+      data: {
+        shop_id: shop.id,
+        shop_name: shop.name,
+        created_by_user_id: userId,
+        created_by_user_email: userEmail,
+        homemade: String(homemade),
+        price: Number(price),
+      },
+    });
+
+    return shop;
   });
-  await prisma.userAction.create({
-    data: {
-      action: "USER_SHOP_NEW",
-      user_id: userId,
-      number_of_actions: 1,
-      user_email: userEmail,
-    },
-  });
-  // This is just so we can see the transition
-  return redirect(`/chocolatine/review/${shop.id}`);
+
+  return redirect(`/chocolatine/${shop.id}`);
 };
 
 export const loader: LoaderFunction = async ({
@@ -101,7 +119,10 @@ export default function AddNewShop() {
   const [searchParams] = useSearchParams();
 
   return (
-    <ModalRouteContainer aria-label="Add new shop" title="Add new shop">
+    <ModalRouteContainer
+      aria-label="Ajoutez un magasin"
+      title="Ajoutez un magasin"
+    >
       <ModalBody>
         <Form id="add-shop-form" method="post" className="m-4">
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
@@ -115,7 +136,7 @@ export default function AddNewShop() {
               defaultValue={searchParams.get("name") ?? undefined}
             />
             <label htmlFor="shop_name">
-              Name<sup className="ml-1 text-red-500">*</sup>
+              Nom<sup className="ml-1 text-red-500">*</sup>
             </label>
           </div>
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
@@ -128,7 +149,7 @@ export default function AddNewShop() {
               placeholder="Paris"
             />
             <label htmlFor="addressLocality">
-              City<sup className="ml-1 text-red-500">*</sup>
+              Ville<sup className="ml-1 text-red-500">*</sup>
             </label>
           </div>
           <div className="mb-3 flex max-w-screen-lg flex-col-reverse gap-2">
@@ -155,21 +176,21 @@ export default function AddNewShop() {
                     rel="noopener noreferrer"
                   >
                     <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    Google Maps link
+                    Lien Google Maps
                   </a>
                 </label>
               </summary>
               <p className="pl-4 text-sm opacity-40">
-                We're interested in the Google Maps link because it provides all
-                the information we need: address, email, phone number, opening
-                hours, and coordinates. It would be very nice if you could paste
-                it here below:
+                On vous demande un lien Google Maps parce qu'il contient toutes
+                les informations dont on a besoin: adresse, email, numéro de
+                téléphone, horaires d'ouverture, et coordonnées. Ce serait très
+                gentil de votre part de le copier-coller ici en dessous:
               </p>
             </details>
           </div>
           <p className="mb-4 px-4 text-sm opacity-40">
-            Or, if you <i>reaaally</i> don't want to go on Google Map and you're
-            sure about your coordinates:{" "}
+            Ou, si vous ne voulez <i>vraiiiment pas</i> aller sur Google Maps et
+            que vous êtes sûr de vos coordonnées:
           </p>
           <div className="mb-3 flex max-w-screen-lg flex-col-reverse gap-2">
             <input
@@ -178,7 +199,7 @@ export default function AddNewShop() {
               id="coordinates"
               title="Coordinates (like `45.540596,2.493823`)"
               pattern="-?\d{1,3}\.\d+,-?\d{1,3}\.\d+"
-              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 valid:bg-green-50 invalid:bg-red-50 focus:border-app-500 focus:ring-app-500"
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 valid:bg-green-50 invalid:bg-red-50 empty:!bg-white focus:border-app-500 focus:ring-app-500"
               placeholder="45.540596,2.493823"
               defaultValue={searchParams.get("coordinates") ?? undefined}
             />
@@ -195,7 +216,7 @@ export default function AddNewShop() {
                     rel="noopener noreferrer"
                   >
                     <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                    Coordinates{" "}
+                    Coordonnées{" "}
                     <span className="opacity-40">
                       (like "45.540596,2.493823")
                     </span>
@@ -203,10 +224,42 @@ export default function AddNewShop() {
                 </label>
               </summary>
               <p className="pl-4 text-sm opacity-40">
-                You have two options for finding the coordinates: long click on
-                our map or right click on Google Maps.
+                Vous avez deux options pour trouver les coordonnées: cliquez
+                droit sur notre carte ou cliquez droit sur Google Maps.
               </p>
             </details>
+          </div>
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+            <select
+              id="homemade"
+              name="homemade"
+              required
+              className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
+            >
+              {Object.entries(readableHomemade).map(([value, label]) => {
+                return (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                );
+              })}
+            </select>
+            <label htmlFor="homemade">
+              Fait maison&nbsp;?<sup className="ml-1 text-red-500">*</sup>
+            </label>
+          </div>
+          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
+            <input
+              name="price"
+              type="number"
+              min="0"
+              step="0.01"
+              id="price"
+              onWheel={(e) => e.currentTarget.blur()}
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+              placeholder="1.50"
+            />
+            <label htmlFor="price">Prix</label>
           </div>
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
             <input
@@ -227,7 +280,7 @@ export default function AddNewShop() {
           form="add-shop-form"
           disabled={busy}
         >
-          Add shop
+          Ajoutez ce magasin
         </button>
       </ModalFooter>
     </ModalRouteContainer>
