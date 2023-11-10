@@ -151,6 +151,198 @@ export default function ChocolatineAndShop() {
               : "N/A"}
           </p>
         </section>
+
+        <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
+          <div className="mb-2 mt-10 flex items-center justify-between">
+            <h3 className="font-bold">A quoi cela ressemble-t-il?</h3>
+            <ClientOnly>
+              {() => (
+                <Link
+                  to={`/chocolatine/review/${shop.id}`}
+                  className="ml-auto text-xs"
+                >
+                  🙋 Ajouter mon avis
+                </Link>
+              )}
+            </ClientOnly>
+          </div>
+          {!chocolatine.has_been_reviewed_once ? (
+            "Pas d'avis encore"
+          ) : (
+            <>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Y'a-t-il du beurre?</summary>
+                  <p className="text-xs italic opacity-70">
+                    Certains aiment avec BEAUCOUP, d'autres avec juste une
+                    touche. Dans tous les cas, c'est un ingrédient
+                    ESSENTIEL&nbsp;🧈
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Pas du tout"}
+                  maxCaption={"QUE du beurre"}
+                  value={chocolatine.average_buttery}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Est-ce plus feuilleté ou plus brioché?</summary>
+                  <p className="text-xs italic opacity-70">
+                    L'original est feuilleté. Beurré et feuilleté. Mais il faut
+                    de tout pour faire un monde&nbsp;🤷
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Feuilleuté"}
+                  maxCaption={"Brioché"}
+                  value={chocolatine.average_flaky_or_brioche}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Doré ou pâle?</summary>
+                  <p className="text-xs italic opacity-70">
+                    Le plus doré, le plus cuit.&nbsp;❤️‍🔥
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Golden"}
+                  maxCaption={"Pale"}
+                  value={chocolatine.average_golden_or_pale}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Croustillant ou moelleux?</summary>
+                  <p className="text-xs italic opacity-70">
+                    Une combinaison de beurre, de feuilletage et de temps de
+                    cuisson&nbsp;🤯
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Crispy"}
+                  maxCaption={"Soft"}
+                  value={chocolatine.average_crispy_or_soft}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Aéré ou dense?</summary>
+                  <p className="text-xs italic opacity-70">
+                    C'est une signature&nbsp;🧑‍🍳
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Light"}
+                  maxCaption={"Dense"}
+                  value={chocolatine.average_light_or_dense}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Comment est la disposition du chocolat?</summary>
+                  <p className="text-xs italic opacity-70">
+                    superposé ou bien distribué?&nbsp;🖖
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Superimposed"}
+                  maxCaption={"On each edges"}
+                  value={chocolatine.average_chocolate_disposition}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Petit ou gros?</summary>
+                  <p className="text-xs italic opacity-70">
+                    c'est surtout pour pointer les trop petits,
+                    honnêtement&nbsp;👎
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"Very small"}
+                  maxCaption={"Very big"}
+                  value={chocolatine.average_big_or_small}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>Bon ou pas bon?</summary>
+                  <p className="text-xs italic opacity-70">
+                    la seule note subjective ici - les autres sont
+                    scientifiques&nbsp;🥸
+                  </p>
+                </details>
+                <BalancedRate
+                  minCaption={"🤢"}
+                  maxCaption={"🤩"}
+                  value={from020to22(chocolatine.average_good_or_not_good)}
+                />
+              </div>
+              <div className="ml-1 mt-4 flex flex-col text-sm">
+                <details className="mb-1 inline-flex">
+                  <summary>
+                    Avis de gourmands ({detailedReviews?.length})
+                  </summary>
+                  <ul className="ml-8 mt-2 flex list-inside flex-col">
+                    {detailedReviews?.map((review, index) => (
+                      <li key={index} className="mb-2">
+                        <strong>
+                          {review.good_or_not_good}
+                          /20
+                        </strong>
+                        <span> - {review?.user_username}</span>
+                        <small className="opacity-50">
+                          {" - "}
+                          {new Intl.DateTimeFormat("en-GB", {
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          }).format(new Date(review.created_at))}
+                        </small>
+                        <p>{review.comment}</p>
+                        {/* You can also add other parts of the review here, like rating, etc. */}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
+            </>
+          )}
+          <div className="mb-2 mt-10 flex items-center justify-between">
+            <h3 className="font-bold">Ingrédients</h3>
+            <ClientOnly>
+              {() => (
+                <a href={newIngredient(shop.name)} className="ml-auto text-xs">
+                  🥣 Ajouter (par email)
+                </a>
+              )}
+            </ClientOnly>
+          </div>
+          Ingredients non renseignés
+          {/* {!ingredients?.length
+            ? "Ingredients not listed yet"
+            : ingredients.map((ingredient) => {
+                return (
+                  <div
+                    className="ml-1 mt-2 flex text-sm"
+                    key={ingredient?.name}
+                  >
+                    <img
+                      className="mr-2 h-6 w-6"
+                      src={`/assets/${ingredient?.additionalProperties.find(
+                        (prop) => prop.name === "Icon",
+                      )?.value}`}
+                      loading="lazy"
+                    />
+                    <span>
+                      <span className="font-semibold">{ingredient.name}</span>:{" "}
+                      {ingredient.quantity}
+                    </span>
+                  </div>
+                );
+              })} */}
+        </section>
         <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
           <h3 className="mb-2 mt-10 font-bold">Informations du magasin</h3>
           {!!awards.length && (

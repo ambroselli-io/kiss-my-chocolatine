@@ -14,10 +14,10 @@ import {
 } from "~/components/Modal";
 import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
-import Cookies from "js-cookie";
 import type { User } from "@prisma/client";
 import { compileReviews } from "~/utils/review";
 import useChocolatineName from "~/utils/useChocolatineName";
+import { readableHomemade } from "~/utils/homemade";
 
 type ActionReturnType = {
   ok: boolean;
@@ -40,6 +40,7 @@ export const action = async ({
       id: params.shopId,
     },
   });
+  console.log({ shop });
   if (!shop) return { ok: false, error: "shop doesnt exist" };
   const homemade = form.get("homemade");
   const price = form.get("price");
@@ -82,7 +83,10 @@ export const action = async ({
       has_been_reviewed_once: hasBeenReviewedOnce,
       ...chocolatineParams,
     },
-    update: chocolatineParams,
+    update: {
+      ...chocolatineParams,
+      has_been_reviewed_once: hasBeenReviewedOnce,
+    },
   });
 
   const review = {
@@ -193,8 +197,16 @@ export default function ChocolatineReview() {
 
   return (
     <ModalRouteContainer
-      aria-label={`Add new review for ${shop.name}'s ${chocolatineName}`}
-      title={`Add new review for ${shop.name}'s ${chocolatineName}`}
+      aria-label={`${chocolatineName
+        .slice(0, 1)
+        .toLocaleUpperCase()}${chocolatineName.slice(1)} de ${
+        shop.name
+      }: ajouter un nouvel avis`}
+      title={`${chocolatineName
+        .slice(0, 1)
+        .toLocaleUpperCase()}${chocolatineName.slice(1)} de ${
+        shop.name
+      }: ajouter un nouvel avis`}
     >
       <ModalBody className="border-t border-t-gray-300">
         <Form id="add-review-form" method="post" className="m-4">
@@ -204,16 +216,17 @@ export default function ChocolatineReview() {
               name="homemade"
               required
               className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
-              defaultValue={chocolatine?.homemade}
             >
-              <option>I don't know, nobody tried yet</option>
-              <option>Yes</option>
-              <option>I think so</option>
-              <option>I don't think so</option>
-              <option>No</option>
+              {Object.entries(readableHomemade).map(([value, label]) => {
+                return (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                );
+              })}
             </select>
             <label htmlFor="homemade">
-              Homemade&nbsp;?<sup className="ml-1 text-red-500">*</sup>
+              Fait maison&nbsp;?<sup className="ml-1 text-red-500">*</sup>
             </label>
           </div>
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
@@ -226,77 +239,78 @@ export default function ChocolatineReview() {
               onWheel={(e) => e.currentTarget.blur()}
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="1.50"
-              defaultValue={chocolatine?.price}
+              defaultValue={chocolatine?.price || undefined}
             />
             <label htmlFor="price">
-              Price<sup className="ml-1 text-red-500">*</sup>
+              Prix<sup className="ml-1 text-red-500">*</sup>
             </label>
           </div>
 
           <RadioRate
             name="buttery"
-            minCaption={"Not at all"}
-            maxCaption={"Anything but butter"}
+            minCaption={"Pas du tout"}
+            maxCaption={"QUE du beurre"}
             defaultValue={myReview?.buttery}
-            legend="Is there any butter in it?"
+            legend="Y'a-t-il du beurre?"
           >
-            Some people like with A LOT, some other with just a touch. In any
-            case, it's an important ingredient of the {chocolatineName}&nbsp;🧈
+            Certains aiment avec BEAUCOUP, d'autres avec juste une touche. Dans
+            tous les cas, c'est un ingrédient ESSENTIEL&nbsp;🧈
           </RadioRate>
           <RadioRate
             name="flaky_or_brioche"
-            minCaption={"Flaky/Feuilleuté"}
-            maxCaption={"Brioche"}
+            minCaption={"Feuilleuté"}
+            maxCaption={"Brioché"}
             defaultValue={myReview?.flaky_or_brioche}
-            legend="Flaky/Feuilleuté or Brioche-like"
+            legend="Est-ce plus feuilleté ou plus brioché?"
           >
-            the original {chocolatineName} IS flaky. Butterly flaky. But it
-            takes everything to make a world&nbsp;🤷
+            L'original est feuilleté. Beurré et feuilleté. Mais il faut de tout
+            pour faire un monde&nbsp;🤷
           </RadioRate>
           <RadioRate
             name="golden_or_pale"
-            minCaption={"Golden"}
-            maxCaption={"Pale"}
+            minCaption={"Doré"}
+            maxCaption={"Pâle"}
             defaultValue={myReview?.golden_or_pale}
-            legend="Golden or Pale"
+            legend="Doré ou pâle?"
           >
-            The more golden the more cooked.&nbsp;❤️‍🔥
+            Le plus doré, le plus cuit.&nbsp;❤️‍🔥
           </RadioRate>
           <RadioRate
             name="crispy_or_soft"
-            minCaption={"Crispy"}
-            maxCaption={"Soft"}
+            minCaption={"Croustillant"}
+            maxCaption={"Moelleux"}
             defaultValue={myReview?.crispy_or_soft}
-            legend="Crispy or Soft"
+            legend="Croustillant ou moelleux?"
           >
-            A combinaison of buttery, flakiness and and time to cook&nbsp;🤯
+            Une combinaison de beurre, de feuilletage et de temps de
+            cuisson&nbsp;🤯
           </RadioRate>
           <RadioRate
             name="light_or_dense"
-            minCaption="Light"
+            minCaption="Aéré"
             maxCaption="Dense"
             defaultValue={myReview?.light_or_dense}
-            legend="Light or Dense"
+            legend="Aéré ou Dense?"
           >
-            This is a signature&nbsp;🧑‍🍳
+            C'est une signature&nbsp;🧑‍🍳
           </RadioRate>
           <RadioRate
             name="chocolate_disposition"
-            minCaption={"Superimposed"}
-            maxCaption={"On each edges"}
+            minCaption={"Superposé"}
+            maxCaption={"Bien distribué"}
             defaultValue={myReview?.chocolate_disposition}
-            legend="Chocolate disposition"
+            legend="Comment est la disposition du chocolat?"
           >
-            superimposed or well distributed?&nbsp;🖖
+            superposé ou bien distribué?&nbsp;🖖
           </RadioRate>
           <RadioRate
             name="big_or_small"
-            minCaption={"Very small"}
-            maxCaption={"Very big"}
+            minCaption={"Très petit"}
+            maxCaption={"Très gros"}
             defaultValue={myReview?.big_or_small}
-            legend="Small or big"
+            legend="Petit ou gros?"
           >
-            this is manly to point out the too small ones, tbh&nbsp;👎
+            c'est surtout pour pointer les trop petits, honnêtement&nbsp;👎
           </RadioRate>
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
             <input
@@ -304,14 +318,16 @@ export default function ChocolatineReview() {
               type="number"
               id="good_or_not_good"
               min="0"
+              max="20"
               step="0.5"
               onWheel={(e) => e.currentTarget.blur()}
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
-              placeholder="A score from 0 to 20"
-              defaultValue={myReview?.good_or_not_good}
+              placeholder="Une note de 0 à 20"
+              defaultValue={myReview?.good_or_not_good || undefined}
             />
             <label htmlFor="price">
-              Good or not good?<sup className="ml-1 text-red-500">*</sup>
+              Bon ou pas bon?<sup className="ml-1 text-red-500">*</sup>
+              <small className="ml-4 opacity-70">Une note de 0 à 20</small>
             </label>
           </div>
           <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
@@ -323,7 +339,7 @@ export default function ChocolatineReview() {
               placeholder="Loving it! ❤️"
               defaultValue={myReview?.comment}
             />
-            <label htmlFor="price">Any comment?</label>
+            <label htmlFor="price">Un commentaire?</label>
           </div>
         </Form>
       </ModalBody>
@@ -334,7 +350,7 @@ export default function ChocolatineReview() {
           className="rounded-lg bg-[#FFBB01] px-4 py-2 disabled:opacity-25"
           disabled={busy}
         >
-          Add review
+          Ajouter mon avis
         </button>
       </ModalFooter>
     </ModalRouteContainer>
