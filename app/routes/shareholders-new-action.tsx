@@ -62,7 +62,6 @@ export default function NewShareholderAction() {
   const { state } = useNavigation();
   const { usersEmails } = useLoaderData<typeof loader>();
   const busy = state === "submitting";
-  console.log({ usersEmails });
 
   const actionData = useActionData<typeof action>();
 

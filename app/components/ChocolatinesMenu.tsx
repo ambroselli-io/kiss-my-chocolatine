@@ -66,7 +66,7 @@ export default function ChocolatinesMenu({
                   }}
                 >
                   Invitez vos amis et gagnez{" "}
-                  {mapActionToShares.USER_REFERRAL_CREATER}
+                  {mapActionToShares.USER_REFERRAL_CREATER} actions
                 </Link>
                 <Link
                   to="/shareholders"

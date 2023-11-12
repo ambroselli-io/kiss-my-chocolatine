@@ -47,12 +47,16 @@ type Stakeholder = {
 export const reduceAllDBActionsToShares = (
   userActions: Array<UserAction>,
   actions: Array<Action>,
+  excludeAdmins: boolean = false,
 ): [Array<Stakeholder>, number] => {
   const uaObject = userActions
     .filter((ua) => actions.includes(ua.action))
     .reduce(
       (builders: any, ua) => {
         const email = ua.user_email as string;
+        if (!!excludeAdmins && email.includes("@ambroselli.io")) {
+          return builders;
+        }
         if (!builders[email]) {
           builders[email] = {
             user_email: email,

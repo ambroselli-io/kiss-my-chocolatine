@@ -9,7 +9,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
-import type { Action } from "@prisma/client";
+import type { Action, UserAction } from "@prisma/client";
 import {
   fromSecondsToHoursMinSec,
   mapActionToShares,
@@ -17,6 +17,7 @@ import {
 } from "~/utils/mapActionToShares";
 import ChartStakeholders from "~/components/ChartStakeholders";
 import useChocolatineName from "~/utils/useChocolatineName";
+import AutoCompleteInput from "~/components/AutoCompleteInput";
 
 export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const parentMeta = matches
@@ -53,9 +54,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const user = (await getUserFromCookie(request, { optional: true })) as User;
 
   const userActions = await prisma.userAction.findMany();
-
+  const usersEmails = await prisma.$queryRaw<
+    Array<UserAction>
+  >`SELECT DISTINCT user_email FROM "UserAction"`;
   return {
     user,
+    usersEmails: usersEmails.map((user) => user.user_email),
     builders: reduceAllDBActionsToShares(userActions, ["BUILDER_HOUR_AMOUNT"]),
     investors: reduceAllDBActionsToShares(userActions, [
       "INVESTOR_EURO_AMOUNT",
@@ -66,14 +70,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
         (action) =>
           !["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action),
       ),
+      true,
     ),
   };
 }
 
 export default function NewShareholderAction() {
-  const { builders, investors, users, user } = useLoaderData<typeof loader>();
+  const { builders, investors, users, usersEmails, user } =
+    useLoaderData<typeof loader>();
 
   const [email, setEmail] = useState(user?.email || "");
+
   const [benefits, setBenefits] = useState("1000000");
 
   const userSharholder = email
@@ -104,6 +111,7 @@ export default function NewShareholderAction() {
 
   const { newAppName } = useChocolatineName();
   const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div
       ref={containerRef}
@@ -118,7 +126,10 @@ export default function NewShareholderAction() {
           Go back home
         </Link>
       </div>
-      <details open className="border-b border-b-gray-300 px-8 pb-4">
+      <details
+        open
+        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
+      >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">My Shares</h2>
         </summary>
@@ -129,22 +140,19 @@ export default function NewShareholderAction() {
         </p>
         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
           <div className="grid grid-cols-1 gap-4 text-left md:grid-cols-2">
-            <div className="mb-3 flex flex-col-reverse gap-2">
-              <input
-                type="text"
-                id="email"
-                required
-                autoCapitalize="off"
-                className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
-                placeholder="arnaud@ambroselli.io"
-                onChange={(e) => setEmail(e.currentTarget.value)}
-                value={email}
-              />
-              <label htmlFor="email">
-                Email
-                <sup className="ml-1 text-red-500">*</sup>
-              </label>
-            </div>
+            <AutoCompleteInput
+              items={usersEmails}
+              label="Email"
+              name="email"
+              type="email"
+              id="email"
+              autoCapitalize="off"
+              required
+              defaultValue={email}
+              onChange={setEmail}
+              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+              placeholder="arnaud@ambroselli.io"
+            />
             <div className="mb-3 flex flex-col-reverse gap-2">
               <NumericFormat
                 value={benefits}
@@ -157,21 +165,23 @@ export default function NewShareholderAction() {
                 className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
                 onBlur={(e) => e.currentTarget.blur()}
               />
-              <label htmlFor="company_benefit">Company's benefit</label>
+              <label htmlFor="company_benefit">
+                Company's hypothetical benefit
+              </label>
             </div>
           </div>
           {!!email && (
-            <div className="mt-4 text-2xl">
+            <div className="mt-4">
               {!!userSharholder && (
                 <div className="mb-2 flex items-center justify-between rounded border border-gray-200 bg-[#c73a7e] bg-opacity-5 p-3">
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     User's actions: <b>{userSharholder?.number_of_actions}</b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Time spent:{" "}
                     <b>{fromSecondsToHoursMinSec(userSharholder.time_spent)}</b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Benefit:{" "}
                     <b>
                       {new Intl.NumberFormat("fr-FR", {
@@ -186,14 +196,14 @@ export default function NewShareholderAction() {
               )}
               {!!builder && (
                 <div className="mb-2 flex items-center justify-between rounded border border-gray-200 bg-[#f5be41] bg-opacity-5 p-3">
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Builder's actions: <b>{builder?.number_of_actions}</b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Time spent:{" "}
                     <b>{fromSecondsToHoursMinSec(builder.time_spent)}</b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Benefit:{" "}
                     <b>
                       {new Intl.NumberFormat("fr-FR", {
@@ -208,10 +218,10 @@ export default function NewShareholderAction() {
               )}
               {!!investor && (
                 <div className="mb-2 flex items-center justify-between rounded border border-gray-200 bg-[#4d98d3]  bg-opacity-5 p-3">
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Investor's actions: <b>{investor?.number_of_actions}</b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Money invested:{" "}
                     <b>
                       {" "}
@@ -223,7 +233,7 @@ export default function NewShareholderAction() {
                       }).format(investor?.number_of_actions)}
                     </b>
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center justify-center">
                     Benefit:{" "}
                     <b>
                       {new Intl.NumberFormat("fr-FR", {
@@ -255,13 +265,13 @@ export default function NewShareholderAction() {
       </details>
       <details
         aria-description="Stakeholders block"
-        className="border-b border-b-gray-300 px-8 pb-4"
+        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">Stakeholders</h2>
         </summary>
         <p>
-          The <b>shares of the company</b> are split equally between three
+          The <b>dividend of the company</b> will be split equally between three
           stakeholders:
         </p>
         <div className="flex h-96 w-full justify-center py-4">
@@ -313,14 +323,21 @@ export default function NewShareholderAction() {
             ]}
           />
         </div>
+        <p>
+          Each stakeholder doesn't have the same rights, for example: builders
+          have a veto right on what to build. But each stakeholder group has the
+          same amount of dividend. Within each group, the dividend is split
+          according to the number of shares of each individual.
+        </p>
       </details>
       <details
         aria-description="Users block"
-        className="border-b border-b-gray-300 px-8 pb-4"
+        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Users ({users[1]} shares as of today)
+            Users ({users[1]} shares as of{" "}
+            {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
         <p>
@@ -367,11 +384,12 @@ export default function NewShareholderAction() {
       </details>
       <details
         aria-description="Builders block"
-        className="border-b border-b-gray-300 px-8 pb-4"
+        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Builders ({builders[1]} shares as of today)
+            Builders ({builders[1]} shares as of{" "}
+            {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
         <p>
@@ -408,11 +426,12 @@ export default function NewShareholderAction() {
       </details>
       <details
         aria-description="Investors block"
-        className="border-b border-b-gray-300 px-8 pb-4"
+        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Investors ({investors[1]} shares as of today)
+            Investors ({investors[1]} shares as of{" "}
+            {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
         <h2 className="inline-flex text-2xl"></h2>
