@@ -31,7 +31,7 @@ export default function AutoCompleteInput({
       selectedItem,
     } = useCombobox({
       onInputValueChange({ inputValue }) {
-        onChange(inputValue);
+        if (onChange) onChange(inputValue);
         setItems(
           initItems
             .filter(getValueFiltered(inputValue))
