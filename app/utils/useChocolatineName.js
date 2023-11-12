@@ -8,8 +8,8 @@ export default function useChocolatineName() {
   const chocolatinesName = Cookies.get("chocolatines-name") || "chocolatines";
 
   const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-  // const newAppName = `Kiss\u00A0My\u00A0${chocolatineName
-  const newAppName = `Kiss\u00A0My\u00A0${"chocolatine"
+  // const newAppName = `Kiss\u00A0My\u00A0${"chocolatine"
+  const newAppName = `Kiss\u00A0My\u00A0${chocolatineName
     .split(" ")
     .map(capitalize)
     .join("\u00A0")}`;
