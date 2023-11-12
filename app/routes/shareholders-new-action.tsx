@@ -5,12 +5,19 @@ import {
   ActionFunctionArgs,
   json,
 } from "@remix-run/node";
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
-import type { Action } from "@prisma/client";
+import type { Action, UserAction } from "@prisma/client";
 import { mapActionToShares } from "~/utils/mapActionToShares";
+import AutoCompleteInput from "~/components/AutoCompleteInput";
 
 export async function action({ request }: ActionFunctionArgs) {
   const user = (await getUserFromCookie(request)) as User;
@@ -43,14 +50,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const user = (await getUserFromCookie(request)) as User;
   if (!user?.admin) return redirect("/404");
 
+  const usersEmails = await prisma.$queryRaw<
+    Array<UserAction>
+  >`SELECT DISTINCT user_email FROM "UserAction"`;
   return {
-    message: "Hello World",
+    usersEmails: usersEmails.map((user) => user.user_email),
   };
 }
 
 export default function NewShareholderAction() {
   const { state } = useNavigation();
+  const { usersEmails } = useLoaderData<typeof loader>();
   const busy = state === "submitting";
+  console.log({ usersEmails });
 
   const actionData = useActionData<typeof action>();
 
@@ -95,23 +107,18 @@ export default function NewShareholderAction() {
             <sup className="ml-1 text-red-500">*</sup>
           </label>
         </div>
-        <div
-          className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left"
+        <AutoCompleteInput
+          items={usersEmails}
+          label="User email"
           key={actionData?.data.id}
-        >
-          <input
-            name="user_email"
-            type="email"
-            id="user_email"
-            autoCapitalize="off"
-            required
-            className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
-            placeholder="A score from 0 to 20"
-          />
-          <label htmlFor="user_email">
-            User email<sup className="ml-1 text-red-500">*</sup>
-          </label>
-        </div>
+          name="user_email"
+          type="email"
+          id="user_email"
+          autoCapitalize="off"
+          required
+          className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
+          placeholder="lol@email.com"
+        />
         <button
           type="submit"
           className="rounded-lg bg-[#FFBB01] px-4 py-2 disabled:opacity-25"
