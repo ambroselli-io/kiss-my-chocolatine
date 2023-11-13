@@ -140,19 +140,22 @@ export default function NewShareholderAction() {
         </p>
         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
           <div className="grid grid-cols-1 gap-4 text-left md:grid-cols-2">
-            <AutoCompleteInput
-              items={usersEmails}
-              label="Email"
-              name="email"
-              type="email"
-              id="email"
-              autoCapitalize="off"
-              required
-              defaultValue={email}
-              onChange={setEmail}
-              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
-              placeholder="arnaud@ambroselli.io"
-            />
+            <div className="mb-3 flex flex-col-reverse gap-2">
+              <input
+                type="text"
+                id="email"
+                required
+                autoCapitalize="off"
+                className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                placeholder="arnaud@ambroselli.io"
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                value={email}
+              />
+              <label htmlFor="email">
+                Email
+                <sup className="ml-1 text-red-500">*</sup>
+              </label>
+            </div>
             <div className="mb-3 flex flex-col-reverse gap-2">
               <NumericFormat
                 value={benefits}
@@ -211,7 +214,7 @@ export default function NewShareholderAction() {
                         currency: "EUR",
                         maximumFractionDigits: 0,
                         minimumFractionDigits: 0,
-                      }).format(investorBenefit)}
+                      }).format(builderBenefit)}
                     </b>
                   </div>
                 </div>
