@@ -5,7 +5,7 @@ import {
   type LoaderFunctionArgs,
 } from "@remix-run/node";
 import { NumericFormat } from "react-number-format";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
@@ -17,11 +17,12 @@ import {
 } from "~/utils/mapActionToShares";
 import ChartStakeholders from "~/components/ChartStakeholders";
 import useChocolatineName from "~/utils/useChocolatineName";
-import AutoCompleteInput from "~/components/AutoCompleteInput";
 
-export const meta: MetaFunction = ({ matches }: MetaArgs) => {
+export const meta: MetaFunction = ({ matches, location }: MetaArgs) => {
+  const email = new URLSearchParams(location.search).get("email");
   const parentMeta = matches
     .flatMap((match) => match.meta ?? [])
+    .filter((meta: any) => !meta.title)
     .filter((meta: any) => meta.property !== "og:image")
     .filter((meta: any) => meta.property !== "twitter:image")
     .filter((meta: any) => meta.property !== "twitter:image:alt")
@@ -31,6 +32,23 @@ export const meta: MetaFunction = ({ matches }: MetaArgs) => {
   const url = "https://chocolatine.kiss-my.app";
   return [
     ...parentMeta,
+    {
+      title: email
+        ? `Kiss My Chocolatine - ${email}'s Shares`
+        : "Kiss My Chocolatine - Shareholders",
+    },
+    {
+      property: "og:title",
+      content: email
+        ? `Kiss My Chocolatine - ${email}'s Shares`
+        : "Kiss My Chocolatine - Shareholders",
+    },
+    {
+      property: "twitter:title",
+      content: email
+        ? `Kiss My Chocolatine - ${email}'s Shares`
+        : "Kiss My Chocolatine - Shareholders",
+    },
     { property: "twitter:image", content: `${url}/shareholders_og.png` },
     {
       property: "twitter:image:alt",
@@ -79,7 +97,10 @@ export default function NewShareholderAction() {
   const { builders, investors, users, usersEmails, user } =
     useLoaderData<typeof loader>();
 
-  const [email, setEmail] = useState(user?.email || "");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [email, setEmail] = useState(
+    searchParams.get("email") ?? user?.email ?? "",
+  );
 
   const [benefits, setBenefits] = useState("1000000");
 
@@ -148,7 +169,10 @@ export default function NewShareholderAction() {
                 autoCapitalize="off"
                 className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
                 placeholder="arnaud@ambroselli.io"
-                onChange={(e) => setEmail(e.currentTarget.value)}
+                onChange={(e) => {
+                  setEmail(e.currentTarget.value);
+                  setSearchParams({ email: e.currentTarget.value });
+                }}
                 value={email}
               />
               <label htmlFor="email">
@@ -352,6 +376,7 @@ export default function NewShareholderAction() {
             enableArcLinkLabels={false}
             onClick={(data: any) => {
               setEmail(data.id);
+              setSearchParams({ email: data.id });
               containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }}
             data={users[0].map((ua, index) => {
@@ -359,9 +384,14 @@ export default function NewShareholderAction() {
                 id: ua.user_email,
                 label: (ua.user_email as string)[0].toLocaleUpperCase(),
                 value: ua.number_of_actions,
-                color: `hsl(330, 70%,  ${
-                  25 + 50 - (ua.number_of_actions / (users[1] as number)) * 50
-                }%) `,
+                color:
+                  email === ua.user_email
+                    ? "#000"
+                    : `hsl(330, 70%,  ${
+                        25 +
+                        50 -
+                        (ua.number_of_actions / (users[1] as number)) * 50
+                      }%) `,
               };
             })}
           />
@@ -410,6 +440,7 @@ export default function NewShareholderAction() {
             enableArcLinkLabels={false}
             onClick={(data: any) => {
               setEmail(data.id);
+              setSearchParams({ email: data.id });
               containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }}
             data={builders[0].map((ua) => {
@@ -417,11 +448,14 @@ export default function NewShareholderAction() {
                 id: ua.user_email,
                 label: (ua.user_email as string)[0].toLocaleUpperCase(),
                 value: ua.number_of_actions,
-                color: `hsl(44, 100%, ${
-                  50 +
-                  50 -
-                  (ua.number_of_actions / (builders[1] as number)) * 50
-                }%) `,
+                color:
+                  email === ua.user_email
+                    ? "#000"
+                    : `hsl(44, 100%, ${
+                        50 +
+                        50 -
+                        (ua.number_of_actions / (builders[1] as number)) * 50
+                      }%) `,
               };
             })}
           />
@@ -456,6 +490,7 @@ export default function NewShareholderAction() {
             enableArcLinkLabels={false}
             onClick={(data: any) => {
               setEmail(data.id);
+              setSearchParams({ email: data.id });
               containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }}
             data={investors[0].map((ua) => {
@@ -463,11 +498,14 @@ export default function NewShareholderAction() {
                 id: ua.user_email,
                 label: (ua.user_email as string)[0].toLocaleUpperCase(),
                 value: ua.number_of_actions,
-                color: `hsl(201, 70%, ${
-                  50 +
-                  50 -
-                  (ua.number_of_actions / (investors[1] as number)) * 50
-                }%) `,
+                color:
+                  email === ua.user_email
+                    ? "#000"
+                    : `hsl(201, 70%, ${
+                        50 +
+                        50 -
+                        (ua.number_of_actions / (investors[1] as number)) * 50
+                      }%) `,
               };
             })}
           />

@@ -21,17 +21,22 @@ export function meta() {
         "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
-      name: "description",
-      content:
-        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
-    },
-    {
       property: "og:title",
       content:
         "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
+      property: "twitter:title",
+      content:
+        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+    },
+    {
       property: "og:description",
+      content:
+        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
+    },
+    {
+      name: "description",
       content:
         "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
@@ -46,11 +51,6 @@ export function meta() {
     { property: "og:image:height", content: "630" },
     {
       property: "og:image:alt",
-      content:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
-    },
-    {
-      property: "twitter:title",
       content:
         "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
