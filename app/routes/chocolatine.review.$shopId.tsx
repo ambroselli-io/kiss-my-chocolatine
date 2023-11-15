@@ -14,7 +14,7 @@ import {
 } from "~/components/Modal";
 import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
-import type { User } from "@prisma/client";
+import type { User, Shop, ChocolatineReview } from "@prisma/client";
 import { compileReviews } from "~/utils/review";
 import useChocolatineName from "~/utils/useChocolatineName";
 import { readableHomemade } from "~/utils/homemade";
@@ -40,7 +40,6 @@ export const action = async ({
       id: params.shopId,
     },
   });
-  console.log({ shop });
   if (!shop) return { ok: false, error: "shop doesnt exist" };
   const homemade = form.get("homemade");
   const price = form.get("price");
@@ -66,29 +65,6 @@ export const action = async ({
     !!good_or_not_good ||
     !!comment;
 
-  const chocolatineParams = {
-    homemade: String(homemade),
-    price: Number(price),
-  };
-
-  const chocolatine = await prisma.chocolatine.upsert({
-    where: {
-      shop_id: shop.id,
-    },
-    create: {
-      shop_id: shop.id,
-      shop_name: shop.name,
-      created_by_user_id: user.id,
-      created_by_user_email: user.email,
-      has_been_reviewed_once: hasBeenReviewedOnce,
-      ...chocolatineParams,
-    },
-    update: {
-      ...chocolatineParams,
-      has_been_reviewed_once: hasBeenReviewedOnce,
-    },
-  });
-
   const review = {
     buttery: Number(buttery),
     flaky_or_brioche: Number(flaky_or_brioche),
@@ -103,11 +79,10 @@ export const action = async ({
 
   await prisma.chocolatineReview.upsert({
     where: {
-      user_id_chocolatine_id: `${user.id}_${chocolatine.id}`,
+      user_id_shop_id: `${user.id}_${shop.id}`,
     },
     create: {
-      user_id_chocolatine_id: `${user.id}_${chocolatine.id}`,
-      chocolatine_id: chocolatine.id,
+      user_id_shop_id: `${user.id}_${shop.id}`,
       user_id: user.id,
       user_username: user.username,
       user_email: user.email,
@@ -120,27 +95,32 @@ export const action = async ({
 
   const chocolatineReviews = await prisma.chocolatineReview.findMany({
     where: {
-      chocolatine_id: chocolatine?.id,
+      shop_id: shop.id,
     },
   });
 
   const quality = compileReviews(chocolatineReviews ?? []);
 
-  await prisma.chocolatine.update({
+  await prisma.shop.update({
     where: {
-      id: chocolatine.id,
+      id: shop.id,
     },
     data: {
-      average_buttery: quality.average_buttery,
-      average_flaky_or_brioche: quality.average_flaky_or_brioche,
-      average_golden_or_pale: quality.average_golden_or_pale,
-      average_crispy_or_soft: quality.average_crispy_or_soft,
-      average_light_or_dense: quality.average_light_or_dense,
-      average_chocolate_disposition: quality.average_chocolate_disposition,
-      average_big_or_small: quality.average_big_or_small,
-      average_good_or_not_good: quality.average_good_or_not_good,
+      chocolatine_average_buttery: quality.average_buttery,
+      chocolatine_average_flaky_or_brioche: quality.average_flaky_or_brioche,
+      chocolatine_average_golden_or_pale: quality.average_golden_or_pale,
+      chocolatine_average_crispy_or_soft: quality.average_crispy_or_soft,
+      chocolatine_average_light_or_dense: quality.average_light_or_dense,
+      chocolatine_average_chocolate_disposition:
+        quality.average_chocolate_disposition,
+      chocolatine_average_big_or_small: quality.average_big_or_small,
+      chocolatine_average_good_or_not_good: quality.average_good_or_not_good,
+      chocolatine_homemade: String(homemade),
+      chocolatine_price: Number(price),
+      chocolatine_has_been_reviewed_once: hasBeenReviewedOnce,
     },
   });
+
   await prisma.userAction.create({
     data: {
       action: "USER_CHOCOLATINE_CRITERIAS_REVIEW",
@@ -158,7 +138,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}`);
+  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({
@@ -173,25 +153,23 @@ export const loader: LoaderFunction = async ({
       id: params.shopId,
     },
   });
-  const chocolatine = await prisma.chocolatine?.findUnique({
-    where: {
-      shop_id: params.shopId,
-    },
-  });
-  const myReview = chocolatine
+
+  const myReview = shop
     ? await prisma.chocolatineReview.findUnique({
         where: {
-          user_id_chocolatine_id: `${userId}_${chocolatine.id}`,
+          user_id_shop_id: `${userId}_${params.shopId}`,
         },
       })
     : null;
-  return json({ shop, chocolatine, myReview });
+  return json({ shop, myReview });
 };
 
 export default function ChocolatineReview() {
   const { state } = useNavigation();
   const busy = state === "submitting";
-  const { shop, chocolatine, myReview } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
+  const shop = data.shop as Shop;
+  const myReview = data.myReview as ChocolatineReview;
 
   const { chocolatineName } = useChocolatineName();
 
@@ -239,7 +217,7 @@ export default function ChocolatineReview() {
               onWheel={(e) => e.currentTarget.blur()}
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
               placeholder="1.50"
-              defaultValue={chocolatine?.price || undefined}
+              defaultValue={shop.chocolatine_price || undefined}
             />
             <label htmlFor="price">
               Prix<sup className="ml-1 text-red-500">*</sup>
@@ -337,7 +315,7 @@ export default function ChocolatineReview() {
               id="comment"
               className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:ring-app-500"
               placeholder="Loving it! ❤️"
-              defaultValue={myReview?.comment}
+              defaultValue={myReview?.comment ?? ""}
             />
             <label htmlFor="price">Un commentaire?</label>
           </div>

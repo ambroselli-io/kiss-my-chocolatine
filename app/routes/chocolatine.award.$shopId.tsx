@@ -16,7 +16,6 @@ import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 import type { User, AvailableAward, Positions } from "@prisma/client";
 import { readableAwards, readablePositions } from "~/utils/awards";
-import useChocolatineName from "~/utils/useChocolatineName";
 
 type ActionReturnType = {
   ok: boolean;
@@ -43,16 +42,6 @@ export const action = async ({
 
   if (!shop) return { ok: false, error: "shop doesnt exist" };
 
-  let chocolatine = undefined;
-
-  if (award === "MASTER_PAIN_AU_CHOCOLAT") {
-    chocolatine = await prisma.chocolatine.findUnique({
-      where: {
-        shop_id: shop.id,
-      },
-    });
-  }
-
   await prisma.award.create({
     data: {
       award,
@@ -60,7 +49,6 @@ export const action = async ({
       year: Number(form.get("year")),
       shop_id: shop.id,
       shop_name: shop.name,
-      chocolatine_id: chocolatine?.id,
     },
   });
 
@@ -73,7 +61,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}`);
+  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({
@@ -88,20 +76,13 @@ export const loader: LoaderFunction = async ({
       id: params.shopId,
     },
   });
-  const chocolatine = await prisma.chocolatine?.findUnique({
-    where: {
-      shop_id: params.shopId,
-    },
-  });
-  return json({ shop, chocolatine });
+  return json({ shop });
 };
 
 export default function Add() {
   const { state } = useNavigation();
   const busy = state === "submitting";
-  const { shop, chocolatine, myReview } = useLoaderData<typeof loader>();
-
-  const { chocolatineName } = useChocolatineName();
+  const { shop } = useLoaderData<typeof loader>();
 
   return (
     <ModalRouteContainer

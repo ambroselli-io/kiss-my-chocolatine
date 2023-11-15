@@ -34,11 +34,6 @@ interface IngredientProperty {
   value: string;
 }
 
-interface BakeryReference {
-  "@type": string;
-  identifier: string;
-}
-
 interface Offer {
   "@type": string;
   price: string | null;
@@ -50,7 +45,6 @@ export interface SchemaOrgChocolatine {
   "@type": string;
   identifier: string;
   name: string;
-  belongsTo: BakeryReference;
   offers: Offer;
   additionalProperty: PropertyValue[];
   additionalType: PropertyValue[];

@@ -26,7 +26,6 @@ model User {
   email_verified         Boolean             @default(false)
   referral_id            String              @unique
   shops                  Shop[]
-  chocolatines           Chocolatine[]
   chocolatineReviews     ChocolatineReview[]
   userOs                 UserOs[]
 }
@@ -44,87 +43,88 @@ model UserOs {
   browser_name    String
   browser_version String
   browser_os      String
-  user            User     @relation(fields: [user_id], references: [id])
   user_id         String
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Shop {
-  id                        String              @id @default(uuid())
-  google_map_link           String?
-  created_at                DateTime            @default(now())
-  updated_at                DateTime            @updatedAt
-  deleted_at                DateTime?
-  type                      String?             @default("Bakery")
-  description               String?
-  name                      String
-  telephone                 String?
-  url                       String?
-  streetAddress             String?
-  addresspostalCode         String?
-  addressLocality           String
-  addressCountry            String?
-  latitude                  Float?
-  longitude                 Float?
-  openingHoursSpecification Json?
-  created_by_user_id        String
-  created_by_user_email     String? // cache
-  created_by_user           User                @relation(fields: [created_by_user_id], references: [id])
-  chocolatine               Chocolatine?
-  chocolatineReviews        ChocolatineReview[]
-  awards                    Award[]
-}
+  id                             String    @id @default(uuid())
+  google_map_link                String?
+  created_at                     DateTime  @default(now())
+  updated_at                     DateTime  @updatedAt
+  deleted_at                     DateTime?
+  type                           String?   @default("Bakery")
+  description                    String?
+  name                           String
+  telephone                      String?
+  url                            String?
+  streetAddress                  String?
+  addresspostalCode              String?
+  addressLocality                String
+  addressCountry                 String?
+  latitude                       Float
+  longitude                      Float
+  created_by_user_id             String
+  created_by_user_email          String? // cache
+  siret                          String?
+  startDate                      DateTime?
+  etatAdministratifEtablissement String?
 
-model Chocolatine {
-  id                            String              @id @default(uuid())
-  created_at                    DateTime            @default(now())
-  updated_at                    DateTime            @updatedAt
-  deleted_at                    DateTime?
-  price                         Float?
-  priceCurrency                 String              @default("EUR")
-  homemade                      String              @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
-  has_been_reviewed_once        Boolean             @default(false)
-  average_buttery               Int                 @default(0)
-  average_light_or_dense        Int                 @default(0)
-  average_flaky_or_brioche      Int                 @default(0)
-  average_golden_or_pale        Int                 @default(0)
-  average_crispy_or_soft        Int                 @default(0)
-  average_big_or_small          Int                 @default(0)
-  average_chocolate_disposition Int                 @default(0)
-  average_good_or_not_good      Int                 @default(0)
-  created_by_user_id            String
-  created_by_user_email         String? // cache
-  shop_id                       String              @unique
-  shop_name                     String? // cache
-  shop                          Shop                @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_by_user               User                @relation(fields: [created_by_user_id], references: [id])
-  chocolatineReviews            ChocolatineReview[]
-  Award                         Award[]
+  openingHoursSpecification     Json?
+  opening_hours_monday_open     String?
+  opening_hours_monday_close    String?
+  opening_hours_tuesday_open    String?
+  opening_hours_tuesday_close   String?
+  opening_hours_wednesday_open  String?
+  opening_hours_wednesday_close String?
+  opening_hours_thursday_open   String?
+  opening_hours_thursday_close  String?
+  opening_hours_friday_open     String?
+  opening_hours_friday_close    String?
+  opening_hours_saturday_open   String?
+  opening_hours_saturday_close  String?
+  opening_hours_sunday_open     String?
+  opening_hours_sunday_close    String?
+
+  chocolatine_homemade                      String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  chocolatine_price                         Float?
+  chocolatine_has_been_reviewed_once        Boolean @default(false)
+  chocolatine_average_buttery               Int     @default(0)
+  chocolatine_average_light_or_dense        Int     @default(0)
+  chocolatine_average_flaky_or_brioche      Int     @default(0)
+  chocolatine_average_golden_or_pale        Int     @default(0)
+  chocolatine_average_crispy_or_soft        Int     @default(0)
+  chocolatine_average_big_or_small          Int     @default(0)
+  chocolatine_average_chocolate_disposition Int     @default(0)
+  chocolatine_average_good_or_not_good      Int     @default(0)
+
+  created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
+  chocolatineReviews ChocolatineReview[]
+  awards             Award[]
 }
 
 model ChocolatineReview {
-  id                     String      @id @default(uuid())
-  user_id_chocolatine_id String      @unique
-  created_at             DateTime    @default(now())
-  updated_at             DateTime    @updatedAt
-  deleted_at             DateTime?
-  comment                String?
-  light_or_dense         Int // -2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense
-  flaky_or_brioche       Int // -2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky
-  buttery                Int // -2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery
-  golden_or_pale         Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
-  crispy_or_soft         Int // -2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft
-  big_or_small           Int // -2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big
-  chocolate_disposition  Int // -2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges
-  good_or_not_good       Int // subjective, score from 0 to 20
-  shop_id                String
-  shop_name              String? // cache
-  chocolatine_id         String
-  user_id                String
-  user_username          String
-  user_email             String? //cache
-  shop                   Shop        @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  chocolatine            Chocolatine @relation(fields: [chocolatine_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user                   User        @relation(fields: [user_id], references: [id])
+  id                    String    @id @default(uuid())
+  user_id_shop_id       String    @unique
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+  deleted_at            DateTime?
+  comment               String?
+  light_or_dense        Int // -2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense
+  flaky_or_brioche      Int // -2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky
+  buttery               Int // -2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery
+  golden_or_pale        Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
+  crispy_or_soft        Int // -2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft
+  big_or_small          Int // -2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big
+  chocolate_disposition Int // -2 for superimposed, -1 for stuck side by side, 0 for well distributed, 1 for too far away, 2 for on the edges
+  good_or_not_good      Int // subjective, score from 0 to 20
+  shop_id               String
+  shop_name             String? // cache
+  user_id               String
+  user_username         String
+  user_email            String? //cache
+  shop                  Shop      @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user                  User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum Action {
@@ -171,16 +171,14 @@ enum Positions {
 }
 
 model Award {
-  id             String         @id @default(uuid())
-  award          AvailableAward
-  position       Positions
-  year           Int
-  created_at     DateTime       @default(now())
-  updated_at     DateTime       @updatedAt
-  deleted_at     DateTime?
-  shop_id        String?
-  shop_name      String? // cache
-  chocolatine_id String?
-  shop           Shop?          @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  chocolatine    Chocolatine?   @relation(fields: [chocolatine_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id         String         @id @default(uuid())
+  award      AvailableAward
+  position   Positions
+  year       Int
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  deleted_at DateTime?
+  shop_id    String?
+  shop_name  String? // cache
+  shop       Shop?          @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

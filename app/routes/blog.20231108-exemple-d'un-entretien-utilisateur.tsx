@@ -48,15 +48,23 @@ export function meta({ matches, location }: MetaArgs) {
       content: `https://chocolatine.kiss-my.app/${location.pathname}`,
     },
     ...parentMeta.filter((meta) => {
-      if (meta.title) return false;
-      if (meta.property === "og:title") return false;
-      if (meta.property === "twitter:title") return false;
-      if (meta.property === "description") return false;
-      if (meta.property === "og:description") return false;
-      if (meta.property === "og:url") return false;
-      if (meta.property === "twitter:url") return false;
-      if (meta.property === "twitter:description") return false;
-      if (meta.tagName === "link" && meta.rel === "canonical") return false;
+      if ("title" in meta) return false;
+      if ("property" in meta && meta.property === "og:title") return false;
+      if ("property" in meta && meta.property === "twitter:title") return false;
+      if ("property" in meta && meta.property === "description") return false;
+      if ("property" in meta && meta.property === "og:description")
+        return false;
+      if ("property" in meta && meta.property === "og:url") return false;
+      if ("property" in meta && meta.property === "twitter:url") return false;
+      if ("property" in meta && meta.property === "twitter:description")
+        return false;
+      if (
+        "tagName" in meta &&
+        "rel" in meta &&
+        meta.tagName === "link" &&
+        meta.rel === "canonical"
+      )
+        return false;
       return true;
     }),
   ];
@@ -90,7 +98,10 @@ export default function LOeufOuLaPoule() {
 
   const onListChange = () => {
     const newData = [...(gridRef?.current?.children ?? [])]
-      .map((i) => i.dataset.id)
+      .map((i) => {
+        const htmlElement = i as HTMLElement;
+        return htmlElement.dataset.id;
+      })
       .map((id) => data.find((item) => item === id));
 
     localStorage.setItem("my-grid", JSON.stringify(newData));

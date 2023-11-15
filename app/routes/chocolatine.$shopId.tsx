@@ -4,12 +4,7 @@ import {
   type MetaArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import type {
-  Shop,
-  ChocolatineReview,
-  Chocolatine,
-  Award,
-} from "@prisma/client";
+import type { Shop, ChocolatineReview, Award } from "@prisma/client";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import Availability from "~/components/Availability";
 import BalancedRate from "~/components/BalancedRate";
@@ -31,8 +26,8 @@ export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   return [
     ...(matches[matches.length - 2].meta ?? []).filter((meta) => {
       if (meta.hasOwnProperty("title")) return false;
-      if (meta.property === "og:title") return false;
-      if (meta.property === "twitter:title") return false;
+      if ("property" in meta && meta.property === "og:title") return false;
+      if ("property" in meta && meta.property === "twitter:title") return false;
       return true;
     }),
     {
@@ -55,11 +50,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       id: params.shopId,
     },
     include: {
-      chocolatine: {
-        include: {
-          chocolatineReviews: true,
-        },
-      },
+      chocolatineReviews: true,
       awards: {
         orderBy: {
           year: "desc",
@@ -72,17 +63,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     return redirect("/404");
   }
 
-  const { chocolatine: chocolatinePopulated, awards, ...shop } = shopPopulated;
-
-  const { chocolatineReviews, ...chocolatine } = chocolatinePopulated ?? {};
+  const { chocolatineReviews, awards, ...shop } = shopPopulated;
 
   const detailedReviews =
     chocolatineReviews?.filter((r: ChocolatineReview) => !!r.comment) ?? [];
 
   return {
-    chocolatine: chocolatine as Chocolatine,
     chocolatineSchemaOrg: chocolatineFromRowToSchemaOrg(
-      chocolatine as Chocolatine,
+      shop as Shop,
       chocolatineReviews as Array<ChocolatineReview>,
     ),
     shop: shop as Shop,
@@ -94,7 +82,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function ChocolatineAndShop() {
   const data = useLoaderData<typeof loader>();
-  const { chocolatine, detailedReviews, awards } = data;
+  const { detailedReviews, awards } = data;
   const shop = data.shop as unknown as Shop;
   const fromCookies = useChocolatineName();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
@@ -134,21 +122,20 @@ export default function ChocolatineAndShop() {
         <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
           <h3
             className={`mt-1 ${
-              ["I don't think so", "No"].includes(chocolatine.homemade)
+              ["I don't think so", "No"].includes(shop.chocolatine_homemade)
                 ? "font-bold text-red-500"
                 : "font-semibold"
             }`}
           >
-            Fait maison&nbsp;: {readableHomemade[chocolatine.homemade]}
-            {["I think so", "Yes"].includes(chocolatine.homemade) && " 🧑‍🍳 "}
-            {["I don't think so", "No"].includes(chocolatine.homemade) &&
+            Fait maison&nbsp;: {readableHomemade[shop.chocolatine_homemade]}
+            {["I think so", "Yes"].includes(shop.chocolatine_homemade) &&
+              " 🧑‍🍳 "}
+            {["I don't think so", "No"].includes(shop.chocolatine_homemade) &&
               " 🏭 "}
           </h3>
           <p className="mb-0 mt-3">
             Prix&nbsp;:{" "}
-            {chocolatine.price
-              ? `${chocolatine.price} ${chocolatine.priceCurrency}`
-              : "N/A"}
+            {shop.chocolatine_price ? `${shop.chocolatine_price} EUR` : "N/A"}
           </p>
         </section>
 
@@ -166,7 +153,7 @@ export default function ChocolatineAndShop() {
               )}
             </ClientOnly>
           </div>
-          {!chocolatine.has_been_reviewed_once ? (
+          {!shop.chocolatine_has_been_reviewed_once ? (
             "Pas d'avis encore"
           ) : (
             <>
@@ -182,7 +169,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Pas du tout"}
                   maxCaption={"QUE du beurre"}
-                  value={chocolatine.average_buttery}
+                  value={shop.chocolatine_average_buttery}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -196,7 +183,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Feuilleuté"}
                   maxCaption={"Brioché"}
-                  value={chocolatine.average_flaky_or_brioche}
+                  value={shop.chocolatine_average_flaky_or_brioche}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -209,7 +196,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Doré"}
                   maxCaption={"Pâle"}
-                  value={chocolatine.average_golden_or_pale}
+                  value={shop.chocolatine_average_golden_or_pale}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -223,7 +210,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Croustillant"}
                   maxCaption={"Moelleux"}
-                  value={chocolatine.average_crispy_or_soft}
+                  value={shop.chocolatine_average_crispy_or_soft}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -236,7 +223,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Aéré"}
                   maxCaption={"Dense"}
-                  value={chocolatine.average_light_or_dense}
+                  value={shop.chocolatine_average_light_or_dense}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -249,7 +236,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Superposé"}
                   maxCaption={"Sur les bords"}
-                  value={chocolatine.average_chocolate_disposition}
+                  value={shop.chocolatine_average_chocolate_disposition}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -263,7 +250,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Très petit"}
                   maxCaption={"Très gros"}
-                  value={chocolatine.average_big_or_small}
+                  value={shop.chocolatine_average_big_or_small}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -277,7 +264,7 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"🤢"}
                   maxCaption={"🤩"}
-                  value={from020to22(chocolatine.average_good_or_not_good)}
+                  value={from020to22(shop.chocolatine_average_good_or_not_good)}
                 />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
@@ -286,24 +273,27 @@ export default function ChocolatineAndShop() {
                     Avis de gourmands ({detailedReviews?.length})
                   </summary>
                   <ul className="ml-8 mt-2 flex list-inside flex-col">
-                    {detailedReviews?.map((review, index) => (
-                      <li key={index} className="mb-2">
-                        <strong>
-                          {review.good_or_not_good}
-                          /20
-                        </strong>
-                        <span> - {review?.user_username}</span>
-                        <small className="opacity-50">
-                          {" - "}
-                          {new Intl.DateTimeFormat("en-GB", {
-                            dateStyle: "short",
-                            timeStyle: "short",
-                          }).format(new Date(review.created_at))}
-                        </small>
-                        <p>{review.comment}</p>
-                        {/* You can also add other parts of the review here, like rating, etc. */}
-                      </li>
-                    ))}
+                    {detailedReviews?.map((r, index: number) => {
+                      const review = r as unknown as ChocolatineReview;
+                      return (
+                        <li key={index} className="mb-2">
+                          <strong>
+                            {review.good_or_not_good}
+                            /20
+                          </strong>
+                          <span> - {review?.user_username}</span>
+                          <small className="opacity-50">
+                            {" - "}
+                            {new Intl.DateTimeFormat("en-GB", {
+                              dateStyle: "short",
+                              timeStyle: "short",
+                            }).format(new Date(review.created_at))}
+                          </small>
+                          <p>{review.comment}</p>
+                          {/* You can also add other parts of the review here, like rating, etc. */}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               </div>
@@ -361,7 +351,16 @@ export default function ChocolatineAndShop() {
             <dl className="px-4 text-sm opacity-70">{shop.description}</dl>
           )}
           <address className="mt-2 flex flex-col items-start justify-start gap-2 px-4 pb-11 text-sm font-light not-italic text-[#3c4043]">
-            <span aria-details="address" className="flex">
+            <span
+              aria-details="address"
+              className="flex"
+              onClick={() => {
+                window.open(
+                  `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
+                  "_blank",
+                );
+              }}
+            >
               <img src="/assets/pin-grey.svg" className="mr-3 w-5" />
               {!!shop.streetAddress ? (
                 <>

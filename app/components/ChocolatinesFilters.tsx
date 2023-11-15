@@ -46,7 +46,7 @@ export default function ChocolatinesFilters({
             { label: "Non", value: 0 },
           ]}
         />
-        <CheckBoxesCategory
+        {/* <CheckBoxesCategory
           title="🏷️ Prix"
           name="price"
           values={[
@@ -132,7 +132,7 @@ export default function ChocolatinesFilters({
             { label: "gros", value: 1 },
             { label: "Très gros", value: 2 },
           ]}
-        />
+        /> */}
       </Form>
     </details>
   );

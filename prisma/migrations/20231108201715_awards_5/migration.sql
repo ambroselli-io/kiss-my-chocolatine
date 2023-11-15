@@ -1,2 +1,0 @@
--- AlterEnum
-ALTER TYPE "AvailableAward" ADD VALUE 'MEILLEUR_CROISSANT_DE_FRANCE';

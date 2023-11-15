@@ -14,6 +14,19 @@ global.__prisma
     // migrations
     console.log("start migration !!");
     // create shops
+    await global.__prisma.$transaction(async (tx) => {
+      const chocolatineReviews = await tx.chocolatineReview.findMany();
+      for (const chocolatineReview of chocolatineReviews) {
+        await tx.chocolatineReview.update({
+          where: {
+            id: chocolatineReview.id,
+          },
+          data: {
+            user_id_shop_id: `${chocolatineReview.user_id}_${chocolatineReview.shop_id}`,
+          },
+        });
+      }
+    });
 
     console.log("done migration");
   })

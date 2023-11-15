@@ -1,2 +1,0 @@
--- AlterEnum
-ALTER TYPE "Action" ADD VALUE 'USER_LINKEDIN_POST';

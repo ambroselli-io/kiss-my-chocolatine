@@ -3,6 +3,7 @@ import {
   redirect,
   LoaderFunctionArgs,
   LoaderFunction,
+  json,
 } from "@remix-run/node";
 import * as Sentry from "@sentry/remix";
 import {
@@ -51,20 +52,29 @@ export const action = async ({
   // -> https://maps.app.goo.gl/2PScR6bSNXJUyns57
   // ->https://www.google.com/maps/place/Le+Pain+Retrouvé/@48.8777186,2.3396138,17z/data=!3m2!4b1!5s0x47e66e473872ba6b:0xf7d926070e69fc39!4m6!3m5!1s0x47e66f897294d69b:0x37816e98cb091727!8m2!3d48.8777186!4d2.3396138!16s%2Fg%2F11qqj676ry?entry=ttu
 
-  const shop = await prisma.$transaction(async (tx) => {
-    let latitude = null;
-    let longitude = null;
-    try {
-      if (coordinates) {
-        [latitude, longitude] = coordinates.split(",").map(Number);
-      } else if (googleLink) {
-        const googleParsing = await parseGoogleLinkForCoordinates(googleLink);
-        latitude = googleParsing.latitude;
-        longitude = googleParsing.longitude;
-      }
-    } catch (e) {
-      Sentry.captureException(e, { extra: { googleLink, coordinates } });
+  let latitude: number | null = null;
+  let longitude: number | null = null;
+  try {
+    if (coordinates) {
+      [latitude, longitude] = coordinates.split(",").map(Number);
+    } else if (googleLink) {
+      const googleParsing = await parseGoogleLinkForCoordinates(googleLink);
+      latitude = googleParsing.latitude;
+      longitude = googleParsing.longitude;
     }
+  } catch (e) {
+    Sentry.captureException(e, { extra: { googleLink, coordinates } });
+  }
+  if (!latitude || !longitude) {
+    return json({
+      ok: false,
+      error:
+        "Une erreur est survenue, nous n'arrivons pas à trouver les coordonnées du magasin. Probablement un problème avec le lien google map. Envoyez nous un mail à kiss-my-chocolatine@gmail.com et on va essayer de régler ça ensemble.",
+    });
+  }
+
+  const shop = await prisma.$transaction(async (tx) => {
+    if (!latitude || !longitude) return null;
     const shop = await tx.shop.create({
       data: {
         name: shopName,
@@ -73,6 +83,8 @@ export const action = async ({
         google_map_link: googleLink,
         latitude,
         longitude,
+        chocolatine_homemade: String(homemade),
+        chocolatine_price: Number(price),
         created_by_user_id: userId,
         created_by_user_email: userEmail,
       },
@@ -86,21 +98,14 @@ export const action = async ({
       },
     });
 
-    await tx.chocolatine.create({
-      data: {
-        shop_id: shop.id,
-        shop_name: shop.name,
-        created_by_user_id: userId,
-        created_by_user_email: userEmail,
-        homemade: String(homemade),
-        price: Number(price),
-      },
-    });
-
     return shop;
   });
 
-  return redirect(`/chocolatine/${shop.id}`);
+  if (shop) return redirect(`/chocolatine/${shop.id}`);
+  return json({
+    ok: false,
+    error: "Une erreur est survenue. Probablement un problème avec ",
+  });
 };
 
 export const loader: LoaderFunction = async ({

@@ -3,7 +3,7 @@ import type {
   OpeningHoursSpecification,
 } from "~/types/schemaOrgShop";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
-import type { Shop, Chocolatine, ChocolatineReview } from "@prisma/client";
+import type { Shop, ChocolatineReview } from "@prisma/client";
 
 export function shopFromRowToSchemaOrg(shop: Shop): SchemaOrgShop {
   return {
@@ -31,23 +31,17 @@ export function shopFromRowToSchemaOrg(shop: Shop): SchemaOrgShop {
 }
 
 export function chocolatineFromRowToSchemaOrg(
-  chocolatine?: Chocolatine,
+  shop: Shop,
   chocolatineReviews: Array<ChocolatineReview> = [],
 ): SchemaOrgChocolatine | null {
-  if (!chocolatine?.id) return null;
-
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    identifier: chocolatine.id,
+    identifier: shop.id,
     name: "Pain au chocolat",
-    belongsTo: {
-      "@type": "Bakery",
-      identifier: chocolatine.shop_id,
-    },
     offers: {
       "@type": "Offer",
-      price: String(chocolatine.price) ?? null,
+      price: String(shop.chocolatine_price) ?? null,
       priceCurrency: "EUR",
     },
     additionalProperty: [
@@ -61,7 +55,7 @@ export function chocolatineFromRowToSchemaOrg(
           "Yes",
           "No",
         ],
-        value: chocolatine.homemade,
+        value: shop.chocolatine_homemade || "",
       },
     ],
     additionalType: [
