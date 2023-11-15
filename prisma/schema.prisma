@@ -72,41 +72,22 @@ model Shop {
   startDate                      DateTime?
   etatAdministratifEtablissement String?
 
-  chocolatine_homemade               String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
-  chocolatine_price                  Float?
-  chocolatine_has_been_reviewed_once Boolean @default(false)
+  chocolatine_homemade                      String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  chocolatine_price                         Float?
+  chocolatine_has_been_reviewed_once        Boolean @default(false)
+  chocolatine_average_buttery               Int     @default(0)
+  chocolatine_average_light_or_dense        Int     @default(0)
+  chocolatine_average_flaky_or_brioche      Int     @default(0)
+  chocolatine_average_golden_or_pale        Int     @default(0)
+  chocolatine_average_crispy_or_soft        Int     @default(0)
+  chocolatine_average_big_or_small          Int     @default(0)
+  chocolatine_average_chocolate_disposition Int     @default(0)
+  chocolatine_average_good_or_not_good      Int     @default(0)
 
   created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
   chocolatine        Chocolatine?
   chocolatineReviews ChocolatineReview[]
   awards             Award[]
-}
-
-model Chocolatine {
-  id                            String              @id @default(uuid())
-  created_at                    DateTime            @default(now())
-  updated_at                    DateTime            @updatedAt
-  deleted_at                    DateTime?
-  price                         Float?
-  priceCurrency                 String              @default("EUR")
-  homemade                      String              @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
-  has_been_reviewed_once        Boolean             @default(false)
-  average_buttery               Int                 @default(0)
-  average_light_or_dense        Int                 @default(0)
-  average_flaky_or_brioche      Int                 @default(0)
-  average_golden_or_pale        Int                 @default(0)
-  average_crispy_or_soft        Int                 @default(0)
-  average_big_or_small          Int                 @default(0)
-  average_chocolate_disposition Int                 @default(0)
-  average_good_or_not_good      Int                 @default(0)
-  created_by_user_id            String
-  created_by_user_email         String? // cache
-  shop_id                       String              @unique
-  shop_name                     String? // cache
-  shop                          Shop                @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_by_user               User                @relation(fields: [created_by_user_id], references: [id])
-  chocolatineReviews            ChocolatineReview[]
-  Award                         Award[]
 }
 
 model ChocolatineReview {
