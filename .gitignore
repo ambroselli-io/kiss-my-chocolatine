@@ -7,3 +7,8 @@ node_modules
 
 # Sentry Config File
 .sentryclirc
+
+# .DS_Store
+**/.DS_Store
+
+app/data/10_71C_with_longitude.csv

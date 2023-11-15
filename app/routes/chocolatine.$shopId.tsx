@@ -207,8 +207,8 @@ export default function ChocolatineAndShop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Golden"}
-                  maxCaption={"Pale"}
+                  minCaption={"Doré"}
+                  maxCaption={"Pâle"}
                   value={chocolatine.average_golden_or_pale}
                 />
               </div>
@@ -221,8 +221,8 @@ export default function ChocolatineAndShop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Crispy"}
-                  maxCaption={"Soft"}
+                  minCaption={"Croustillant"}
+                  maxCaption={"Moelleux"}
                   value={chocolatine.average_crispy_or_soft}
                 />
               </div>
@@ -234,7 +234,7 @@ export default function ChocolatineAndShop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Light"}
+                  minCaption={"Aéré"}
                   maxCaption={"Dense"}
                   value={chocolatine.average_light_or_dense}
                 />
@@ -247,8 +247,8 @@ export default function ChocolatineAndShop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Superimposed"}
-                  maxCaption={"On each edges"}
+                  minCaption={"Superposé"}
+                  maxCaption={"Sur les bords"}
                   value={chocolatine.average_chocolate_disposition}
                 />
               </div>
@@ -261,8 +261,8 @@ export default function ChocolatineAndShop() {
                   </p>
                 </details>
                 <BalancedRate
-                  minCaption={"Very small"}
-                  maxCaption={"Very big"}
+                  minCaption={"Très petit"}
+                  maxCaption={"Très gros"}
                   value={chocolatine.average_big_or_small}
                 />
               </div>

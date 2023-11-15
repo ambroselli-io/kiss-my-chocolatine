@@ -297,7 +297,7 @@ export default function ChocolatineReview() {
           <RadioRate
             name="chocolate_disposition"
             minCaption={"Superposé"}
-            maxCaption={"Bien distribué"}
+            maxCaption={"Sur les bords"}
             defaultValue={myReview?.chocolate_disposition}
             legend="Comment est la disposition du chocolat?"
           >
