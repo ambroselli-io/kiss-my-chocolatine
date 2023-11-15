@@ -36,6 +36,7 @@ import { getUserIdFromCookie } from "~/services/auth.server";
 import ChocolatinesMenu from "~/components/ChocolatinesMenu";
 import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import { isShopIncludedBySimpleFilters } from "~/utils/isIncludedBySimpleFilters.server";
+import type { ShopForPinOnMap } from "~/types/shop";
 
 type loaderData = {
   initialViewState: {
@@ -72,7 +73,15 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   let now = Date.now();
 
-  const shops = await prisma.shop.findMany();
+  const shops = await prisma.shop.findMany({
+    select: {
+      id: true,
+      longitude: true,
+      latitude: true,
+      chocolatine_has_been_reviewed_once: true,
+      chocolatine_homemade: true,
+    },
+  });
 
   console.log("now 1", Date.now() - now, "ms");
   now = Date.now();
@@ -103,7 +112,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     "I don't know, nobody tried yet": 0,
   };
 
-  const shopObject: Record<string, Shop> = {};
+  const shopObject: Record<string, ShopForPinOnMap> = {};
   const featuresIncludedByFilters: Array<CustomFeature> = [];
   const featuresExcludedByFilters: Array<CustomFeature> = [];
   const shopSchemaOrg = [];
