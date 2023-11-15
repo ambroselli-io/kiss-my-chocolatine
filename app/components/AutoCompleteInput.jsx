@@ -5,7 +5,6 @@ export default function AutoCompleteInput({
   items: initItems,
   label,
   required,
-  onChange,
   ...props
 }) {
   function getValueFiltered(inputValue) {
@@ -31,7 +30,6 @@ export default function AutoCompleteInput({
       selectedItem,
     } = useCombobox({
       onInputValueChange({ inputValue }) {
-        if (onChange) onChange(inputValue);
         setItems(
           initItems
             .filter(getValueFiltered(inputValue))

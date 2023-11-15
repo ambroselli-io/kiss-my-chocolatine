@@ -26,16 +26,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MapImage from "~/components/MapImage";
 import Onboarding from "~/components/Onboarding";
 import {
-  isChocolatineIncludedByFilters,
+  isShopIncludedBySimpleFilters,
   availableFilters,
-} from "~/utils/isIncludedByFilters.server";
+} from "~/utils/isIncludedBySimpleFilters.server";
 import type { CustomFeature, CustomFeatureCollection } from "~/types/geojson";
 import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import { prisma } from "~/db/prisma.server";
 import { getUserIdFromCookie } from "~/services/auth.server";
 import ChocolatinesMenu from "~/components/ChocolatinesMenu";
 import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
-import { isShopIncludedBySimpleFilters } from "~/utils/isIncludedBySimpleFilters.server";
 import type { ShopForPinOnMap } from "~/types/shop";
 
 type loaderData = {
@@ -48,21 +47,21 @@ type loaderData = {
   geojson_included_by_filters: CustomFeatureCollection;
   geojson_excluded_by_filters: CustomFeatureCollection;
   user_id?: string;
-  shopSchemaOrg: Array<SchemaOrgShop>;
+  // shopSchemaOrg: Array<SchemaOrgShop>;
 };
 
-export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
-  const parentMeta = matches[matches.length - 2].meta ?? [];
-  const shopSchemaOrg = (data as loaderData)
-    .shopSchemaOrg as Array<SchemaOrgShop>;
+// export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
+//   const parentMeta = matches[matches.length - 2].meta ?? [];
+//   const shopSchemaOrg = (data as loaderData)
+//     .shopSchemaOrg as Array<SchemaOrgShop>;
 
-  return [
-    ...parentMeta,
-    ...shopSchemaOrg.map((shop) => ({
-      "script:ld+json": shop,
-    })),
-  ];
-};
+//   return [
+//     ...parentMeta,
+//     ...shopSchemaOrg.map((shop) => ({
+//       "script:ld+json": shop,
+//     })),
+//   ];
+// };
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const europe = {
@@ -115,7 +114,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const shopObject: Record<string, ShopForPinOnMap> = {};
   const featuresIncludedByFilters: Array<CustomFeature> = [];
   const featuresExcludedByFilters: Array<CustomFeature> = [];
-  const shopSchemaOrg = [];
+  // const shopSchemaOrg = [];
   let currentShop = null;
   for (const shop of shops) {
     shopObject[shop.id] = shop;
@@ -150,7 +149,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     };
     if (isIncludedByFilters) featuresIncludedByFilters.push(feature);
     if (!isIncludedByFilters) featuresExcludedByFilters.push(feature);
-    shopSchemaOrg.push(shopFromRowToSchemaOrg(shop));
+    // shopSchemaOrg.push(shopFromRowToSchemaOrg(shop));
   }
   console.log("now 3", Date.now() - now, "ms");
   now = Date.now();
@@ -169,7 +168,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     user_id: await getUserIdFromCookie(request, { optional: true }),
     initialViewState,
     total: shops.length,
-    shopSchemaOrg,
+    // shopSchemaOrg,
     geojson_included_by_filters: {
       type: "FeatureCollection",
       features: featuresIncludedByFilters,

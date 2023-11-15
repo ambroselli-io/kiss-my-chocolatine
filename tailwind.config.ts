@@ -25,6 +25,7 @@ export default {
       },
       maxWidth: (theme) => {
         const extendedMaxWidthFromWidth: any = {};
+        // @ts-expect-error
         for (const [key, value] of Object.entries(theme("width"))) {
           extendedMaxWidthFromWidth[key] = value;
         }

@@ -1,6 +1,6 @@
 import { isOpenedNow } from "./isOpenedNow";
 import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
-import type { Shop } from "@prisma/client";
+import type { ShopForPinOnMap } from "~/types/shop";
 
 export const availableFilters: Record<string, "chocolatine" | "shop"> = {
   opened_now: "shop",
@@ -10,7 +10,7 @@ export const availableFilters: Record<string, "chocolatine" | "shop"> = {
 
 export function isShopIncludedBySimpleFilters(
   filters: ChocolatineFiltersInterface,
-  shop: Shop,
+  shop: ShopForPinOnMap,
 ) {
   const filterKeys = Object.keys(filters);
   if (filterKeys.length === 0) return true;
@@ -31,17 +31,17 @@ export function isShopIncludedBySimpleFilters(
     })();
     if (!filters.homemade?.includes(String(homemadeNumberValue))) return false;
   }
-  if (filterKeys.includes("opened_now")) {
-    const openedNowValue = (() => {
-      const [isOpened] = isOpenedNow(shop);
-      if (isOpened === true) return "1";
-      if (isOpened === false) return "0";
-      return "null";
-    })();
-    if (!filters.opened_now?.includes(String(openedNowValue))) {
-      return false;
-    }
-  }
+  // if (filterKeys.includes("opened_now")) {
+  //   const openedNowValue = (() => {
+  //     const [isOpened] = isOpenedNow(shop);
+  //     if (isOpened === true) return "1";
+  //     if (isOpened === false) return "0";
+  //     return "null";
+  //   })();
+  //   if (!filters.opened_now?.includes(String(openedNowValue))) {
+  //     return false;
+  //   }
+  // }
 
   return true;
 }

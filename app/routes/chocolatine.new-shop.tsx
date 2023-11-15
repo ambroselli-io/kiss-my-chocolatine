@@ -98,17 +98,6 @@ export const action = async ({
       },
     });
 
-    await tx.chocolatine.create({
-      data: {
-        shop_id: shop.id,
-        shop_name: shop.name,
-        created_by_user_id: userId,
-        created_by_user_email: userEmail,
-        homemade: String(homemade),
-        price: Number(price),
-      },
-    });
-
     return shop;
   });
 

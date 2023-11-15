@@ -1,5 +1,11 @@
 -- CreateEnum
-CREATE TYPE "Action" AS ENUM ('USER_SHOP_NEW', 'USER_SHOP_UPDATE', 'USER_REFERRAL_CREATER', 'USER_REFERRAL_RECEIVER', 'USER_CHOCOLATINE_NEW', 'USER_CHOCOLATINE_UPDATE', 'USER_CHOCOLATINE_REVIEW', 'USER_LINKEDIN_LIKE', 'USER_LINKEDIN_COMMENT', 'USER_LINKEDIN_SHARE', 'INVESTOR_EURO_AMOUNT', 'BUILDER_HOUR_AMOUNT');
+CREATE TYPE "Action" AS ENUM ('USER_REGISTRATION', 'USER_SHOP_NEW', 'USER_SHOP_UPDATE', 'USER_REFERRAL_CREATER', 'USER_REFERRAL_RECEIVER', 'USER_CHOCOLATINE_CRITERIAS_REVIEW', 'USER_CHOCOLATINE_COMMENT_SCORE', 'USER_CHOCOLATINE_INGREDIENTS', 'USER_LINKEDIN_LIKE', 'USER_LINKEDIN_COMMENT', 'USER_LINKEDIN_SHARE', 'USER_LINKEDIN_POST', 'USER_LINKEDIN_FOLLOW_PAGE', 'INVESTOR_EURO_AMOUNT', 'BUILDER_HOUR_AMOUNT', 'FEEDBACK');
+
+-- CreateEnum
+CREATE TYPE "AvailableAward" AS ENUM ('MEILLEUR_CROISSANT_DE_FRANCE', 'MASTER_PAIN_AU_CHOCOLAT', 'MEILLEURE_BOULANGERIE_DE_FRANCE_M6');
+
+-- CreateEnum
+CREATE TYPE "Positions" AS ENUM ('WINNER', 'SECOND', 'THIRD', 'FINALIST');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -56,10 +62,40 @@ CREATE TABLE "Shop" (
     "addresspostalCode" TEXT,
     "addressLocality" TEXT NOT NULL,
     "addressCountry" TEXT,
-    "latitude" DOUBLE PRECISION,
-    "longitude" DOUBLE PRECISION,
-    "openingHoursSpecification" JSONB,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
     "created_by_user_id" TEXT NOT NULL,
+    "created_by_user_email" TEXT,
+    "siret" TEXT,
+    "startDate" TIMESTAMP(3),
+    "etatAdministratifEtablissement" TEXT,
+    "openingHoursSpecification" JSONB,
+    "opening_hours_monday_open" TEXT,
+    "opening_hours_monday_close" TEXT,
+    "opening_hours_tuesday_open" TEXT,
+    "opening_hours_tuesday_close" TEXT,
+    "opening_hours_wednesday_open" TEXT,
+    "opening_hours_wednesday_close" TEXT,
+    "opening_hours_thursday_open" TEXT,
+    "opening_hours_thursday_close" TEXT,
+    "opening_hours_friday_open" TEXT,
+    "opening_hours_friday_close" TEXT,
+    "opening_hours_saturday_open" TEXT,
+    "opening_hours_saturday_close" TEXT,
+    "opening_hours_sunday_open" TEXT,
+    "opening_hours_sunday_close" TEXT,
+    "chocolatine_homemade" TEXT NOT NULL DEFAULT 'I don''t know, nobody tried yet',
+    "chocolatine_price" DOUBLE PRECISION,
+    "chocolatine_has_been_reviewed_once" BOOLEAN NOT NULL DEFAULT false,
+    "chocolatine_average_buttery" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_light_or_dense" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_flaky_or_brioche" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_golden_or_pale" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_crispy_or_soft" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_big_or_small" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_chocolate_disposition" INTEGER NOT NULL DEFAULT 0,
+    "chocolatine_average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
+    "chocolatineId" TEXT,
 
     CONSTRAINT "Shop_pkey" PRIMARY KEY ("id")
 );
@@ -83,7 +119,9 @@ CREATE TABLE "Chocolatine" (
     "average_chocolate_disposition" INTEGER NOT NULL DEFAULT 0,
     "average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
     "created_by_user_id" TEXT NOT NULL,
+    "created_by_user_email" TEXT,
     "shop_id" TEXT NOT NULL,
+    "shop_name" TEXT,
 
     CONSTRAINT "Chocolatine_pkey" PRIMARY KEY ("id")
 );
@@ -92,6 +130,7 @@ CREATE TABLE "Chocolatine" (
 CREATE TABLE "ChocolatineReview" (
     "id" TEXT NOT NULL,
     "user_id_chocolatine_id" TEXT NOT NULL,
+    "user_id_shop_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
@@ -105,9 +144,11 @@ CREATE TABLE "ChocolatineReview" (
     "chocolate_disposition" INTEGER NOT NULL,
     "good_or_not_good" INTEGER NOT NULL,
     "shop_id" TEXT NOT NULL,
-    "chocolatine_id" TEXT NOT NULL,
+    "shop_name" TEXT,
     "user_id" TEXT NOT NULL,
+    "chocolatineId" TEXT,
     "user_username" TEXT NOT NULL,
+    "user_email" TEXT,
 
     CONSTRAINT "ChocolatineReview_pkey" PRIMARY KEY ("id")
 );
@@ -116,13 +157,30 @@ CREATE TABLE "ChocolatineReview" (
 CREATE TABLE "UserAction" (
     "id" TEXT NOT NULL,
     "action" "Action" NOT NULL,
-    "shares" INTEGER NOT NULL DEFAULT 1,
+    "number_of_actions" INTEGER NOT NULL DEFAULT 1,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
-    "user_id" TEXT NOT NULL,
+    "user_id" TEXT,
+    "user_email" TEXT,
 
     CONSTRAINT "UserAction_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Award" (
+    "id" TEXT NOT NULL,
+    "award" "AvailableAward" NOT NULL,
+    "position" "Positions" NOT NULL,
+    "year" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "shop_id" TEXT,
+    "shop_name" TEXT,
+    "chocolatine_id" TEXT,
+
+    CONSTRAINT "Award_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -141,25 +199,16 @@ CREATE UNIQUE INDEX "Chocolatine_shop_id_key" ON "Chocolatine"("shop_id");
 CREATE UNIQUE INDEX "ChocolatineReview_user_id_chocolatine_id_key" ON "ChocolatineReview"("user_id_chocolatine_id");
 
 -- AddForeignKey
-ALTER TABLE "UserOs" ADD CONSTRAINT "UserOs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserOs" ADD CONSTRAINT "UserOs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Shop" ADD CONSTRAINT "Shop_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chocolatine" ADD CONSTRAINT "Chocolatine_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Chocolatine" ADD CONSTRAINT "Chocolatine_created_by_user_id_fkey" FOREIGN KEY ("created_by_user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_chocolatine_id_fkey" FOREIGN KEY ("chocolatine_id") REFERENCES "Chocolatine"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "UserAction" ADD CONSTRAINT "UserAction_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Award" ADD CONSTRAINT "Award_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
