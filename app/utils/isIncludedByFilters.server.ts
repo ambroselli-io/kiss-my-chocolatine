@@ -36,15 +36,6 @@ export function isChocolatineIncludedByFilters(
         const criteria = key as keyof Chocolatine;
         const value = String(chocolatine[criteria]);
         if (!filters[criteria]?.includes(value)) {
-          if (debug)
-            console.log(
-              "criteria",
-              criteria,
-              "value",
-              value,
-              "filters[criteria]",
-              filters[criteria],
-            );
           return false;
         }
       }
