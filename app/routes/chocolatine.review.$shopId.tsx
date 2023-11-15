@@ -40,7 +40,6 @@ export const action = async ({
       id: params.shopId,
     },
   });
-  console.log({ shop });
   if (!shop) return { ok: false, error: "shop doesnt exist" };
   const homemade = form.get("homemade");
   const price = form.get("price");
@@ -141,6 +140,17 @@ export const action = async ({
       average_good_or_not_good: quality.average_good_or_not_good,
     },
   });
+  await prisma.shop.update({
+    where: {
+      id: shop.id,
+    },
+    data: {
+      chocolatine_homemade: String(homemade),
+      chocolatine_price: Number(price),
+      chocolatine_has_been_reviewed_once: hasBeenReviewedOnce,
+    },
+  });
+
   await prisma.userAction.create({
     data: {
       action: "USER_CHOCOLATINE_CRITERIAS_REVIEW",
@@ -158,7 +168,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}`);
+  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({

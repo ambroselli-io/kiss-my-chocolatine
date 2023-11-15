@@ -34,8 +34,8 @@ import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import { prisma } from "~/db/prisma.server";
 import { getUserIdFromCookie } from "~/services/auth.server";
 import ChocolatinesMenu from "~/components/ChocolatinesMenu";
-import { Record } from "@prisma/client/runtime/library";
 import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
+import { isShopIncludedBySimpleFilters } from "~/utils/isIncludedBySimpleFilters.server";
 
 type loaderData = {
   initialViewState: {
@@ -70,27 +70,12 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     zoom: 4,
   };
 
-  const shops = await prisma.shop.findMany({
-    include: {
-      chocolatine: true,
-    },
-  });
+  let now = Date.now();
 
-  const shopObject: Record<string, Shop> = {};
-  for (const shop of shops) {
-    shopObject[shop.id] = shop;
-  }
+  const shops = await prisma.shop.findMany();
 
-  const currentShop = shops.find((f) => f.id === params?.shopId);
-  const initialViewState = (() => {
-    if (!params.shopId) return europe;
-    if (!currentShop) return europe;
-    return {
-      longitude: currentShop.longitude as number,
-      latitude: currentShop.latitude as number,
-      zoom: 14,
-    };
-  })();
+  console.log("now 1", Date.now() - now, "ms");
+  now = Date.now();
 
   /* filters */
   const url = new URL(request.url);
@@ -100,65 +85,77 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const filterKey = searchParamKey as keyof ChocolatineFiltersInterface;
     filters[filterKey] = url.searchParams.getAll(filterKey as string);
   }
+  console.log("now 2", Date.now() - now, "ms");
+  now = Date.now();
 
-  const features = shops
-    .map((shop): CustomFeature | null => {
-      if (!shop.longitude) return null;
-      if (!shop.latitude) return null;
+  const isHomeMade: Record<string, number> = {
+    "I think so": 1,
+    Yes: 1,
+    "I don't think so": 0,
+    No: 0,
+    "I don't know, nobody tried yet": 0,
+  };
+  const isIndus: Record<string, number> = {
+    "I think so": 0,
+    Yes: 0,
+    "I don't think so": 1,
+    No: 1,
+    "I don't know, nobody tried yet": 0,
+  };
 
-      const { chocolatine } = shop;
+  const shopObject: Record<string, Shop> = {};
+  const featuresIncludedByFilters: Array<CustomFeature> = [];
+  const featuresExcludedByFilters: Array<CustomFeature> = [];
+  const shopSchemaOrg = [];
+  let currentShop = null;
+  for (const shop of shops) {
+    shopObject[shop.id] = shop;
+    if (!shop.longitude) continue;
+    if (!shop.latitude) continue;
 
-      const isActiveShop = shop.id === params?.shopId;
-      const isIncludedByFilters = isChocolatineIncludedByFilters(
-        filters,
-        shop,
-        chocolatine,
-      );
+    const isActiveShop = shop.id === params?.shopId;
+    if (isActiveShop) currentShop = shop;
+    const isIncludedByFilters = isShopIncludedBySimpleFilters(filters, shop);
 
-      return {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [shop.longitude, shop.latitude],
-        },
-        properties: {
-          id: shop.id,
-          is_active_shop: isActiveShop ? 1 : 0,
-          is_home_made: ["I think so", "Yes"].includes(
-            chocolatine?.homemade as string,
-          )
-            ? 1
-            : 0,
-          is_industrial: ["I don't think so", "No"].includes(
-            chocolatine?.homemade as string,
-          )
-            ? 1
-            : 0,
-          is_included_by_filters: isIncludedByFilters ? 1 : 0,
-          sort_key: isActiveShop
-            ? 4
-            : isIncludedByFilters
-            ? 3
-            : chocolatine?.has_been_reviewed_once
-            ? 2
-            : 1,
-          has_review: !!chocolatine?.has_been_reviewed_once,
-        },
-      };
-    })
-    .filter(Boolean)
-    .map((feature) => {
-      feature = feature as CustomFeature;
-      return feature;
-    });
-
-  const featuresIncludedByFilters = features.filter(
-    (feature) => feature.properties.is_included_by_filters === 1,
-  );
-  const shopSchemaOrg = features.map((feature) => {
-    return shopFromRowToSchemaOrg(shopObject[feature.properties.id]);
-  });
-
+    const feature: CustomFeature = {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [shop.longitude, shop.latitude],
+      },
+      properties: {
+        id: shop.id,
+        is_active_shop: isActiveShop ? 1 : 0,
+        is_home_made: isHomeMade[shop?.chocolatine_homemade],
+        is_industrial: isIndus[shop?.chocolatine_homemade],
+        is_included_by_filters: isIncludedByFilters ? 1 : 0,
+        sort_key: isActiveShop
+          ? 4
+          : isIncludedByFilters
+          ? 3
+          : shop?.chocolatine_has_been_reviewed_once
+          ? 2
+          : 1,
+        has_review: !!shop?.chocolatine_has_been_reviewed_once,
+      },
+    };
+    if (isIncludedByFilters) featuresIncludedByFilters.push(feature);
+    if (!isIncludedByFilters) featuresExcludedByFilters.push(feature);
+    shopSchemaOrg.push(shopFromRowToSchemaOrg(shop));
+  }
+  console.log("now 3", Date.now() - now, "ms");
+  now = Date.now();
+  const initialViewState = (() => {
+    if (!params.shopId) return europe;
+    if (!currentShop) return europe;
+    return {
+      longitude: currentShop.longitude as number,
+      latitude: currentShop.latitude as number,
+      zoom: 14,
+    };
+  })();
+  console.log("now 4", Date.now() - now, "ms");
+  now = Date.now();
   const data: loaderData = {
     user_id: await getUserIdFromCookie(request, { optional: true }),
     initialViewState,
@@ -170,16 +167,16 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     },
     geojson_excluded_by_filters: {
       type: "FeatureCollection",
-      features: features.filter(
-        (feature) => feature.properties.is_included_by_filters === 0,
-      ),
+      features: featuresExcludedByFilters,
     },
   };
+  console.log("now 5", Date.now() - now, "ms");
+  now = Date.now();
   return data;
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  let {
+  const {
     user_id,
     initialViewState,
     total,
@@ -189,6 +186,8 @@ export default function App() {
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [searchParams] = useSearchParams();
+
+  const now = useRef(Date.now());
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -245,8 +244,6 @@ export default function App() {
                   setIsHoveringFeature(!!e.features?.length);
                 }}
                 onClick={(e) => {
-                  console.log(e);
-                  console.log(e.features);
                   if (e.features?.length) {
                     const feature = e.features[0] as any;
                     if (!!feature.properties.id) {
@@ -265,10 +262,7 @@ export default function App() {
                   }
                 }}
                 onContextMenu={(e) => {
-                  // log the coordinates like: { longitude: -122.084990, latitude: 37.426929}
                   const lngLat = e.lngLat;
-                  // console.log(e);
-                  // console.log(e.features);
                   navigate(
                     `/chocolatine/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
                   );
@@ -446,9 +440,9 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
 }) => {
-  if (currentParams.shopId !== nextParams.shopId) {
-    return true;
-  }
+  // if (currentParams.shopId !== nextParams.shopId) {
+  //   return true;
+  // }
   // if searchparms size differ, then we need to revalidate
 
   if (

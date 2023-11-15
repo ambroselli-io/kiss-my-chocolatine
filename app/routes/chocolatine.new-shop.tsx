@@ -83,6 +83,8 @@ export const action = async ({
         google_map_link: googleLink,
         latitude,
         longitude,
+        chocolatine_homemade: String(homemade),
+        chocolatine_price: Number(price),
         created_by_user_id: userId,
         created_by_user_email: userEmail,
       },

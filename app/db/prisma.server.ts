@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { compileReviews } from "~/utils/review";
 declare global {
   var __prisma: PrismaClient;
 }

@@ -49,29 +49,37 @@ model UserOs {
 }
 
 model Shop {
-  id                        String              @id @default(uuid())
-  google_map_link           String?
-  created_at                DateTime            @default(now())
-  updated_at                DateTime            @updatedAt
-  deleted_at                DateTime?
-  type                      String?             @default("Bakery")
-  description               String?
-  name                      String
-  telephone                 String?
-  url                       String?
-  streetAddress             String?
-  addresspostalCode         String?
-  addressLocality           String
-  addressCountry            String?
-  latitude                  Float?
-  longitude                 Float?
-  openingHoursSpecification Json?
-  created_by_user_id        String
-  created_by_user_email     String? // cache
-  created_by_user           User                @relation(fields: [created_by_user_id], references: [id])
-  chocolatine               Chocolatine?
-  chocolatineReviews        ChocolatineReview[]
-  awards                    Award[]
+  id                             String    @id @default(uuid())
+  google_map_link                String?
+  created_at                     DateTime  @default(now())
+  updated_at                     DateTime  @updatedAt
+  deleted_at                     DateTime?
+  type                           String?   @default("Bakery")
+  description                    String?
+  name                           String
+  telephone                      String?
+  url                            String?
+  streetAddress                  String?
+  addresspostalCode              String?
+  addressLocality                String
+  addressCountry                 String?
+  latitude                       Float
+  longitude                      Float
+  openingHoursSpecification      Json?
+  created_by_user_id             String
+  created_by_user_email          String? // cache
+  siret                          String?
+  startDate                      DateTime?
+  etatAdministratifEtablissement String?
+
+  chocolatine_homemade               String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  chocolatine_price                  Float?
+  chocolatine_has_been_reviewed_once Boolean @default(false)
+
+  created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
+  chocolatine        Chocolatine?
+  chocolatineReviews ChocolatineReview[]
+  awards             Award[]
 }
 
 model Chocolatine {

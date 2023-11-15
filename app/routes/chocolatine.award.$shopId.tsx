@@ -73,7 +73,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}`);
+  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({
