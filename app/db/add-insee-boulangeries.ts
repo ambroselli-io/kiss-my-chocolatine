@@ -93,12 +93,41 @@ async function migrateCSVData() {
         if (record.complementAdresseEtablissement)
           streetAddress += ` ${record.complementAdresseEtablissement}`;
 
+        const longitude = parseFloat(record.x_longitude);
+        const latitude = parseFloat(record.y_latitude);
+
+        const existingShop = await prisma.shop.findFirst({
+          where: {
+            longitude: longitude,
+            latitude: latitude,
+          },
+        });
+
+        if (existingShop) {
+          if (!existingShop.startDate) {
+            await prisma.shop.delete({
+              where: {
+                id: existingShop.id,
+              },
+            });
+          } else if (existingShop.startDate > new Date(record.dateDebut)) {
+            return null;
+          } else {
+            await prisma.shop.delete({
+              where: {
+                id: existingShop.id,
+              },
+            });
+          }
+        }
+
         await prisma.shop.create({
           data: {
             name:
               record.enseigne1Etablissement ||
               record.enseigne2Etablissement ||
               record.denominationUsuelleEtablissement,
+            description: "Added from INSEE data",
             type: record.activitePrincipaleEtablissement,
             startDate: record.dateDebut ? new Date(record.dateDebut) : null,
             siret: record.siret,

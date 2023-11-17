@@ -75,6 +75,22 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const usersEmails = await prisma.$queryRaw<
     Array<UserAction>
   >`SELECT DISTINCT user_email FROM "UserAction"`;
+
+  console.log(
+    JSON.stringify(
+      reduceAllDBActionsToShares(
+        userActions,
+        (Object.keys(mapActionToShares) as Array<Action>).filter(
+          (action) =>
+            !["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action),
+        ),
+        true,
+      ),
+      null,
+      2,
+    ),
+  );
+
   return {
     user,
     usersEmails: usersEmails.map((user) => user.user_email),
