@@ -68,16 +68,16 @@ export const renderDotLabel = (dotData: any): string => {
     case "Croustillant":
       switch (dotData.value) {
         case 1:
-          return "Très mou";
+          return "Très croustillant";
         case 2:
-          return "Mou";
+          return "Bien croustillant";
         default:
         case 3:
           return "Juste croustillant";
         case 4:
-          return "Bien croustillant";
+          return "Mou";
         case 5:
-          return "Très croustillant";
+          return "Très mou";
       }
     case "Léger":
       switch (dotData.value) {
