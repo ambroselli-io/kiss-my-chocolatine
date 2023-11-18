@@ -66,7 +66,6 @@ CREATE TABLE "Shop" (
     "longitude" DOUBLE PRECISION NOT NULL,
     "created_by_user_id" TEXT NOT NULL,
     "created_by_user_email" TEXT,
-<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
     "siret" TEXT,
     "startDate" TIMESTAMP(3),
     "etatAdministratifEtablissement" TEXT,
@@ -96,44 +95,14 @@ CREATE TABLE "Shop" (
     "chocolatine_average_big_or_small" INTEGER NOT NULL DEFAULT 0,
     "chocolatine_average_chocolate_disposition" INTEGER NOT NULL DEFAULT 0,
     "chocolatine_average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
-    "chocolatineId" TEXT,
-========
->>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
 
     CONSTRAINT "Shop_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Chocolatine" (
-    "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "deleted_at" TIMESTAMP(3),
-    "price" DOUBLE PRECISION,
-    "priceCurrency" TEXT NOT NULL DEFAULT 'EUR',
-    "homemade" TEXT NOT NULL DEFAULT 'I don''t know, nobody tried yet',
-    "has_been_reviewed_once" BOOLEAN NOT NULL DEFAULT false,
-    "average_buttery" INTEGER NOT NULL DEFAULT 0,
-    "average_light_or_dense" INTEGER NOT NULL DEFAULT 0,
-    "average_flaky_or_brioche" INTEGER NOT NULL DEFAULT 0,
-    "average_golden_or_pale" INTEGER NOT NULL DEFAULT 0,
-    "average_crispy_or_soft" INTEGER NOT NULL DEFAULT 0,
-    "average_big_or_small" INTEGER NOT NULL DEFAULT 0,
-    "average_chocolate_disposition" INTEGER NOT NULL DEFAULT 0,
-    "average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
-    "created_by_user_id" TEXT NOT NULL,
-    "created_by_user_email" TEXT,
-    "shop_id" TEXT NOT NULL,
-    "shop_name" TEXT,
-
-    CONSTRAINT "Chocolatine_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "ChocolatineReview" (
     "id" TEXT NOT NULL,
-    "user_id_chocolatine_id" TEXT NOT NULL,
-    "user_id_shop_id" TEXT,
+    "user_id_shop_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
@@ -148,12 +117,7 @@ CREATE TABLE "ChocolatineReview" (
     "good_or_not_good" INTEGER NOT NULL,
     "shop_id" TEXT NOT NULL,
     "shop_name" TEXT,
-<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
-========
-    "chocolatine_id" TEXT NOT NULL,
->>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
     "user_id" TEXT NOT NULL,
-    "chocolatineId" TEXT,
     "user_username" TEXT NOT NULL,
     "user_email" TEXT,
 
@@ -185,7 +149,6 @@ CREATE TABLE "Award" (
     "deleted_at" TIMESTAMP(3),
     "shop_id" TEXT,
     "shop_name" TEXT,
-    "chocolatine_id" TEXT,
 
     CONSTRAINT "Award_pkey" PRIMARY KEY ("id")
 );
@@ -200,10 +163,7 @@ CREATE UNIQUE INDEX "User_referral_id_key" ON "User"("referral_id");
 CREATE UNIQUE INDEX "UserOs_unique_key_key" ON "UserOs"("unique_key");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Chocolatine_shop_id_key" ON "Chocolatine"("shop_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ChocolatineReview_user_id_chocolatine_id_key" ON "ChocolatineReview"("user_id_chocolatine_id");
+CREATE UNIQUE INDEX "ChocolatineReview_user_id_shop_id_key" ON "ChocolatineReview"("user_id_shop_id");
 
 -- AddForeignKey
 ALTER TABLE "UserOs" ADD CONSTRAINT "UserOs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -218,14 +178,4 @@ ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_shop_id_fkey" 
 ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
 ALTER TABLE "Award" ADD CONSTRAINT "Award_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-========
-ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Award" ADD CONSTRAINT "Award_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Award" ADD CONSTRAINT "Award_chocolatine_id_fkey" FOREIGN KEY ("chocolatine_id") REFERENCES "Chocolatine"("id") ON DELETE CASCADE ON UPDATE CASCADE;
->>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
