@@ -161,6 +161,7 @@ export const loader: LoaderFunction = async ({
         },
       })
     : null;
+
   return json({ shop, myReview });
 };
 

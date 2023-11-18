@@ -24,8 +24,8 @@ const ChartRadar = ({ data }: { data: RadarData }) => {
       gridLabelOffset={36}
       gridLabel={() => null}
       dotSize={10}
-      gridLevels={4}
-      maxValue={4}
+      gridLevels={5}
+      maxValue={5}
       curve="linearClosed"
       enableDotLabel
       dotLabel={renderDotLabel}

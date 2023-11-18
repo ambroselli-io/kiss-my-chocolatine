@@ -22,16 +22,16 @@ export const renderDotLabel = (dotData: any): string => {
   switch (dotData.index) {
     case "Beurré": {
       switch (dotData.value) {
-        case 0.1:
-          return "Pas beurré";
         case 1:
+          return "Pas beurré";
+        case 2:
           return "Peu beurré";
         default:
-        case 2:
-          return "Beurré";
         case 3:
           return "Bien beurré";
         case 4:
+          return "Bien beurré";
+        case 5:
           return "QUE du beurre";
       }
     }
@@ -39,86 +39,86 @@ export const renderDotLabel = (dotData: any): string => {
       return dotData.index;
     case "Feuilleté":
       switch (dotData.value) {
-        case 0.1:
-          return "Pas feuilleté";
         case 1:
+          return "Pas feuilleté";
+        case 2:
           return "Peu feuilleté";
         default:
-        case 2:
-          return "Bien feuilleté";
         case 3:
-          return "Vraiment feuilleté";
+          return "Bien feuilleté";
         case 4:
+          return "Vraiment feuilleté";
+        case 5:
           return "Très feuilleté";
       }
     case "Doré":
       switch (dotData.value) {
-        case 0.1:
-          return "Très pâle";
         case 1:
-          return "Peu doré";
-        default:
+          return "Très pâle";
         case 2:
-          return "Doré";
+          return "Pâle";
+        default:
         case 3:
-          return "Bien doré";
+          return "Juste doré";
         case 4:
+          return "Bien doré";
+        case 5:
           return "Très doré";
       }
     case "Croustillant":
       switch (dotData.value) {
-        case 0.1:
-          return "Très mou";
         case 1:
+          return "Très mou";
+        case 2:
           return "Mou";
         default:
-        case 2:
-          return "Croustillant";
         case 3:
-          return "Bien croustillant";
+          return "Juste croustillant";
         case 4:
+          return "Bien croustillant";
+        case 5:
           return "Très croustillant";
       }
     case "Léger":
       switch (dotData.value) {
-        case 0.1:
-          return "Très dense";
         case 1:
+          return "Très dense";
+        case 2:
           return "Dense";
         default:
-        case 2:
-          return "Léger";
         case 3:
-          return "Bien léger";
+          return "Aéré";
         case 4:
-          return "Très léger";
+          return "Bien aéré";
+        case 5:
+          return "Très aéré";
       }
     case `Disposition chocolat`:
       switch (dotData.value) {
-        case 0.1:
-          return "Superposé";
         case 1:
+          return "Superposé";
+        case 2:
           return "Collé";
         default:
-        case 2:
-          return "Bien disposé";
         case 3:
-          return "Un peu écarté";
+          return "Bien disposé";
         case 4:
+          return "Un peu écarté";
+        case 5:
           return "Sur les bords";
       }
     case "Gros ?":
       switch (dotData.value) {
-        case 0.1:
-          return "Très petit";
         case 1:
+          return "Très petit";
+        case 2:
           return "Petit";
         default:
-        case 2:
-          return "Normal";
         case 3:
-          return "Gros";
+          return "Taille normale";
         case 4:
+          return "Gros";
+        case 5:
           return "Très gros";
       }
   }
@@ -128,31 +128,31 @@ export const fromShopToRadarData = (shop: Shop): RadarData => {
   return [
     {
       index: "Beurré",
-      value: Math.max(shop.chocolatine_average_buttery + 2, 0.1),
+      value: Math.max(shop.chocolatine_average_buttery + 3, 1),
     },
     {
       index: "Feuilleté",
-      value: Math.max(shop.chocolatine_average_flaky_or_brioche + 2, 0.1),
+      value: -Math.min(shop.chocolatine_average_flaky_or_brioche - 3, -1),
     },
     {
       index: "Doré",
-      value: Math.max(shop.chocolatine_average_golden_or_pale + 2, 0.1),
+      value: Math.max(shop.chocolatine_average_golden_or_pale + 3, 1),
     },
     {
       index: "Gros ?",
-      value: Math.max(shop.chocolatine_average_big_or_small + 2, 0.1),
+      value: Math.max(shop.chocolatine_average_big_or_small + 3, 1),
     },
     // {
     //   index: `Disposition chocolat`,
-    //   value: Math.max(shop.chocolatine_average_chocolate_disposition + 2, 0.1),
+    //   value: Math.max(shop.chocolatine_average_chocolate_disposition + 3, 1),
     // },
     {
       index: "Croustillant",
-      value: Math.max(shop.chocolatine_average_crispy_or_soft + 2, 0.1),
+      value: Math.max(shop.chocolatine_average_crispy_or_soft + 3, 1),
     },
     {
       index: "Léger",
-      value: Math.max(shop.chocolatine_average_light_or_dense + 2, 0.1),
+      value: Math.max(shop.chocolatine_average_light_or_dense + 3, 1),
     },
   ];
 };
