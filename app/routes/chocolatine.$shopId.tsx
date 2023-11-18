@@ -18,6 +18,9 @@ import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 import { readableAwards, readablePositions } from "~/utils/awards";
 import { readableHomemade } from "~/utils/homemade";
+import ChartRadar from "~/components/ChartRadar";
+import { fromShopToRadarData } from "~/utils/radarData";
+import type { RadarData } from "~/utils/radarData";
 
 export const meta: MetaFunction = ({ matches, data }: MetaArgs) => {
   const chocolatineSchemaOrg = (data as Record<string, SchemaOrgChocolatine>)
@@ -68,12 +71,15 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const detailedReviews =
     chocolatineReviews?.filter((r: ChocolatineReview) => !!r.comment) ?? [];
 
+  const radarData = fromShopToRadarData(shop);
+
   return {
     chocolatineSchemaOrg: chocolatineFromRowToSchemaOrg(
       shop as Shop,
       chocolatineReviews as Array<ChocolatineReview>,
     ),
     shop: shop as Shop,
+    radarData: radarData as RadarData,
     awards: awards as Array<Award>,
     ingredients: [], // TODO
     detailedReviews,
@@ -82,7 +88,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function ChocolatineAndShop() {
   const data = useLoaderData<typeof loader>();
-  const { detailedReviews, awards } = data;
+  const { detailedReviews, awards, radarData } = data;
   const shop = data.shop as unknown as Shop;
   const fromCookies = useChocolatineName();
   const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
@@ -157,7 +163,10 @@ export default function ChocolatineAndShop() {
             "Pas d'avis encore"
           ) : (
             <>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
+              <div className="flex h-96 w-full justify-center py-4">
+                <ChartRadar data={radarData} />
+              </div>
+              {/* <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>Y'a-t-il du beurre?</summary>
                   <p className="text-xs italic opacity-70">
@@ -225,7 +234,7 @@ export default function ChocolatineAndShop() {
                   maxCaption={"Dense"}
                   value={shop.chocolatine_average_light_or_dense}
                 />
-              </div>
+              </div> */}
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>Comment est la disposition du chocolat?</summary>
@@ -239,7 +248,7 @@ export default function ChocolatineAndShop() {
                   value={shop.chocolatine_average_chocolate_disposition}
                 />
               </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
+              {/* <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>Petit ou gros?</summary>
                   <p className="text-xs italic opacity-70">
@@ -252,7 +261,7 @@ export default function ChocolatineAndShop() {
                   maxCaption={"Très gros"}
                   value={shop.chocolatine_average_big_or_small}
                 />
-              </div>
+              </div> */}
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>Bon ou pas bon?</summary>

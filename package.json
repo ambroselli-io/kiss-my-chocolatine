@@ -20,6 +20,7 @@
     "@nivo/core": "0.80.0",
     "@nivo/line": "0.80.0",
     "@nivo/pie": "0.80.0",
+    "@nivo/radar": "0.80.0",
     "@prisma/client": "^5.5.2",
     "@remix-run/node": "^2.2.0",
     "@remix-run/react": "^2.2.0",
