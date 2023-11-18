@@ -54,30 +54,30 @@ export const renderDotLabel = (dotData: any): string => {
     case "Doré":
       switch (dotData.value) {
         case 1:
-          return "Très doré";
+          return "Très pâle";
         case 2:
-          return "Bien doré";
+          return "Pâle";
         default:
         case 3:
           return "Juste doré";
         case 4:
-          return "Pâle";
+          return "Bien doré";
         case 5:
-          return "Très pâle";
+          return "Très doré";
       }
     case "Croustillant":
       switch (dotData.value) {
         case 1:
-          return "Très croustillant";
+          return "Très mou";
         case 2:
-          return "Bien croustillant";
+          return "Mou";
         default:
         case 3:
           return "Juste croustillant";
         case 4:
-          return "Mou";
+          return "Bien croustillant";
         case 5:
-          return "Très mou";
+          return "Très croustillant";
       }
     case "Léger":
       switch (dotData.value) {
@@ -136,7 +136,7 @@ export const fromShopToRadarData = (shop: Shop): RadarData => {
     },
     {
       index: "Doré",
-      value: Math.max(shop.chocolatine_average_golden_or_pale + 3, 1),
+      value: -Math.min(shop.chocolatine_average_golden_or_pale - 3, -1),
     },
     {
       index: "Gros ?",
@@ -148,7 +148,7 @@ export const fromShopToRadarData = (shop: Shop): RadarData => {
     // },
     {
       index: "Croustillant",
-      value: Math.max(shop.chocolatine_average_crispy_or_soft + 3, 1),
+      value: -Math.min(shop.chocolatine_average_crispy_or_soft - 3, -1),
     },
     {
       index: "Léger",
