@@ -66,6 +66,7 @@ CREATE TABLE "Shop" (
     "longitude" DOUBLE PRECISION NOT NULL,
     "created_by_user_id" TEXT NOT NULL,
     "created_by_user_email" TEXT,
+<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
     "siret" TEXT,
     "startDate" TIMESTAMP(3),
     "etatAdministratifEtablissement" TEXT,
@@ -96,6 +97,8 @@ CREATE TABLE "Shop" (
     "chocolatine_average_chocolate_disposition" INTEGER NOT NULL DEFAULT 0,
     "chocolatine_average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
     "chocolatineId" TEXT,
+========
+>>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
 
     CONSTRAINT "Shop_pkey" PRIMARY KEY ("id")
 );
@@ -145,6 +148,10 @@ CREATE TABLE "ChocolatineReview" (
     "good_or_not_good" INTEGER NOT NULL,
     "shop_id" TEXT NOT NULL,
     "shop_name" TEXT,
+<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
+========
+    "chocolatine_id" TEXT NOT NULL,
+>>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
     "user_id" TEXT NOT NULL,
     "chocolatineId" TEXT,
     "user_username" TEXT NOT NULL,
@@ -211,4 +218,14 @@ ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_shop_id_fkey" 
 ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+<<<<<<<< HEAD:prisma/migrations/20231115201951_init/migration.sql
 ALTER TABLE "Award" ADD CONSTRAINT "Award_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+========
+ALTER TABLE "ChocolatineReview" ADD CONSTRAINT "ChocolatineReview_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Award" ADD CONSTRAINT "Award_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Award" ADD CONSTRAINT "Award_chocolatine_id_fkey" FOREIGN KEY ("chocolatine_id") REFERENCES "Chocolatine"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+>>>>>>>> ee997ee (fix: migrations):prisma/migrations/20231118102111_init/migration.sql
