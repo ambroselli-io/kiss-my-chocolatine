@@ -91,13 +91,13 @@ export default function ChocolatinesFilters({
         />
         <CheckBoxesCategory
           name="average_crispy_or_soft"
-          title="🍦 Croustillant ou moelleux"
+          title="🍦 Croustillant ou mou"
           values={[
             { label: "Très croustillant", value: -2 },
             { label: "Croustillant", value: -1 },
             { label: "Équilibré ⚖️", value: 0 },
-            { label: "Moelleux", value: 1 },
-            { label: "Très moelleux", value: 2 },
+            { label: "Mou", value: 1 },
+            { label: "Très mou", value: 2 },
           ]}
         />
         <CheckBoxesCategory

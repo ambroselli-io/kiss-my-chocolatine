@@ -210,7 +210,7 @@ export default function ChocolatineAndShop() {
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Croustillant ou moelleux?</summary>
+                  <summary>Croustillant ou mou?</summary>
                   <p className="text-xs italic opacity-70">
                     Une combinaison de beurre, de feuilletage et de temps de
                     cuisson&nbsp;🤯
@@ -218,7 +218,7 @@ export default function ChocolatineAndShop() {
                 </details>
                 <BalancedRate
                   minCaption={"Croustillant"}
-                  maxCaption={"Moelleux"}
+                  maxCaption={"Mou"}
                   value={shop.chocolatine_average_crispy_or_soft}
                 />
               </div>
@@ -264,7 +264,7 @@ export default function ChocolatineAndShop() {
               </div> */}
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
-                  <summary>Bon ou pas bon?</summary>
+                  <summary>En fin de compte, est-il bon?</summary>
                   <p className="text-xs italic opacity-70">
                     la seule note subjective ici - les autres sont
                     scientifiques&nbsp;🥸

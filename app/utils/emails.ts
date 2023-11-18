@@ -51,7 +51,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft (croustillant ou moelleux):
+-Crispy or Soft (croustillant ou mou):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
 -Small or big:
@@ -139,7 +139,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft (croustillant ou moelleux):
+-Crispy or Soft (croustillant ou mou):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
 -Small or big:
@@ -206,7 +206,7 @@ For the ${chocolatineName}, you can fill any of these fields with a value from -
 -Golden or Pale (doré ou pâle):
   (-2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale)
 
--Crispy or Soft (croustillant ou moelleux):
+-Crispy or Soft (croustillant ou mou):
   (-2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft)
 
 -Small or big:

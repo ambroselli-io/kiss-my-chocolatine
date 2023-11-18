@@ -256,9 +256,9 @@ export default function ChocolatineReview() {
           <RadioRate
             name="crispy_or_soft"
             minCaption={"Croustillant"}
-            maxCaption={"Moelleux"}
+            maxCaption={"Mou"}
             defaultValue={myReview?.crispy_or_soft}
-            legend="Croustillant ou moelleux?"
+            legend="Croustillant ou mou?"
           >
             Une combinaison de beurre, de feuilletage et de temps de
             cuisson&nbsp;🤯
@@ -304,7 +304,8 @@ export default function ChocolatineReview() {
               defaultValue={myReview?.good_or_not_good || undefined}
             />
             <label htmlFor="price">
-              Bon ou pas bon?<sup className="ml-1 text-red-500">*</sup>
+              En fin de compte, est-il bon?
+              <sup className="ml-1 text-red-500">*</sup>
               <small className="ml-4 opacity-70">Une note de 0 à 20</small>
             </label>
           </div>
