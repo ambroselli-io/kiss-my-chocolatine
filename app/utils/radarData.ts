@@ -54,16 +54,16 @@ export const renderDotLabel = (dotData: any): string => {
     case "Doré":
       switch (dotData.value) {
         case 1:
-          return "Très pâle";
+          return "Très doré";
         case 2:
-          return "Pâle";
+          return "Bien doré";
         default:
         case 3:
           return "Juste doré";
         case 4:
-          return "Bien doré";
+          return "Pâle";
         case 5:
-          return "Très doré";
+          return "Très pâle";
       }
     case "Croustillant":
       switch (dotData.value) {
