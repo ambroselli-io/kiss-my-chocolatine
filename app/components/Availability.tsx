@@ -7,8 +7,6 @@ import { Link } from "@remix-run/react";
 const Availability = ({
   shop,
   title = "Horaires",
-  openedCaption = "Ouvert maintenant",
-  closedCaption = "Fermé maintenant",
 }: {
   shop: Shop;
   title?: string;
@@ -39,7 +37,11 @@ const Availability = ({
         onClick={() => setShowMoreAvailability(true)}
       >
         <em className={`not-italic ${!isOpened && "text-red-500"}`}>
-          {isOpened ? openedCaption : closedCaption}
+          {isOpened
+            ? "Ouvert maintenant"
+            : !!hoursToday.opens
+            ? "Fermé maintenant"
+            : "Fermé aujourd'hui"}
         </em>
         <em className="text-gray-400">
           {!!hoursToday.opens &&

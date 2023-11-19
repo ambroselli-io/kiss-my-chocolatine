@@ -113,16 +113,18 @@ export default function ChocolatineAndShop() {
         <h2 className="mt-4 bg-gray-900 px-4 text-xl font-semibold text-white">
           {shop.name}
         </h2>
-        {["I think so", "Yes"].includes(shop.chocolatine_homemade) && (
-          <h3 className="pb-2 pl-5 font-semibold text-app-500 opacity-90">
-            🧑‍🍳 Artisanal
-          </h3>
-        )}
-        {["I don't think so", "No"].includes(shop.chocolatine_homemade) && (
-          <h3 className="pb-2 pl-5 font-semibold text-gray-500 opacity-90">
-            🤖 Industriel
-          </h3>
-        )}
+        <div className="pb-2 pl-5 ">
+          {["I think so", "Yes"].includes(shop.chocolatine_homemade) && (
+            <h3 className="font-semibold text-app-500 opacity-90">
+              🧑‍🍳 Artisanal
+            </h3>
+          )}
+          {["I don't think so", "No"].includes(shop.chocolatine_homemade) && (
+            <h3 className="font-semibold text-gray-500 opacity-90">
+              🤖 Industriel
+            </h3>
+          )}
+        </div>
         <Link
           className="absolute right-2 top-2 font-light text-white"
           to={`/${params.product}?${searchParams.toString()}`}
