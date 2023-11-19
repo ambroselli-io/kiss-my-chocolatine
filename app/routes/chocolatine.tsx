@@ -223,7 +223,7 @@ export default function App() {
 
   return (
     <>
-      <div className="relative flex h-full w-full flex-col justify-between sm:justify-start">
+      <div className="relative flex h-full w-full flex-col justify-between">
         <div
           className={[
             "absolute inset-0 border-2 border-app-500",

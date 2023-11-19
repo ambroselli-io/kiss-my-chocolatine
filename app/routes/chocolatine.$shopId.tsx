@@ -100,7 +100,7 @@ export default function ChocolatineAndShop() {
   return (
     <div
       id="drawer"
-      className="border-t-1 relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden rounded-t-3xl border-gray-300 bg-gray-900 shadow-2xl sm:z-0 sm:h-auto sm:max-h-full sm:max-w-sm sm:flex-1 sm:basis-full"
+      className="border-t-1 relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden rounded-t-3xl border-gray-300 bg-gray-900 shadow-2xl sm:z-0 sm:max-w-sm"
     >
       <h2 className="mt-4 bg-gray-900 px-4 text-xl font-semibold text-white">
         {shop.name}
