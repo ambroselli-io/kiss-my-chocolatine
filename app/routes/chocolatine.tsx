@@ -448,9 +448,9 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
 }) => {
-  // if (currentParams.shopId !== nextParams.shopId) {
-  //   return true;
-  // }
+  if (!!currentParams.shopId && !nextParams.shopId) {
+    return true;
+  }
   // if searchparms size differ, then we need to revalidate
 
   if (
