@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import type { OpeningHoursSpecification } from "app/types/schemaOrgShop";
 declare global {
   var __prisma: PrismaClient;
 }
@@ -13,7 +14,6 @@ global.__prisma
   .then(async () => {
     // migrations
     console.log("start migration !!");
-    // create shops
 
     console.log("done migration");
   })
