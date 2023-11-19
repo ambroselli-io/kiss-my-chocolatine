@@ -25,8 +25,78 @@ export function shopFromRowToSchemaOrg(shop: Shop): SchemaOrgShop {
       latitude: shop.latitude as number,
       longitude: shop.longitude as number,
     },
-    openingHoursSpecification:
-      shop.openingHoursSpecification as unknown as Array<OpeningHoursSpecification>,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday"],
+        opens: shop.opening_hours_monday_open
+          ? shop.opening_hours_monday_open
+          : "",
+        closes: shop.opening_hours_monday_close
+          ? shop.opening_hours_monday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Tuesday"],
+        opens: shop.opening_hours_tuesday_open
+          ? shop.opening_hours_tuesday_open
+          : "",
+        closes: shop.opening_hours_tuesday_close
+          ? shop.opening_hours_tuesday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Wednesday"],
+        opens: shop.opening_hours_wednesday_open
+          ? shop.opening_hours_wednesday_open
+          : "",
+        closes: shop.opening_hours_wednesday_close
+          ? shop.opening_hours_wednesday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Thursday"],
+        opens: shop.opening_hours_thursday_open
+          ? shop.opening_hours_thursday_open
+          : "",
+        closes: shop.opening_hours_thursday_close
+          ? shop.opening_hours_thursday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Friday"],
+        opens: shop.opening_hours_friday_open
+          ? shop.opening_hours_friday_open
+          : "",
+        closes: shop.opening_hours_friday_close
+          ? shop.opening_hours_friday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday"],
+        opens: shop.opening_hours_saturday_open
+          ? shop.opening_hours_saturday_open
+          : "",
+        closes: shop.opening_hours_saturday_close
+          ? shop.opening_hours_saturday_close
+          : "",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Sunday"],
+        opens: shop.opening_hours_sunday_open
+          ? shop.opening_hours_sunday_open
+          : "",
+        closes: shop.opening_hours_sunday_close
+          ? shop.opening_hours_sunday_close
+          : "",
+      },
+    ],
   };
 }
 

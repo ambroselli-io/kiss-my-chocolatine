@@ -16,6 +16,7 @@ import { prisma } from "~/db/prisma.server";
 import { getUserFromCookie, getUserIdFromCookie } from "~/services/auth.server";
 import type { User, AvailableAward, Positions } from "@prisma/client";
 import { readableAwards, readablePositions } from "~/utils/awards";
+import { isOpenedNow } from "~/utils/isOpenedNow";
 
 type ActionReturnType = {
   ok: boolean;
@@ -34,8 +35,6 @@ export const action = async ({
     }`,
   })) as User;
   if (!user) return { ok: false, error: "user doesnt exist" };
-  const form = await request.formData();
-  const award = form.get("award") as AvailableAward;
   const shop = await prisma.shop.findUnique({
     where: {
       id: params.shopId,
@@ -43,14 +42,51 @@ export const action = async ({
   });
 
   if (!shop) return { ok: false, error: "shop doesnt exist" };
+  const form = await request.formData();
+  function getHoursFromDay(index: number) {
+    const isClosed = form.get(`${index}-closed`) === "on";
+    if (isClosed) return [null, null];
+    const openingHour = form.get(`${index}-opening-hour`);
+    const openingMinute = form.get(`${index}-opening-minute`);
+    const closingHour = form.get(`${index}-closing-hour`);
+    const closingMinute = form.get(`${index}-closing-minute`);
+    if (!openingHour?.length || !openingMinute?.length)
+      throw new Error("Missing opening hour or minute");
+    if (!closingHour?.length || !closingMinute?.length)
+      throw new Error("Missing closing hour or minute");
+    return [
+      `${openingHour}:${String(openingMinute).padEnd(2, "0")}`,
+      `${closingHour}:${String(closingMinute).padEnd(2, "0")}`,
+    ];
+  }
 
-  await prisma.award.create({
+  const mondayHours = getHoursFromDay(0);
+  const tuesdayHours = getHoursFromDay(1);
+  const wednesdayHours = getHoursFromDay(2);
+  const thursdayHours = getHoursFromDay(3);
+  const fridayHours = getHoursFromDay(4);
+  const saturdayHours = getHoursFromDay(5);
+  const sundayHours = getHoursFromDay(6);
+
+  await prisma.shop.update({
+    where: {
+      id: shop.id,
+    },
     data: {
-      award,
-      position: form.get("position") as Positions,
-      year: Number(form.get("year")),
-      shop_id: shop.id,
-      shop_name: shop.name,
+      opening_hours_monday_open: mondayHours[0],
+      opening_hours_monday_close: mondayHours[1],
+      opening_hours_tuesday_open: tuesdayHours[0],
+      opening_hours_tuesday_close: tuesdayHours[1],
+      opening_hours_wednesday_open: wednesdayHours[0],
+      opening_hours_wednesday_close: wednesdayHours[1],
+      opening_hours_thursday_open: thursdayHours[0],
+      opening_hours_thursday_close: thursdayHours[1],
+      opening_hours_friday_open: fridayHours[0],
+      opening_hours_friday_close: fridayHours[1],
+      opening_hours_saturday_open: saturdayHours[0],
+      opening_hours_saturday_close: saturdayHours[1],
+      opening_hours_sunday_open: sundayHours[0],
+      opening_hours_sunday_close: sundayHours[1],
     },
   });
 
@@ -79,86 +115,231 @@ export const loader: LoaderFunction = async ({
     where: {
       id: params.shopId,
     },
+    select: {
+      id: true,
+      name: true,
+      opening_hours_monday_open: true,
+      opening_hours_monday_close: true,
+      opening_hours_tuesday_open: true,
+      opening_hours_tuesday_close: true,
+      opening_hours_wednesday_open: true,
+      opening_hours_wednesday_close: true,
+      opening_hours_thursday_open: true,
+      opening_hours_thursday_close: true,
+      opening_hours_friday_open: true,
+      opening_hours_friday_close: true,
+      opening_hours_saturday_open: true,
+      opening_hours_saturday_close: true,
+      opening_hours_sunday_open: true,
+      opening_hours_sunday_close: true,
+    },
   });
   return json({ shop });
 };
 
-export default function Add() {
+export default function AddOpeningHours() {
   const { state } = useNavigation();
   const busy = state === "submitting";
   const { shop } = useLoaderData<typeof loader>();
+  const DAYS = [
+    { key: "monday", label: "Lundi" },
+    { key: "tuesday", label: "Mardi" },
+    { key: "wednesday", label: "Mercredi" },
+    { key: "thursday", label: "Jeudi" },
+    { key: "friday", label: "Vendredi" },
+    { key: "saturday", label: "Samedi" },
+    { key: "sunday", label: "Dimanche" },
+  ];
+
+  const { hasNoHours } = isOpenedNow(shop);
+
+  const resetLine =
+    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      // empty line if closed
+      if (e.target.checked) {
+        const openingHourInput = document.querySelector(
+          `input[name="${index}-opening-hour"]`,
+        );
+        if (openingHourInput) {
+          (openingHourInput as HTMLInputElement).value = "";
+          (openingHourInput as HTMLInputElement).required = false;
+        }
+        const openingMinuteInput = document.querySelector(
+          `input[name="${index}-opening-minute"]`,
+        );
+        if (openingMinuteInput) {
+          (openingMinuteInput as HTMLInputElement).value = "";
+          (openingMinuteInput as HTMLInputElement).required = false;
+        }
+        const closingHourInput = document.querySelector(
+          `input[name="${index}-closing-hour"]`,
+        );
+        if (closingHourInput) {
+          (closingHourInput as HTMLInputElement).value = "";
+          (closingHourInput as HTMLInputElement).required = false;
+        }
+        const closingMinuteInput = document.querySelector(
+          `input[name="${index}-closing-minute"]`,
+        );
+        if (closingMinuteInput) {
+          (closingMinuteInput as HTMLInputElement).value = "";
+          (closingMinuteInput as HTMLInputElement).required = false;
+        }
+      }
+    };
+
+  const copyLine = (index: number) => () => {
+    const openingHour = (
+      document.querySelector(
+        `input[name="${index}-opening-hour"]`,
+      ) as HTMLInputElement
+    )?.value;
+    const openingMinute = (
+      document.querySelector(
+        `input[name="${index}-opening-minute"]`,
+      ) as HTMLInputElement
+    )?.value;
+    const closingHour = (
+      document.querySelector(
+        `input[name="${index}-closing-hour"]`,
+      ) as HTMLInputElement
+    )?.value;
+    const closingMinute = (
+      document.querySelector(
+        `input[name="${index}-closing-minute"]`,
+      ) as HTMLInputElement
+    )?.value;
+
+    for (let i = 0; i < DAYS.length; i++) {
+      const openingHourInput = document.querySelector(
+        `input[name="${i}-opening-hour"]`,
+      );
+      if (openingHourInput) {
+        (openingHourInput as HTMLInputElement).value = openingHour;
+      }
+      const openingMinuteInput = document.querySelector(
+        `input[name="${i}-opening-minute"]`,
+      );
+      if (openingMinuteInput) {
+        (openingMinuteInput as HTMLInputElement).value = openingMinute;
+      }
+      const closingHourInput = document.querySelector(
+        `input[name="${i}-closing-hour"]`,
+      );
+      if (closingHourInput) {
+        (closingHourInput as HTMLInputElement).value = closingHour;
+      }
+      const closingMinuteInput = document.querySelector(
+        `input[name="${i}-closing-minute"]`,
+      );
+      if (closingMinuteInput) {
+        (closingMinuteInput as HTMLInputElement).value = closingMinute;
+      }
+    }
+  };
 
   return (
     <ModalRouteContainer
-      aria-label={`Add new award for ${shop.name}`}
-      title={`Add new award for ${shop.name}`}
+      aria-label={`Ajoutez les horaires d'ouverture pour ${shop.name}`}
+      title={`Ajoutez les horaires d'ouverture pour ${shop.name}`}
+      size="full"
     >
       <ModalBody className="border-t border-t-gray-300">
-        <Form id="add-review-form" method="post" className="m-4">
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
-            <select
-              id="award"
-              name="award"
-              required
-              className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
-            >
-              {Object.entries(readableAwards).map(([key, name]) => {
-                return (
-                  <option key={key} value={key}>
-                    {name}
-                  </option>
-                );
-              })}
-            </select>
-            <label htmlFor="homemade">
-              Award<sup className="ml-1 text-red-500">*</sup>
-            </label>
-          </div>
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
-            <select
-              id="position"
-              name="position"
-              required
-              className="block w-full rounded-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-app-500 sm:text-sm sm:leading-6"
-            >
-              {Object.entries(readablePositions).map(([key, name]) => {
-                return (
-                  <option key={key} value={key}>
-                    {name}
-                  </option>
-                );
-              })}
-            </select>
-            <label htmlFor="homemade">
-              Position<sup className="ml-1 text-red-500">*</sup>
-            </label>
-          </div>
-          <div className="mb-3 flex max-w-lg flex-col-reverse gap-2 text-left">
-            <input
-              name="year"
-              type="number"
-              min="1950"
-              max={new Date().getFullYear() + 1}
-              step="1"
-              id="year"
-              onWheel={(e) => e.currentTarget.blur()}
-              className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
-              placeholder="2023"
-            />
-            <label htmlFor="price">
-              Year<sup className="ml-1 text-red-500">*</sup>
-            </label>
+        <Form
+          id="add-opening-hours-form"
+          method="post"
+          className="m-4 min-w-max"
+        >
+          <div className="mb-3 grid grid-cols-7 items-center justify-center gap-4">
+            <div></div> {/* Empty cell for alignment */}
+            <div>Closed?</div>
+            <div>Opening hour</div>
+            <div>Opening minute</div>
+            <div>Closing hour (24H)</div>
+            <div>Closing minute</div>
+            <div></div>
+            {DAYS.map(({ key, label }, index) => {
+              const isDefaultClosed =
+                !hasNoHours && shop[`opening_hours_${key}_open`] === null;
+              return (
+                <React.Fragment key={key}>
+                  <div>{label}</div>
+                  <input
+                    type="checkbox"
+                    name={`${index}-closed`}
+                    className="mt-2 h-4 w-4 rounded border-0 text-indigo-600 ring-1 ring-inset ring-gray-300 focus:border-app-500 focus:ring-app-500"
+                    onChange={resetLine(index)}
+                    defaultChecked={isDefaultClosed}
+                  />
+                  <input
+                    name={`${index}-opening-hour`}
+                    type="number"
+                    min="0"
+                    step="1"
+                    max="24"
+                    required={!isDefaultClosed}
+                    className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                    defaultValue={
+                      shop[`opening_hours_${key}_open`]?.split(":")?.[0]
+                    }
+                  />
+                  <input
+                    name={`${index}-opening-minute`}
+                    type="number"
+                    min="0"
+                    step="5"
+                    max="60"
+                    required={!isDefaultClosed}
+                    className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                    defaultValue={
+                      shop[`opening_hours_${key}_open`]?.split(":")?.[1]
+                    }
+                  />
+                  <input
+                    name={`${index}-closing-hour`}
+                    type="number"
+                    min="0"
+                    step="1"
+                    max="24"
+                    required={!isDefaultClosed}
+                    className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                    defaultValue={
+                      shop[`opening_hours_${key}_close`]?.split(":")?.[0]
+                    }
+                  />
+                  <input
+                    name={`${index}-closing-minute`}
+                    type="number"
+                    min="0"
+                    step="5"
+                    max="60"
+                    required={!isDefaultClosed}
+                    className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                    defaultValue={
+                      shop[`opening_hours_${key}_close`]?.split(":")?.[1]
+                    }
+                  />
+                  <button
+                    className="text-xs text-gray-400"
+                    type="button"
+                    onClick={copyLine(index)}
+                  >
+                    copy this to all days
+                  </button>
+                </React.Fragment>
+              );
+            })}
           </div>
         </Form>
       </ModalBody>
       <ModalFooter>
         <button
           type="submit"
-          form="add-review-form"
+          form="add-opening-hours-form"
           className="rounded-lg bg-[#FFBB01] px-4 py-2 disabled:opacity-25"
           disabled={busy}
         >
-          Add award
+          Add opening hours
         </button>
       </ModalFooter>
     </ModalRouteContainer>

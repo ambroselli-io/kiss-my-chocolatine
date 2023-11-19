@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { isOpenedNow } from "~/utils/isOpenedNow";
 import type { Shop } from "@prisma/client";
+import { Link } from "@remix-run/react";
 
 const Availability = ({
   shop,
@@ -15,7 +16,15 @@ const Availability = ({
   closedCaption?: string;
 }) => {
   const [showMoreAvailability, setShowMoreAvailability] = useState(false);
-  const [isOpened, hoursPerDay, hoursToday] = isOpenedNow(shop);
+  const { isOpened, hoursPerDay, hoursToday, hasNoHours } = isOpenedNow(shop);
+
+  if (hasNoHours) {
+    return (
+      <Link to="./opening-hours" className="underline">
+        Horaires non renseignés - cliquez pour ajouter
+      </Link>
+    );
+  }
 
   return (
     <>
@@ -108,6 +117,9 @@ const MoreAvailability = ({ hoursPerDay, title, show, close }: any) => {
             })}
           </div>
         </div>
+        <Link to="./opening-hours" className="mt-4 block underline">
+          🕰️ Modifier les horaires
+        </Link>
       </div>
     </aside>,
     document?.getElementById("drawer") as HTMLElement,

@@ -168,13 +168,7 @@ export default function ChocolatineAndShop() {
             </span>
             <span aria-details="opening hours" className="flex text-sm">
               <img src="/assets/clock-grey.svg" className="mr-3 w-5" />
-              {shop.openingHoursSpecification ? (
-                <Availability shop={shop} />
-              ) : (
-                <Link to="./opening-hours" className="underline">
-                  Horaires non renseignés
-                </Link>
-              )}
+              <Availability shop={shop} />
             </span>
             <span
               aria-details="opening hours"
@@ -351,11 +345,7 @@ export default function ChocolatineAndShop() {
               </span>
               <span aria-details="opening hours" className="flex text-sm">
                 <img src="/assets/clock-grey.svg" className="mr-3 w-5" />
-                {shop.openingHoursSpecification ? (
-                  <Availability shop={shop} />
-                ) : (
-                  "Horaires non renseignés"
-                )}
+                <Availability shop={shop} />
               </span>
               {shop.telephone && (
                 <span aria-details="phone" className="flex">

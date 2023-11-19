@@ -194,7 +194,6 @@ export default function App() {
   } = useLoaderData<typeof loader>();
   const params = useParams();
 
-  console.log({ params });
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [searchParams] = useSearchParams();

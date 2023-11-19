@@ -83,15 +83,15 @@ export const loader: LoaderFunction = async ({
   return json({ shop });
 };
 
-export default function Add() {
+export default function AddAward() {
   const { state } = useNavigation();
   const busy = state === "submitting";
   const { shop } = useLoaderData<typeof loader>();
 
   return (
     <ModalRouteContainer
-      aria-label={`Add new award for ${shop.name}`}
-      title={`Add new award for ${shop.name}`}
+      aria-label={`Ajoutez une récompense pour ${shop.name}`}
+      title={`Ajoutez une récompense pour ${shop.name}`}
     >
       <ModalBody className="border-t border-t-gray-300">
         <Form id="add-review-form" method="post" className="m-4">
@@ -158,7 +158,7 @@ export default function Add() {
           className="rounded-lg bg-[#FFBB01] px-4 py-2 disabled:opacity-25"
           disabled={busy}
         >
-          Add award
+          Ajouter la récompense
         </button>
       </ModalFooter>
     </ModalRouteContainer>
