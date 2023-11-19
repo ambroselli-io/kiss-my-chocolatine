@@ -7,6 +7,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
@@ -130,18 +131,32 @@ export const loader = async () => {
   };
 };
 
-export const ErrorBoundary = () => {
+export function ErrorBoundary() {
   const error = useRouteError();
-  captureRemixErrorBoundaryError(error);
-  console.log(error);
-  return (
-    <html lang="en" className="h-full w-full">
-      <body>
-        <div>Something went wrong</div>
-      </body>
-    </html>
-  );
-};
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data}</p>
+      </div>
+    );
+  } else if (error instanceof Error) {
+    captureRemixErrorBoundaryError(error);
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre>{error.stack}</pre>
+      </div>
+    );
+  } else {
+    return <h1>Unknown Error</h1>;
+  }
+}
 
 export default function App() {
   const { ENV } = useLoaderData<typeof loader>();

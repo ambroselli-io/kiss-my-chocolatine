@@ -12,7 +12,7 @@ import type { CustomFeatureCollection } from "~/types/geojson";
 import useChocolatineName from "~/utils/useChocolatineName";
 import { mapActionToShares } from "~/utils/mapActionToShares";
 
-interface ChocolatinesMenuProps {
+interface BurgerMenuProps {
   mapRef: React.MutableRefObject<MapRef | null>;
   setIsOnboardingOpen: (isOpen: boolean) => void;
   user_id: string | undefined;
@@ -20,13 +20,13 @@ interface ChocolatinesMenuProps {
   geojson_included_by_filters: CustomFeatureCollection;
 }
 
-export default function ChocolatinesMenu({
+export default function BurgerMenu({
   mapRef,
   setIsOnboardingOpen,
   user_id,
   total,
   geojson_included_by_filters,
-}: ChocolatinesMenuProps) {
+}: BurgerMenuProps) {
   const [showMore, setShowMore] = useState(false);
   const params = useParams();
 
@@ -59,7 +59,7 @@ export default function ChocolatinesMenu({
                   geojson_included_by_filters={geojson_included_by_filters}
                 />
                 <Link
-                  to="/chocolatine/referral"
+                  to={`/${params.product}/referral`}
                   className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
                   onClick={() => {
                     setShowMore(false);
@@ -98,7 +98,7 @@ export default function ChocolatinesMenu({
                   <ArrowTopRightOnSquareIcon className="h-3 w-3" />
                 </a>
                 <Link
-                  to="/chocolatine/feedback"
+                  to={`/${params.product}/feedback`}
                   className="inline-block items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2"
                   onClick={() => {
                     setShowMore(false);
@@ -132,7 +132,7 @@ export default function ChocolatinesMenu({
                   </Form>
                 ) : (
                   <Link
-                    to="/chocolatine/register"
+                    to={`/${params.product}/register`}
                     className="mr-auto px-4 py-2"
                     onClick={() => {
                       setShowMore(false);
@@ -148,7 +148,7 @@ export default function ChocolatinesMenu({
           {!params.shopId && (
             <>
               <Link
-                to="/chocolatine/new-shop"
+                to={`/${params.product}/new-shop`}
                 className="absolute bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-4 bg-app-500 text-3xl font-bold drop-shadow-sm"
               >
                 <div className="absolute m-auto h-1 w-1/2 bg-gray-800" />

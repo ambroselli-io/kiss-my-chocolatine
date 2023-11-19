@@ -31,7 +31,9 @@ export const action = async ({
   // Here we can update our database with the new invoice
   if (!params.shopId) return { ok: false, error: "Missing shop_id" };
   const user = (await getUserFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   })) as User;
   if (!user) return { ok: false, error: "user doesnt exist" };
   const form = await request.formData();
@@ -138,7 +140,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
+  return redirect(`/${params.product}/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({
@@ -146,7 +148,9 @@ export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
   const userId = await getUserIdFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   });
   const shop = await prisma.shop.findUnique({
     where: {
@@ -172,20 +176,12 @@ export default function ChocolatineReview() {
   const shop = data.shop as Shop;
   const myReview = data.myReview as ChocolatineReview;
 
-  const { chocolatineName } = useChocolatineName();
+  const { capitalizedChocolatineName } = useChocolatineName();
 
   return (
     <ModalRouteContainer
-      aria-label={`${chocolatineName
-        .slice(0, 1)
-        .toLocaleUpperCase()}${chocolatineName.slice(1)} de ${
-        shop.name
-      }: ajouter un nouvel avis`}
-      title={`${chocolatineName
-        .slice(0, 1)
-        .toLocaleUpperCase()}${chocolatineName.slice(1)} de ${
-        shop.name
-      }: ajouter un nouvel avis`}
+      aria-label={`${capitalizedChocolatineName} de ${shop.name}: ajouter un nouvel avis`}
+      title={`${capitalizedChocolatineName} de ${shop.name}: ajouter un nouvel avis`}
     >
       <ModalBody className="border-t border-t-gray-300">
         <Form id="add-review-form" method="post" className="m-4">

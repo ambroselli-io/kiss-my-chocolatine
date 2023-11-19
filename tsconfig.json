@@ -3,8 +3,9 @@
     "env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/routes/chocolatine.register.jsx",
-    "app/routes/chocolatine.review.$shopId.tsx"
+    "app/routes/($product).register.jsx",
+    "app/routes/($product).$shopId.review.tsx",
+    "app/routes/($product).$shopId.awardtsx"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

@@ -29,7 +29,9 @@ export const action = async ({
   // Here we can update our database with the new invoice
   if (!params.shopId) return { ok: false, error: "Missing shop_id" };
   const user = (await getUserFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   })) as User;
   if (!user) return { ok: false, error: "user doesnt exist" };
   const form = await request.formData();
@@ -61,7 +63,7 @@ export const action = async ({
     },
   });
 
-  return redirect(`/chocolatine/${shop.id}?revalidate=true`);
+  return redirect(`/${params.product}/${shop.id}?revalidate=true`);
 };
 
 export const loader: LoaderFunction = async ({
@@ -69,7 +71,9 @@ export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
   const userId = await getUserIdFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   });
   const shop = await prisma.shop.findUnique({
     where: {

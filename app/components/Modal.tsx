@@ -58,7 +58,7 @@ const ModalRouteContainer = ({ title, ...props }: ModalRouteContainerProps) => {
   const navigate = useNavigate();
 
   function onGoBack() {
-    navigate("/..");
+    navigate("../");
   }
 
   return (
@@ -205,7 +205,7 @@ const ModalHeader = ({
           {!!title && (
             <Dialog.Title
               as="h3"
-              className="mb-0 px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6"
+              className="mb-0 mr-8 px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6"
             >
               {title}
             </Dialog.Title>

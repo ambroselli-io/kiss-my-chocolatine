@@ -85,9 +85,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }: LoaderFunctionArgs) => {
   await getUserFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/referral",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   });
   return { mapActionToShares };
 };

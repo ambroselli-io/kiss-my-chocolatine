@@ -34,6 +34,7 @@ type ActionReturnType = {
 
 export const action = async ({
   request,
+  params,
 }: ActionFunctionArgs): Promise<ActionReturnType> => {
   // Here we can update our database with the new invoice
   const form = await request.formData();
@@ -101,7 +102,7 @@ export const action = async ({
     return shop;
   });
 
-  if (shop) return redirect(`/chocolatine/${shop.id}`);
+  if (shop) return redirect(`/${params.product}/${shop.id}`);
   return json({
     ok: false,
     error: "Une erreur est survenue. Probablement un problème avec ",
@@ -110,9 +111,12 @@ export const action = async ({
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }: LoaderFunctionArgs) => {
   await getUserFromCookie(request, {
-    failureRedirect: "/chocolatine/register?redirect=/chocolatine/new-shop",
+    failureRedirect: `/${params.product}/register?redirect=${
+      new URL(request.url).pathname
+    }`,
   });
   return null;
 };

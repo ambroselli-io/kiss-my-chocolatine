@@ -8,6 +8,7 @@ import {
   Outlet,
   useLoaderData,
   useNavigate,
+  useParams,
   useSearchParams,
 } from "@remix-run/react";
 import {
@@ -33,7 +34,7 @@ import type { CustomFeature, CustomFeatureCollection } from "~/types/geojson";
 import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import { prisma } from "~/db/prisma.server";
 import { getUserIdFromCookie } from "~/services/auth.server";
-import ChocolatinesMenu from "~/components/ChocolatinesMenu";
+import BurgerMenu from "~/components/BurgerMenu";
 import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { ShopForPinOnMap } from "~/types/shop";
 
@@ -191,6 +192,9 @@ export default function App() {
     geojson_included_by_filters,
     geojson_excluded_by_filters,
   } = useLoaderData<typeof loader>();
+  const params = useParams();
+
+  console.log({ params });
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
   const [isHoveringFeature, setIsHoveringFeature] = useState(false);
   const [searchParams] = useSearchParams();
@@ -256,7 +260,9 @@ export default function App() {
                     const feature = e.features[0] as any;
                     if (!!feature.properties.id) {
                       const { id } = feature.properties;
-                      navigate(`/chocolatine/${id}?${searchParams.toString()}`);
+                      navigate(
+                        `/${params.product}/${id}?${searchParams.toString()}`,
+                      );
                     } else if (
                       feature.properties?.type === "Bakery" ||
                       feature.properties?.class === "food_and_drink"
@@ -264,7 +270,7 @@ export default function App() {
                       const name = feature.properties?.name;
                       const lngLat = e.lngLat;
                       navigate(
-                        `/chocolatine/new-shop?name=${name}&coordinates=${lngLat.lat},${lngLat.lng}`,
+                        `/${params.product}/new-shop?name=${name}&coordinates=${lngLat.lat},${lngLat.lng}`,
                       );
                     }
                   }
@@ -272,7 +278,7 @@ export default function App() {
                 onContextMenu={(e) => {
                   const lngLat = e.lngLat;
                   navigate(
-                    `/chocolatine/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
+                    `/${params.product}/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
                   );
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
@@ -421,7 +427,7 @@ export default function App() {
             </MapProvider>
           )}
         </div>
-        <ChocolatinesMenu
+        <BurgerMenu
           mapRef={mapRef}
           total={total}
           setIsOnboardingOpen={setIsOnboardingOpen}
