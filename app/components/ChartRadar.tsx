@@ -11,7 +11,6 @@ import { renderDotLabel } from "~/utils/radarData";
 // you'll often use just a few of them.
 
 const ChartRadar = ({ data }: { data: RadarData }) => {
-  console.log(data);
   return (
     <ResponsiveRadar
       data={data}
@@ -19,7 +18,7 @@ const ChartRadar = ({ data }: { data: RadarData }) => {
       indexBy="index"
       valueFormat=">-.2f"
       isInteractive={false}
-      margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+      margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
       borderColor={{ from: "color" }}
       gridLabelOffset={36}
       gridLabel={() => null}

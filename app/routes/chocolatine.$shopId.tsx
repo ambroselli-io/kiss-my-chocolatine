@@ -163,78 +163,9 @@ export default function ChocolatineAndShop() {
             "Pas d'avis encore"
           ) : (
             <>
-              <div className="flex h-96 w-full justify-center py-4">
+              <div className="flex h-60 w-full justify-center py-4">
                 <ChartRadar data={radarData} />
               </div>
-              {/* <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Y'a-t-il du beurre?</summary>
-                  <p className="text-xs italic opacity-70">
-                    Certains aiment avec BEAUCOUP, d'autres avec juste une
-                    touche. Dans tous les cas, c'est un ingrédient
-                    ESSENTIEL&nbsp;🧈
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Pas du tout"}
-                  maxCaption={"QUE du beurre"}
-                  value={shop.chocolatine_average_buttery}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Est-ce plus feuilleté ou plus brioché?</summary>
-                  <p className="text-xs italic opacity-70">
-                    L'original est feuilleté. Beurré et feuilleté. Mais il faut
-                    de tout pour faire un monde&nbsp;🤷
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Feuilleuté"}
-                  maxCaption={"Brioché"}
-                  value={shop.chocolatine_average_flaky_or_brioche}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Doré ou pâle?</summary>
-                  <p className="text-xs italic opacity-70">
-                    Le plus doré, le plus cuit.&nbsp;❤️‍🔥
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Doré"}
-                  maxCaption={"Pâle"}
-                  value={shop.chocolatine_average_golden_or_pale}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Croustillant ou mou?</summary>
-                  <p className="text-xs italic opacity-70">
-                    Une combinaison de beurre, de feuilletage et de temps de
-                    cuisson&nbsp;🤯
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Croustillant"}
-                  maxCaption={"Mou"}
-                  value={shop.chocolatine_average_crispy_or_soft}
-                />
-              </div>
-              <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Aéré ou dense?</summary>
-                  <p className="text-xs italic opacity-70">
-                    C'est une signature&nbsp;🧑‍🍳
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Aéré"}
-                  maxCaption={"Dense"}
-                  value={shop.chocolatine_average_light_or_dense}
-                />
-              </div> */}
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>Comment est la disposition du chocolat?</summary>
@@ -248,20 +179,6 @@ export default function ChocolatineAndShop() {
                   value={shop.chocolatine_average_chocolate_disposition}
                 />
               </div>
-              {/* <div className="ml-1 mt-4 flex flex-col text-sm">
-                <details className="mb-1 inline-flex">
-                  <summary>Petit ou gros?</summary>
-                  <p className="text-xs italic opacity-70">
-                    c'est surtout pour pointer les trop petits,
-                    honnêtement&nbsp;👎
-                  </p>
-                </details>
-                <BalancedRate
-                  minCaption={"Très petit"}
-                  maxCaption={"Très gros"}
-                  value={shop.chocolatine_average_big_or_small}
-                />
-              </div> */}
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
                   <summary>En fin de compte, est-il bon?</summary>
@@ -299,7 +216,6 @@ export default function ChocolatineAndShop() {
                             }).format(new Date(review.created_at))}
                           </small>
                           <p>{review.comment}</p>
-                          {/* You can also add other parts of the review here, like rating, etc. */}
                         </li>
                       );
                     })}
@@ -319,28 +235,6 @@ export default function ChocolatineAndShop() {
             </ClientOnly>
           </div>
           Ingredients non renseignés
-          {/* {!ingredients?.length
-            ? "Ingredients not listed yet"
-            : ingredients.map((ingredient) => {
-                return (
-                  <div
-                    className="ml-1 mt-2 flex text-sm"
-                    key={ingredient?.name}
-                  >
-                    <img
-                      className="mr-2 h-6 w-6"
-                      src={`/assets/${ingredient?.additionalProperties.find(
-                        (prop) => prop.name === "Icon",
-                      )?.value}`}
-                      loading="lazy"
-                    />
-                    <span>
-                      <span className="font-semibold">{ingredient.name}</span>:{" "}
-                      {ingredient.quantity}
-                    </span>
-                  </div>
-                );
-              })} */}
         </section>
         <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
           <h3 className="mb-2 mt-10 font-bold">Informations du magasin</h3>
