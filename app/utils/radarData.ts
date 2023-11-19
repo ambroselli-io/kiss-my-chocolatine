@@ -18,7 +18,6 @@ export type RadarData = Array<DotData>;
 
 export const renderDotLabel = (dotData: any): string => {
   dotData = dotData as DotData;
-  console.log(dotData);
   switch (dotData.index) {
     case "Beurré": {
       switch (dotData.value) {

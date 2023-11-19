@@ -100,12 +100,23 @@ export default function ChocolatineAndShop() {
   return (
     <div
       id="drawer"
-      className="relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden bg-white drop-shadow-lg sm:z-0 sm:h-auto sm:max-h-full sm:max-w-sm sm:flex-1 sm:basis-full"
+      className="border-t-1 relative z-20 flex h-[75vh] w-full max-w-screen-sm shrink-0 flex-col overflow-y-hidden rounded-t-3xl border-gray-300 bg-gray-900 shadow-2xl sm:z-0 sm:h-auto sm:max-h-full sm:max-w-sm sm:flex-1 sm:basis-full"
     >
-      <h2 className="mt-4 px-4 text-xl font-bold">{shop.name}</h2>
-
+      <h2 className="mt-4 bg-gray-900 px-4 text-xl font-semibold text-white">
+        {shop.name}
+      </h2>
+      {["I think so", "Yes"].includes(shop.chocolatine_homemade) && (
+        <h3 className="pb-2 pl-5 font-semibold text-app-500 opacity-90">
+          🧑‍🍳 Artisanal
+        </h3>
+      )}
+      {["I don't think so", "No"].includes(shop.chocolatine_homemade) && (
+        <h3 className="pb-2 pl-5 font-semibold text-gray-500 opacity-90">
+          🤖 Industriel
+        </h3>
+      )}
       <Link
-        className="absolute right-2 top-2 font-light text-black"
+        className="absolute right-2 top-2 font-light text-white"
         to={`/chocolatine?${searchParams.toString()}`}
       >
         <svg
@@ -124,27 +135,51 @@ export default function ChocolatineAndShop() {
           />
         </svg>
       </Link>
-      <div className="h-full w-full flex-col overflow-x-auto overflow-y-auto">
-        <section className="min-h-fit w-full shrink-0 overflow-y-auto px-4 pt-4">
-          <h3
-            className={`mt-1 ${
-              ["I don't think so", "No"].includes(shop.chocolatine_homemade)
-                ? "font-bold text-red-500"
-                : "font-semibold"
-            }`}
+      <div className="relative h-full w-full flex-col overflow-x-auto overflow-y-auto bg-white">
+        <div className="mt-2 flex flex-col items-start justify-start gap-2 px-4 text-sm font-light not-italic text-[#3c4043]">
+          <span
+            aria-details="address"
+            className="flex"
+            onClick={() => {
+              window.open(
+                `https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}&travelmode=walking`,
+                "_blank",
+              );
+            }}
           >
-            Fait maison&nbsp;: {readableHomemade[shop.chocolatine_homemade]}
-            {["I think so", "Yes"].includes(shop.chocolatine_homemade) &&
-              " 🧑‍🍳 "}
-            {["I don't think so", "No"].includes(shop.chocolatine_homemade) &&
-              " 🏭 "}
-          </h3>
-          <p className="mb-0 mt-3">
-            Prix&nbsp;:{" "}
-            {shop.chocolatine_price ? `${shop.chocolatine_price} EUR` : "N/A"}
-          </p>
-        </section>
-
+            <img src="/assets/pin-grey.svg" className="mr-3 w-5" />
+            {!!shop.streetAddress ? (
+              <>
+                {shop.streetAddress}
+                <br />
+                {shop.addresspostalCode} {shop.addressLocality}
+              </>
+            ) : (
+              <>{shop.addressLocality}</>
+            )}
+          </span>
+          <span aria-details="opening hours" className="flex text-sm">
+            <img src="/assets/clock-grey.svg" className="mr-3 w-5" />
+            {shop.openingHoursSpecification ? (
+              <Availability shop={shop} />
+            ) : (
+              "Horaires non renseignés"
+            )}
+          </span>
+          <span
+            aria-details="opening hours"
+            className="flex items-center text-sm"
+          >
+            <span className="mr-3 w-5 rounded-full text-center text-base font-medium text-gray-300">
+              €
+            </span>
+            {shop.chocolatine_price ? (
+              <>{shop.chocolatine_price.toFixed(2)}&thinsp;€</>
+            ) : (
+              "Prix non renseigné"
+            )}
+          </span>
+        </div>
         <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
           <div className="mb-2 mt-10 flex items-center justify-between">
             <h3 className="font-bold">A quoi cela ressemble-t-il?</h3>
@@ -164,7 +199,16 @@ export default function ChocolatineAndShop() {
           ) : (
             <>
               <div className="flex h-60 w-full justify-center py-4">
-                <ChartRadar data={radarData} />
+                <ChartRadar
+                  color={
+                    ["I don't think so", "No"].includes(
+                      shop.chocolatine_homemade,
+                    )
+                      ? "#9da3ae"
+                      : "#f5be41"
+                  }
+                  data={radarData}
+                />
               </div>
               <div className="ml-1 mt-4 flex flex-col text-sm">
                 <details className="mb-1 inline-flex">
@@ -176,6 +220,13 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"Superposé"}
                   maxCaption={"Sur les bords"}
+                  color={
+                    ["I don't think so", "No"].includes(
+                      shop.chocolatine_homemade,
+                    )
+                      ? "#9da3ae"
+                      : "#f5be41"
+                  }
                   value={shop.chocolatine_average_chocolate_disposition}
                 />
               </div>
@@ -190,6 +241,13 @@ export default function ChocolatineAndShop() {
                 <BalancedRate
                   minCaption={"🤢"}
                   maxCaption={"🤩"}
+                  color={
+                    ["I don't think so", "No"].includes(
+                      shop.chocolatine_homemade,
+                    )
+                      ? "#9da3ae"
+                      : "#f5be41"
+                  }
                   value={from020to22(shop.chocolatine_average_good_or_not_good)}
                 />
               </div>

@@ -10,7 +10,7 @@ import { renderDotLabel } from "~/utils/radarData";
 // website examples showcase many properties,
 // you'll often use just a few of them.
 
-const ChartRadar = ({ data }: { data: RadarData }) => {
+const ChartRadar = ({ color, data }: { color: string; data: RadarData }) => {
   return (
     <ResponsiveRadar
       data={data}
@@ -30,7 +30,7 @@ const ChartRadar = ({ data }: { data: RadarData }) => {
       dotLabel={renderDotLabel}
       dotColor={{ theme: "background" }}
       dotBorderWidth={2}
-      colors={"#FFBB01"}
+      colors={color}
       blendMode="normal"
       motionConfig="wobbly"
       fillOpacity={0.6}
