@@ -1,4 +1,4 @@
-import { captureRemixErrorBoundaryError } from "@sentry/remix";
+import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -18,28 +18,23 @@ export function meta() {
   const url = "https://chocolatine.kiss-my.app";
   return [
     {
-      title:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+      title: "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "og:title",
-      content:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+      content: "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "twitter:title",
-      content:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+      content: "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "og:description",
-      content:
-        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
+      content: "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     {
       name: "description",
-      content:
-        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
+      content: "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     { property: "og:url", content: url },
     { property: "og:image", content: `${url}/og-image-1200-630.jpg` },
@@ -52,19 +47,16 @@ export function meta() {
     { property: "og:image:height", content: "630" },
     {
       property: "og:image:alt",
-      content:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+      content: "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     {
       property: "twitter:description",
-      content:
-        "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
+      content: "Tous les pains au chocolat du monde entier 🌍 Les magasins, les ingrédients",
     },
     { property: "twitter:image", content: `${url}/og-image-1200-630.jpg` },
     {
       property: "twitter:image:alt",
-      content:
-        "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
+      content: "Kiss My Chocolatine - On veut des pains au chocolat faits maison !",
     },
     { property: "twitter:card", content: "summary" },
     { property: "twitter:creator", content: "@arnaudambro" },
@@ -158,7 +150,7 @@ export function ErrorBoundary() {
   }
 }
 
-export default function App() {
+function App() {
   const { ENV } = useLoaderData<typeof loader>();
 
   return (
@@ -191,3 +183,5 @@ export default function App() {
     </html>
   );
 }
+
+export default withSentry(App);
