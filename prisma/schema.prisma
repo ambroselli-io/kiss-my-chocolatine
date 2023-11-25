@@ -98,6 +98,12 @@ model Shop {
   chocolatine_average_chocolate_disposition Int     @default(0)
   chocolatine_average_good_or_not_good      Int     @default(0)
 
+  chocolatine_chocolate_description String?
+  chocolatine_butter_description    String?
+  chocolatine_flour_description     String?
+  chocolatine_milk_description      String?
+  chocolatine_salt_description      String?
+
   created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
   chocolatineReviews ChocolatineReview[]
   awards             Award[]
