@@ -1,20 +1,12 @@
 import React, { useRef, useState } from "react";
-import {
-  type MetaFunction,
-  type MetaArgs,
-  type LoaderFunctionArgs,
-} from "@remix-run/node";
+import { type MetaFunction, type MetaArgs, type LoaderFunctionArgs } from "@remix-run/node";
 import { NumericFormat } from "react-number-format";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { getUserFromCookie } from "~/services/auth.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db/prisma.server";
 import type { Action, UserAction } from "@prisma/client";
-import {
-  fromSecondsToHoursMinSec,
-  mapActionToShares,
-  reduceAllDBActionsToShares,
-} from "~/utils/mapActionToShares";
+import { fromSecondsToHoursMinSec, mapActionToShares, reduceAllDBActionsToShares } from "~/utils/mapActionToShares";
 import ChartStakeholders from "~/components/ChartStakeholders";
 import useChocolatineName from "~/utils/useChocolatineName";
 
@@ -33,21 +25,15 @@ export const meta: MetaFunction = ({ matches, location }: MetaArgs) => {
   return [
     ...parentMeta,
     {
-      title: email
-        ? `Kiss My Chocolatine - ${email}'s Shares`
-        : "Kiss My Chocolatine - Shareholders",
+      title: email ? `Kiss My Chocolatine - ${email}'s Shares` : "Kiss My Chocolatine - Shareholders",
     },
     {
       property: "og:title",
-      content: email
-        ? `Kiss My Chocolatine - ${email}'s Shares`
-        : "Kiss My Chocolatine - Shareholders",
+      content: email ? `Kiss My Chocolatine - ${email}'s Shares` : "Kiss My Chocolatine - Shareholders",
     },
     {
       property: "twitter:title",
-      content: email
-        ? `Kiss My Chocolatine - ${email}'s Shares`
-        : "Kiss My Chocolatine - Shareholders",
+      content: email ? `Kiss My Chocolatine - ${email}'s Shares` : "Kiss My Chocolatine - Shareholders",
     },
     { property: "twitter:image", content: `${url}/shareholders_og.png` },
     {
@@ -72,37 +58,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const user = (await getUserFromCookie(request, { optional: true })) as User;
 
   const userActions = await prisma.userAction.findMany();
-  const usersEmails = await prisma.$queryRaw<
-    Array<UserAction>
-  >`SELECT DISTINCT user_email FROM "UserAction"`;
-
-  console.log(
-    JSON.stringify(
-      reduceAllDBActionsToShares(
-        userActions,
-        (Object.keys(mapActionToShares) as Array<Action>).filter(
-          (action) =>
-            !["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action),
-        ),
-        true,
-      ),
-      null,
-      2,
-    ),
-  );
+  const usersEmails = await prisma.$queryRaw<Array<UserAction>>`SELECT DISTINCT user_email FROM "UserAction"`;
 
   return {
     user,
     usersEmails: usersEmails.map((user) => user.user_email),
     builders: reduceAllDBActionsToShares(userActions, ["BUILDER_HOUR_AMOUNT"]),
-    investors: reduceAllDBActionsToShares(userActions, [
-      "INVESTOR_EURO_AMOUNT",
-    ]),
+    investors: reduceAllDBActionsToShares(userActions, ["INVESTOR_EURO_AMOUNT"]),
     users: reduceAllDBActionsToShares(
       userActions,
       (Object.keys(mapActionToShares) as Array<Action>).filter(
-        (action) =>
-          !["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action),
+        (action) => !["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action),
       ),
       true,
     ),
@@ -110,50 +76,32 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function NewShareholderAction() {
-  const { builders, investors, users, usersEmails, user } =
-    useLoaderData<typeof loader>();
+  const { builders, investors, users, usersEmails, user } = useLoaderData<typeof loader>();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [email, setEmail] = useState(
-    searchParams.get("email") ?? user?.email ?? "",
-  );
+  const [email, setEmail] = useState(searchParams.get("email") ?? user?.email ?? "");
 
-  const [benefits, setBenefits] = useState("1000000");
+  const [benefitPerShop, setBenefitPerShop] = useState("200");
+  const [numberOfShops, setNumberOfShops] = useState("10000");
+  const [benefits, setBenefits] = useState(`${200 * 10000}`);
 
-  const userSharholder = email
-    ? users[0].find((ua) => ua.user_email === email)
-    : null;
-  const investor = email
-    ? investors[0].find((ua) => ua.user_email === email)
-    : null;
-  const builder = email
-    ? builders[0].find((ua) => ua.user_email === email)
-    : null;
+  const userSharholder = email ? users[0].find((ua) => ua.user_email === email) : null;
+  const investor = email ? investors[0].find((ua) => ua.user_email === email) : null;
+  const builder = email ? builders[0].find((ua) => ua.user_email === email) : null;
 
   const userBenefit = userSharholder
-    ? Math.round(
-        (Number(benefits) / 3) * (userSharholder?.number_of_actions / users[1]),
-      )
+    ? Math.round((Number(benefits) / 3) * (userSharholder?.number_of_actions / users[1]))
     : 0;
   const investorBenefit = investor
-    ? Math.round(
-        (Number(benefits) / 3) * (investor?.number_of_actions / investors[1]),
-      )
+    ? Math.round((Number(benefits) / 3) * (investor?.number_of_actions / investors[1]))
     : 0;
-  const builderBenefit = builder
-    ? Math.round(
-        (Number(benefits) / 3) * (builder?.number_of_actions / builders[1]),
-      )
-    : 0;
+  const builderBenefit = builder ? Math.round((Number(benefits) / 3) * (builder?.number_of_actions / builders[1])) : 0;
 
   const { newAppName } = useChocolatineName();
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div
-      ref={containerRef}
-      className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50"
-    >
+    <div ref={containerRef} className="flex h-full w-full flex-col gap-4 overflow-y-auto bg-gray-50">
       <div className="flex flex-col justify-between gap-2 bg-app-500 px-6 py-10 sm:flex-row">
         <h1 className="text-4xl font-semibold">{newAppName}'s Shareholders</h1>
         <Link className="underline sm:ml-auto" to="/shareholders-new-action">
@@ -163,17 +111,13 @@ export default function NewShareholderAction() {
           Go back home
         </Link>
       </div>
-      <details
-        open
-        className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4"
-      >
+      <details open className="mx-auto w-full max-w-prose border-b border-b-gray-300 px-8 pb-4">
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">My Shares</h2>
         </summary>
         <p className="mb-4">
-          We can simulate your shares based on your actions on the platform.
-          Write your email below, and a potential company's benefit, and see how
-          much you get in your pocket.
+          We can simulate your shares based on your actions on the platform. Write your email below, and a potential
+          company's benefit, and see how much you get in your pocket.
         </p>
         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
           <div className="grid grid-cols-1 gap-4 text-left md:grid-cols-2">
@@ -208,9 +152,51 @@ export default function NewShareholderAction() {
                 className="block w-full rounded-md border-0 bg-transparent p-2.5 text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
                 onBlur={(e) => e.currentTarget.blur()}
               />
-              <label htmlFor="company_benefit">
-                Company's hypothetical benefit
-              </label>
+              <details>
+                <summary>
+                  <label htmlFor="company_benefit">Company's hypothetical benefit</label>
+                </summary>
+                <p>
+                  There are around 35.000 bakeries in France. Imagine we have a value proposition for them, such as a
+                  label "artisanal" or juset even the right to be on the map.
+                </p>
+                <ul className="list-disc">
+                  <li>
+                    How much do you think they would pay for it?{" "}
+                    <NumericFormat
+                      value={benefitPerShop}
+                      onValueChange={(values) => {
+                        setBenefitPerShop(values.value);
+                        setBenefits(`${Number(values.value) * Number(numberOfShops)}`);
+                      }}
+                      thousandsGroupStyle="thousand"
+                      thousandSeparator=" "
+                      prefix={"€ "}
+                      id="per_shop_benefit"
+                      required
+                      className="inline-block rounded-md border-0 bg-transparent text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                      onBlur={(e) => e.currentTarget.blur()}
+                    />{" "}
+                  </li>
+                  <li>
+                    And How many bakeries do you think would pay for it?{" "}
+                    <NumericFormat
+                      value={numberOfShops}
+                      onValueChange={(values) => {
+                        setNumberOfShops(values.value);
+                        setBenefits(`${Number(values.value) * Number(benefitPerShop)}`);
+                      }}
+                      thousandsGroupStyle="thousand"
+                      thousandSeparator=" "
+                      id="number_of_shops"
+                      required
+                      className="inline-block rounded-md border-0 bg-transparent text-black outline-app-500 ring-1 ring-inset ring-gray-300 transition-all placeholder:opacity-30 focus:border-app-500 focus:ring-app-500"
+                      onBlur={(e) => e.currentTarget.blur()}
+                    />
+                    <span className="ml-2 opacity-50">{Math.round((Number(numberOfShops) / 35000) * 100)}%</span>
+                  </li>
+                </ul>
+              </details>
             </div>
           </div>
           {!!email && (
@@ -221,8 +207,7 @@ export default function NewShareholderAction() {
                     User's actions: <b>{userSharholder?.number_of_actions}</b>
                   </div>
                   <div className="flex flex-col items-center justify-center">
-                    Time spent:{" "}
-                    <b>{fromSecondsToHoursMinSec(userSharholder.time_spent)}</b>
+                    Time spent: <b>{fromSecondsToHoursMinSec(userSharholder.time_spent)}</b>
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     Benefit:{" "}
@@ -243,8 +228,7 @@ export default function NewShareholderAction() {
                     Builder's actions: <b>{builder?.number_of_actions}</b>
                   </div>
                   <div className="flex flex-col items-center justify-center">
-                    Time spent:{" "}
-                    <b>{fromSecondsToHoursMinSec(builder.time_spent)}</b>
+                    Time spent: <b>{fromSecondsToHoursMinSec(builder.time_spent)}</b>
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     Benefit:{" "}
@@ -314,8 +298,7 @@ export default function NewShareholderAction() {
           <h2 className="inline-flex text-2xl">Stakeholders</h2>
         </summary>
         <p>
-          The <b>dividend of the company</b> will be split equally between three
-          stakeholders:
+          The <b>dividend of the company</b> will be split equally between three stakeholders:
         </p>
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
@@ -367,10 +350,9 @@ export default function NewShareholderAction() {
           />
         </div>
         <p>
-          Each stakeholder doesn't have the same rights, for example: builders
-          have a veto right on what to build. But each stakeholder group has the
-          same amount of dividend. Within each group, the dividend is split
-          according to the number of shares of each individual.
+          Each stakeholder doesn't have the same rights, for example: builders have a veto right on what to build. But
+          each stakeholder group has the same amount of dividend. Within each group, the dividend is split according to
+          the number of shares of each individual.
         </p>
       </details>
       <details
@@ -379,14 +361,10 @@ export default function NewShareholderAction() {
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Users ({users[1]} shares as of{" "}
-            {new Date().toLocaleDateString("fr-FR")})
+            Users ({users[1]} shares as of {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
-        <p>
-          There is an unlimited amount of Users shares. The more actions done,
-          the more existing shares.
-        </p>
+        <p>There is an unlimited amount of Users shares. The more actions done, the more existing shares.</p>
         <div className="flex h-96 w-full justify-center py-4">
           <ChartStakeholders
             enableArcLinkLabels={false}
@@ -403,24 +381,17 @@ export default function NewShareholderAction() {
                 color:
                   email === ua.user_email
                     ? "#000"
-                    : `hsl(330, 70%,  ${
-                        25 +
-                        50 -
-                        (ua.number_of_actions / (users[1] as number)) * 50
-                      }%) `,
+                    : `hsl(330, 70%,  ${25 + 50 - (ua.number_of_actions / (users[1] as number)) * 50}%) `,
               };
             })}
           />
         </div>
         <p>
-          The <b>shares of the Users</b> are split equally between all the users
-          as per:
+          The <b>shares of the Users</b> are split equally between all the users as per:
         </p>
         <ul className="list-inside list-disc">
           {Object.entries(mapActionToShares).map(([action, value]) => {
-            if (
-              ["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action)
-            ) {
+            if (["INVESTOR_EURO_AMOUNT", "BUILDER_HOUR_AMOUNT"].includes(action)) {
               return null;
             }
             return (
@@ -437,17 +408,13 @@ export default function NewShareholderAction() {
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Builders ({builders[1]} shares as of{" "}
-            {new Date().toLocaleDateString("fr-FR")})
+            Builders ({builders[1]} shares as of {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
+        <p>There is an unlimited amount of Builders shares. The more hours worked, the more existing shares.</p>
         <p>
-          There is an unlimited amount of Builders shares. The more hours
-          worked, the more existing shares.
-        </p>
-        <p>
-          The <b>shares of the Builders</b> are split equally between all the
-          builders as per: one hour of work is one share.
+          The <b>shares of the Builders</b> are split equally between all the builders as per: one hour of work is one
+          share.
         </p>
         <p>A Builder can do: code, design, marketing, sales, support, etc.</p>
         <p>A Builder's share last for 2 years.</p>
@@ -467,11 +434,7 @@ export default function NewShareholderAction() {
                 color:
                   email === ua.user_email
                     ? "#000"
-                    : `hsl(44, 100%, ${
-                        50 +
-                        50 -
-                        (ua.number_of_actions / (builders[1] as number)) * 50
-                      }%) `,
+                    : `hsl(44, 100%, ${50 + 50 - (ua.number_of_actions / (builders[1] as number)) * 50}%) `,
               };
             })}
           />
@@ -483,18 +446,13 @@ export default function NewShareholderAction() {
       >
         <summary className="mb-4 pl-4">
           <h2 className="inline-flex text-2xl">
-            Investors ({investors[1]} shares as of{" "}
-            {new Date().toLocaleDateString("fr-FR")})
+            Investors ({investors[1]} shares as of {new Date().toLocaleDateString("fr-FR")})
           </h2>
         </summary>
         <h2 className="inline-flex text-2xl"></h2>
+        <p>There is an unlimited amount of Investors shares. The more euros invested, the more existing shares.</p>
         <p>
-          There is an unlimited amount of Investors shares. The more euros
-          invested, the more existing shares.
-        </p>
-        <p>
-          The <b>shares of the Investors</b> are split equally between all the
-          investors as per
+          The <b>shares of the Investors</b> are split equally between all the investors as per
         </p>
         <ul className="list-inside list-disc">
           <li>The first 10.000€ invested are worth 100 shares per Euro</li>
@@ -517,11 +475,7 @@ export default function NewShareholderAction() {
                 color:
                   email === ua.user_email
                     ? "#000"
-                    : `hsl(201, 70%, ${
-                        50 +
-                        50 -
-                        (ua.number_of_actions / (investors[1] as number)) * 50
-                      }%) `,
+                    : `hsl(201, 70%, ${50 + 50 - (ua.number_of_actions / (investors[1] as number)) * 50}%) `,
               };
             })}
           />
