@@ -103,6 +103,24 @@ model Shop {
   chocolatine_flour_description     String?
   chocolatine_milk_description      String?
   chocolatine_salt_description      String?
+  chocolatine_egg_description       String?
+
+  croissant_homemade                 String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  croissant_price                    Float?
+  croissant_has_been_reviewed_once   Boolean @default(false)
+  croissant_average_buttery          Int     @default(0)
+  croissant_average_light_or_dense   Int     @default(0)
+  croissant_average_flaky_or_brioche Int     @default(0)
+  croissant_average_golden_or_pale   Int     @default(0)
+  croissant_average_crispy_or_soft   Int     @default(0)
+  croissant_average_big_or_small     Int     @default(0)
+  croissant_average_good_or_not_good Int     @default(0)
+
+  croissant_butter_description String?
+  croissant_flour_description  String?
+  croissant_milk_description   String?
+  croissant_salt_description   String?
+  croissant_egg_description    String?
 
   created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
   chocolatineReviews ChocolatineReview[]
