@@ -1,0 +1,17 @@
+-- AlterTable
+ALTER TABLE "Shop" ADD COLUMN     "chocolatine_egg_description" TEXT,
+ADD COLUMN     "croissant_average_big_or_small" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_buttery" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_crispy_or_soft" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_flaky_or_brioche" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_golden_or_pale" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_good_or_not_good" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_average_light_or_dense" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "croissant_butter_description" TEXT,
+ADD COLUMN     "croissant_egg_description" TEXT,
+ADD COLUMN     "croissant_flour_description" TEXT,
+ADD COLUMN     "croissant_has_been_reviewed_once" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "croissant_homemade" TEXT NOT NULL DEFAULT 'I don''t know, nobody tried yet',
+ADD COLUMN     "croissant_milk_description" TEXT,
+ADD COLUMN     "croissant_price" DOUBLE PRECISION,
+ADD COLUMN     "croissant_salt_description" TEXT;
