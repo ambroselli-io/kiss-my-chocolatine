@@ -32,3 +32,17 @@ details.question > summary::after {
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
   @apply mb-16 mr-6 rounded-full shadow-none drop-shadow;
 }
+
+.buttons-folded {
+  grid-template-columns: 0fr 0fr 0fr 1fr;
+  grid-template-rows: 1fr 0fr 0fr 0fr;
+}
+
+.buttons-expanded {
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+  grid-template-rows: 0.5fr 1fr 1fr 0.5fr;
+}
+
+.mapboxgl-ctrl-bottom-left {
+  @apply left-20 z-0;
+}

@@ -13,6 +13,7 @@ import {
 } from "@remix-run/react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "~/styles/tailwind.css";
+import Cookies from "js-cookie";
 
 export function meta() {
   const url = "https://chocolatine.kiss-my.app";
@@ -116,9 +117,22 @@ declare global {
 }
 
 export const loader = async () => {
+  const chocolatineName = Cookies.get("chocolatine-name") || "chocolatine";
+  const chocolatinesName = Cookies.get("chocolatines-name") || "chocolatines";
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const capitalizedChocolatineName = chocolatineName.split(" ").map(capitalize).join("\u00A0");
+  // const newAppName = `Kiss\u00A0My\u00A0${"chocolatine"
+  const newAppName = `Kiss\u00A0My\u00A0${capitalizedChocolatineName}`;
+
   return {
     ENV: {
       MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
+    },
+    custom: {
+      chocolatineName,
+      chocolatinesName,
+      capitalizedChocolatineName,
+      newAppName,
     },
   };
 };
@@ -151,7 +165,7 @@ export function ErrorBoundary() {
 }
 
 function App() {
-  const { ENV } = useLoaderData<typeof loader>();
+  const { ENV, custom } = useLoaderData<typeof loader>();
 
   return (
     <html lang="en" className="h-full w-full">
@@ -164,7 +178,7 @@ function App() {
         <Links />
       </head>
       <body className="relative h-full w-full overflow-hidden">
-        <Outlet />
+        <Outlet context={custom} />
 
         <ScrollRestoration />
         <LiveReload />

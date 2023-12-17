@@ -1,41 +1,19 @@
-import type {
-  MetaFunction,
-  MetaArgs,
-  LoaderFunctionArgs,
-} from "@remix-run/node";
+import { type MetaFunction, type MetaArgs, type LoaderFunctionArgs, redirect } from "@remix-run/node";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "@remix-run/react";
-import {
-  Layer,
-  Map,
-  MapProvider,
-  NavigationControl,
-  Source,
-  GeolocateControl,
-} from "react-map-gl";
+import { Outlet, useLoaderData, useNavigate, useParams, useSearchParams } from "@remix-run/react";
+import { Layer, Map, MapProvider, NavigationControl, Source, GeolocateControl } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
-import type { Shop } from "@prisma/client";
-import type { SchemaOrgShop } from "../types/schemaOrgShop";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MapImage from "~/components/MapImage";
+import SwitchProduct from "~/components/SwitchProduct";
 import Onboarding from "~/components/Onboarding";
-import {
-  isShopIncludedBySimpleFilters,
-  availableFilters,
-} from "~/utils/isIncludedBySimpleFilters.server";
+import { isShopIncludedBySimpleFilters, availableFilters } from "~/utils/isIncludedBySimpleFilters.server";
 import type { CustomFeature, CustomFeatureCollection } from "~/types/geojson";
 import type { ChocolatineFiltersInterface } from "~/types/chocolatineCriterias";
 import { prisma } from "~/db/prisma.server";
 import { getUserIdFromCookie } from "~/services/auth.server";
 import BurgerMenu from "~/components/BurgerMenu";
-import { shopFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { ShopForPinOnMap } from "~/types/shop";
 
 type loaderData = {
@@ -71,17 +49,57 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     zoom: 4,
   };
 
+  const product = (params.product ?? "chocolatine") as "chocolatine" | "croissant" | "galette" | "baguette";
+  if (!["chocolatine", "croissant", "galette", "baguette"].includes(product)) {
+    return redirect(`/chocolatine`);
+  }
+
   let now = Date.now();
 
-  const shops = await prisma.shop.findMany({
-    select: {
-      id: true,
-      longitude: true,
-      latitude: true,
-      chocolatine_has_been_reviewed_once: true,
-      chocolatine_homemade: true,
-    },
-  });
+  let shops: Array<{
+    id: string;
+    longitude: number;
+    latitude: number;
+    has_been_reviewed_once: boolean;
+    homemade: string;
+  }> = [];
+  switch (product) {
+    default:
+    case "chocolatine":
+      shops = (
+        await prisma.shop.findMany({
+          select: {
+            id: true,
+            longitude: true,
+            latitude: true,
+            chocolatine_has_been_reviewed_once: true,
+            chocolatine_homemade: true,
+          },
+        })
+      ).map((shop) => ({
+        ...shop,
+        has_been_reviewed_once: shop.chocolatine_has_been_reviewed_once,
+        homemade: shop.chocolatine_homemade,
+      }));
+      break;
+    case "croissant":
+      shops = (
+        await prisma.shop.findMany({
+          select: {
+            id: true,
+            longitude: true,
+            latitude: true,
+            croissant_has_been_reviewed_once: true,
+            croissant_homemade: true,
+          },
+        })
+      ).map((shop) => ({
+        ...shop,
+        has_been_reviewed_once: shop.croissant_has_been_reviewed_once,
+        homemade: shop.croissant_homemade,
+      }));
+      break;
+  }
 
   console.log("now 1", Date.now() - now, "ms");
   now = Date.now();
@@ -135,17 +153,11 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
       properties: {
         id: shop.id,
         is_active_shop: isActiveShop ? 1 : 0,
-        is_home_made: isHomeMade[shop?.chocolatine_homemade],
-        is_industrial: isIndus[shop?.chocolatine_homemade],
+        is_home_made: isHomeMade[shop?.homemade],
+        is_industrial: isIndus[shop?.homemade],
         is_included_by_filters: isIncludedByFilters ? 1 : 0,
-        sort_key: isActiveShop
-          ? 4
-          : isIncludedByFilters
-          ? 3
-          : shop?.chocolatine_has_been_reviewed_once
-          ? 2
-          : 1,
-        has_review: !!shop?.chocolatine_has_been_reviewed_once,
+        sort_key: isActiveShop ? 4 : isIncludedByFilters ? 3 : shop?.has_been_reviewed_once ? 2 : 1,
+        has_review: !!shop?.has_been_reviewed_once,
       },
     };
     if (isIncludedByFilters) featuresIncludedByFilters.push(feature);
@@ -185,13 +197,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 // https://www.iletaitunefoislapatisserie.com/2013/04/pains-au-chocolat.html
 export default function App() {
-  const {
-    user_id,
-    initialViewState,
-    total,
-    geojson_included_by_filters,
-    geojson_excluded_by_filters,
-  } = useLoaderData<typeof loader>();
+  const { user_id, initialViewState, total, geojson_included_by_filters, geojson_excluded_by_filters } =
+    useLoaderData<typeof loader>();
   const params = useParams();
 
   const [mapboxAccessToken, setMapboxAccessToken] = useState("");
@@ -228,10 +235,7 @@ export default function App() {
     <>
       <div className="relative flex h-full w-full flex-col justify-between">
         <div
-          className={[
-            "absolute inset-0 border-2 border-app-500",
-            isHoveringFeature ? "[&_canvas]:cursor-pointer" : "",
-          ]
+          className={["absolute inset-0 border-2 border-app-500", isHoveringFeature ? "[&_canvas]:cursor-pointer" : ""]
             .filter(Boolean)
             .join(" ")}
         >
@@ -244,13 +248,7 @@ export default function App() {
                 reuseMaps
                 // locale={{ fr }}
                 id="maproot"
-                interactiveLayerIds={[
-                  "shops_include",
-                  "shops_exclude",
-                  "poi-label",
-                  "symbol",
-                  "city-label",
-                ]}
+                interactiveLayerIds={["shops_include", "shops_exclude", "poi-label", "symbol", "city-label"]}
                 onMouseMove={(e) => {
                   setIsHoveringFeature(!!e.features?.length);
                 }}
@@ -259,26 +257,20 @@ export default function App() {
                     const feature = e.features[0] as any;
                     if (!!feature.properties.id) {
                       const { id } = feature.properties;
-                      navigate(
-                        `/${params.product}/${id}?${searchParams.toString()}`,
-                      );
+                      navigate(`/${params.product}/${id}?${searchParams.toString()}`);
                     } else if (
                       feature.properties?.type === "Bakery" ||
                       feature.properties?.class === "food_and_drink"
                     ) {
                       const name = feature.properties?.name;
                       const lngLat = e.lngLat;
-                      navigate(
-                        `/${params.product}/new-shop?name=${name}&coordinates=${lngLat.lat},${lngLat.lng}`,
-                      );
+                      navigate(`/${params.product}/new-shop?name=${name}&coordinates=${lngLat.lat},${lngLat.lng}`);
                     }
                   }
                 }}
                 onContextMenu={(e) => {
                   const lngLat = e.lngLat;
-                  navigate(
-                    `/${params.product}/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`,
-                  );
+                  navigate(`/${params.product}/new-shop?coordinates=${lngLat.lat},${lngLat.lng}`);
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
               >
@@ -300,15 +292,7 @@ export default function App() {
                         "circle-color": "#FFBB01",
                         "circle-stroke-width": 2,
                         "circle-stroke-color": "#000000",
-                        "circle-radius": [
-                          "step",
-                          ["get", "point_count"],
-                          20,
-                          100,
-                          30,
-                          750,
-                          40,
-                        ],
+                        "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
                       }}
                     />
                     <Layer /* Layer for the cluster count labels */
@@ -318,10 +302,7 @@ export default function App() {
                       filter={["has", "point_count"]}
                       layout={{
                         "text-field": "{point_count_abbreviated}",
-                        "text-font": [
-                          "DIN Offc Pro Medium",
-                          "Arial Unicode MS Bold",
-                        ],
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
                         "text-size": 12,
                       }}
                     />
@@ -361,11 +342,7 @@ export default function App() {
                       }}
                     />
                   </Source>
-                  <Source
-                    id="shops_exclude"
-                    type="geojson"
-                    data={geojson_excluded_by_filters}
-                  >
+                  <Source id="shops_exclude" type="geojson" data={geojson_excluded_by_filters}>
                     <Layer
                       id="shops_exclude"
                       type="symbol"
@@ -407,11 +384,7 @@ export default function App() {
                     />
                   </Source>
                 </MapImage>
-                <NavigationControl
-                  showCompass={false}
-                  showZoom={false}
-                  visualizePitch={true}
-                />
+                <NavigationControl showCompass={false} showZoom={false} visualizePitch={true} />
                 <GeolocateControl
                   positionOptions={{ enableHighAccuracy: true }}
                   position="bottom-right"
@@ -433,6 +406,7 @@ export default function App() {
           user_id={user_id}
           geojson_included_by_filters={geojson_included_by_filters}
         />
+        <SwitchProduct />
 
         <Outlet />
       </div>
@@ -447,21 +421,16 @@ export default function App() {
   );
 }
 
-export const shouldRevalidate: ShouldRevalidateFunction = ({
-  currentParams,
-  nextParams,
-  currentUrl,
-  nextUrl,
-}) => {
+export const shouldRevalidate: ShouldRevalidateFunction = ({ currentParams, nextParams, currentUrl, nextUrl }) => {
   if (!!currentParams.shopId && !nextParams.shopId) {
+    return true;
+  }
+  if (currentParams.product !== nextParams.product) {
     return true;
   }
   // if searchparms size differ, then we need to revalidate
 
-  if (
-    Array.from(currentUrl.searchParams).length !==
-    Array.from(nextUrl.searchParams).length
-  ) {
+  if (Array.from(currentUrl.searchParams).length !== Array.from(nextUrl.searchParams).length) {
     return true;
   }
   return false;

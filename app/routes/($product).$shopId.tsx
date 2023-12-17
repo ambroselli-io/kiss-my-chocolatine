@@ -12,7 +12,7 @@ import useChocolatineName from "~/utils/useChocolatineName";
 import { chocolatineFromRowToSchemaOrg } from "~/utils/schemaOrg";
 import type { SchemaOrgChocolatine } from "~/types/schemaOrgChocolatine";
 import { readableAwards, readablePositions } from "~/utils/awards";
-import { readableHomemade } from "~/utils/homemade";
+import aroundtheworld from "~/data/around-the-world.json";
 import ChartRadar from "~/components/ChartRadar";
 import { fromShopToRadarData } from "~/utils/radarData";
 import type { RadarData } from "~/utils/radarData";
@@ -88,14 +88,10 @@ export default function ChocolatineAndShop() {
   const data = useLoaderData<typeof loader>();
   const { detailedReviews, awards, radarData, ingredients } = data;
   const shop = data.shop as unknown as Shop;
-  const fromCookies = useChocolatineName();
-  const [chocolatineName, setChocolatineName] = useState("pain au chocolat");
-  const [searchParams] = useSearchParams();
+  const { chocolatineName } = useChocolatineName();
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
-  useEffect(() => {
-    setChocolatineName(fromCookies.chocolatineName);
-  }, []);
-
+  const gender = aroundtheworld.find((name) => name.singular === chocolatineName)?.gender ?? "m";
   return (
     <>
       <div
@@ -165,7 +161,9 @@ export default function ChocolatineAndShop() {
           </div>
           <section className="w-full shrink-0 gap-y-4 overflow-y-auto px-4 pb-6">
             <div className="mb-2 mt-10 flex items-center justify-between">
-              <h3 className="font-bold">A quoi cela ressemble-t-il?</h3>
+              <h3 className="font-bold">
+                A quoi ressemble {gender === "m" ? "le" : "la"} {chocolatineName}?
+              </h3>
               <ClientOnly>
                 {() => (
                   <Link to={`/${params.product}/${shop.id}/review`} className="ml-auto text-xs">
@@ -373,6 +371,15 @@ export default function ChocolatineAndShop() {
             <Link to={`/${params.product}/${shop.id}/award`} className="my-2 block text-xs underline">
               🥇 Ajoutez une récompense
             </Link>
+            <button
+              onClick={() => {
+                searchParams.set("switch-env", "true");
+                setSearchParams(searchParams);
+              }}
+              className="my-2 block text-xs underline"
+            >
+              🥐 Voir d'autres produits
+            </button>
             <ClientOnly>
               {() => (
                 <a href={newFeedback(shop.name)} className="my-2 ml-auto block text-xs">
