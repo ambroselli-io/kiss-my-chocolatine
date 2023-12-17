@@ -2,86 +2,103 @@
   {
     "flag": "🇫🇷",
     "singular": "pain au chocolat",
-    "plural": "pains au chocolat"
+    "plural": "pains au chocolat",
+    "gender": "m"
   },
   {
     "flag": "🇫🇷",
     "singular": "chocolatine",
-    "plural": "chocolatines"
+    "plural": "chocolatines",
+    "gender": "f"
   },
   {
     "flag": "🇫🇷",
     "singular": "petit pain",
-    "plural": "petits pains"
+    "plural": "petits pains",
+    "gender": "m"
   },
   {
     "flag": "🇫🇷",
     "singular": "petit pain au chocolat",
-    "plural": "petits pains au chocolat"
+    "plural": "petits pains au chocolat",
+    "gender": "m"
   },
   {
     "flag": "🇧🇪",
     "singular": "couque au chocolat",
-    "plural": "couques au chocolat"
+    "plural": "couques au chocolat",
+    "gender": "m"
   },
   {
     "flag": "🇬🇧",
     "singular": "pain auw chowcowlat",
-    "plural": "pains auw chowcowlat"
+    "plural": "pains auw chowcowlat",
+    "gender": "m"
   },
   {
     "flag": "🇬🇧",
     "singular": "chocolate croissant",
-    "plural": "chocolate croissants"
+    "plural": "chocolate croissants",
+    "gender": "m"
   },
   {
     "flag": "🇳🇱",
     "singular": "chocolade broodje",
-    "plural": "chocolade broodjes"
+    "plural": "chocolade broodjes",
+    "gender": "m"
   },
   {
     "flag": "🇩🇰",
     "singular": "chokoladebolle",
-    "plural": "chokoladebolle"
+    "plural": "chokoladebolle",
+    "gender": "m"
   },
   {
     "flag": "🇵🇹",
     "singular": "pão de chocolate",
-    "plural": "pães de chocolate"
+    "plural": "pães de chocolate",
+    "gender": "m"
   },
   {
     "flag": "🇷🇺",
     "singular": "cлойка с шоколадом",
-    "plural": "cлойки с шоколадом"
+    "plural": "cлойки с шоколадом",
+    "gender": "m"
   },
   {
     "flag": "🇩🇪",
     "singular": "Schokoladencroissant",
-    "plural": "Schokoladencroissants"
+    "plural": "Schokoladencroissants",
+    "gender": "m"
   },
   {
     "flag": "🇮🇹",
     "singular": "cornetto al cioccolato",
-    "plural": "cornetti al cioccolato"
+    "plural": "cornetti al cioccolato",
+    "gender": "m"
   },
   {
     "flag": "🇪🇸",
     "singular": "napolitana de chocolate",
-    "plural": "napolitanas de chocolate"
+    "plural": "napolitanas de chocolate",
+    "gender": "m"
   },
   {
     "flag": "🇯🇵",
     "singular": "choco pan",
-    "plural": "choco pan"
+    "plural": "choco pan",
+    "gender": "m"
   },
   {
     "flag": "🇬🇧",
     "singular": "chocolate pastry",
-    "plural": "chocolate pastries"
+    "plural": "chocolate pastries",
+    "gender": "f"
   },
   {
     "flag": "🇬🇧",
     "singular": "chocolate twist",
-    "plural": "chocolate twists"
+    "plural": "chocolate twists",
+    "gender": "m"
   }
 ]

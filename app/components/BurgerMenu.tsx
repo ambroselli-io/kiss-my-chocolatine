@@ -35,26 +35,17 @@ export default function BurgerMenu({
         <>
           <div className="relative flex max-h-[85vh] shrink-0 cursor-pointer flex-col bg-white drop-shadow-sm ">
             <div className="flex items-center justify-between px-4 py-2 ">
-              <h1
-                className="max-w-lg cursor-pointer md:max-w-none"
-                onClick={() => setIsOnboardingOpen(true)}
-              >
-                Les <b>{chocolatinesName}</b> du monde entier 🌍{" "}
+              <h1 className="max-w-lg cursor-pointer md:max-w-none" onClick={() => setIsOnboardingOpen(true)}>
+                Les boulangeries du monde entier 🌍{" "}
                 <small className="opacity-30">
-                  Bon, il y en {total} pour le moment, mais le monde entier
-                  arrive pas après pas 🤜
+                  Bon, il y en {total} pour le moment, mais le monde entier arrive pas après pas 🤜
                 </small>
               </h1>
-              <ButtonArrowMenu
-                onClick={() => setShowMore(!showMore)}
-                isActive={showMore}
-              />
+              <ButtonArrowMenu onClick={() => setShowMore(!showMore)} isActive={showMore} />
             </div>
             {showMore && (
               <div className="flex flex-col overflow-y-auto border-t border-t-gray-200">
-                <ChocolatinesFilters
-                  geojson_included_by_filters={geojson_included_by_filters}
-                />
+                <ChocolatinesFilters geojson_included_by_filters={geojson_included_by_filters} />
                 <Link
                   to={`/${params.product}/referral`}
                   className="inline-flex items-center gap-x-2 border-b border-b-[#FFBB01] border-opacity-50 px-4 py-2 font-bold"
@@ -62,8 +53,7 @@ export default function BurgerMenu({
                     setShowMore(false);
                   }}
                 >
-                  Invitez vos amis et gagnez{" "}
-                  {mapActionToShares.USER_REFERRAL_CREATER} actions
+                  Invitez vos amis et gagnez {mapActionToShares.USER_REFERRAL_CREATER} actions
                 </Link>
                 <Link
                   to="/shareholders"
