@@ -27,6 +27,9 @@ model User {
   referral_id            String              @unique
   shops                  Shop[]
   chocolatineReviews     ChocolatineReview[]
+  croissantReviews       CroissantReview[]
+  galetteReviews         GaletteReview[]
+  baguetteReviews        BaguetteReview[]
   userOs                 UserOs[]
 }
 
@@ -116,14 +119,47 @@ model Shop {
   croissant_average_big_or_small     Int     @default(0)
   croissant_average_good_or_not_good Int     @default(0)
 
-  croissant_butter_description String?
-  croissant_flour_description  String?
-  croissant_milk_description   String?
-  croissant_salt_description   String?
-  croissant_egg_description    String?
+  // croissant_butter_description String?
+  // croissant_flour_description  String?
+  // croissant_milk_description   String?
+  // croissant_salt_description   String?
+  // croissant_egg_description    String?
+
+  galette_homemade                  String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  galette_price                     Float?
+  galette_has_been_reviewed_once    Boolean @default(false)
+  galette_average_dry_or_moist      Int     @default(0)
+  galette_average_golden_or_pale    Int     @default(0)
+  galette_average_creamy_or_flaky   Int     @default(0)
+  galette_average_rayage_creativity Int     @default(0)
+  galette_average_good_or_not_good  Int     @default(0)
+
+  // galette_butter_description String?
+  // galette_flour_description  String?
+  // galette_milk_description   String?
+  // galette_salt_description   String?
+  // galette_egg_description    String?
+
+  baguette_homemade                 String  @default("I don't know, nobody tried yet") // I don't know, nobody tried yet, I think so, I don't think so, Yes, No
+  baguette_price                    Float?
+  baguette_has_been_reviewed_once   Boolean @default(false)
+  baguette_average_dry_or_moist     Int     @default(0)
+  baguette_average_light_or_dense   Int     @default(0)
+  baguette_average_crispy_or_soft   Int     @default(0)
+  baguette_average_golden_or_pale   Int     @default(0)
+  baguette_average_good_or_not_good Int     @default(0)
+
+  // galette_butter_description String?
+  // galette_flour_description  String?
+  // galette_milk_description   String?
+  // galette_salt_description   String?
+  // galette_egg_description    String?
 
   created_by_user    User                @relation(fields: [created_by_user_id], references: [id])
   chocolatineReviews ChocolatineReview[]
+  croissantReviews   CroissantReview[]
+  galetteReviews     GaletteReview[]
+  baguetteReviews    BaguetteReview[]
   awards             Award[]
 }
 
@@ -149,6 +185,71 @@ model ChocolatineReview {
   user_email            String? //cache
   shop                  Shop      @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user                  User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model CroissantReview {
+  id               String    @id @default(uuid())
+  user_id_shop_id  String    @unique
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  deleted_at       DateTime?
+  comment          String?
+  light_or_dense   Int // -2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense
+  flaky_or_brioche Int // -2 is for very brioche, -1 for brioche, 0 for medium, 1 for flaky, 2 for very flaky
+  buttery          Int // -2 is for not buttery at all, -1 for not buttery, 0 for medium, 1 for buttery, 2 for very buttery
+  golden_or_pale   Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
+  crispy_or_soft   Int // -2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft
+  big_or_small     Int // -2 for very small, -1 for small, 0 for medium, 1 for big, 2 for very big
+  good_or_not_good Int // subjective, score from 0 to 20
+  shop_id          String
+  shop_name        String? // cache
+  user_id          String
+  user_username    String
+  user_email       String? //cache
+  shop             Shop      @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user             User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model GaletteReview {
+  id                String    @id @default(uuid())
+  user_id_shop_id   String    @unique
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  deleted_at        DateTime?
+  comment           String?
+  dry_or_moist      Int // -2 is for very dry, -1 for dry, 0 for medium, 1 for moist, 2 for very moist
+  golden_or_pale    Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
+  creamy_or_flaky   Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
+  rayage_creativity Int // -2 is for very creative, -1 for creative, 0 for medium, 1 for not creative, 2 for very not creative
+  good_or_not_good  Int // subjective, score from 0 to 20
+  shop_id           String
+  shop_name         String? // cache
+  user_id           String
+  user_username     String
+  user_email        String? //cache
+  shop              Shop      @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user              User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model BaguetteReview {
+  id               String    @id @default(uuid())
+  user_id_shop_id  String    @unique
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  deleted_at       DateTime?
+  comment          String?
+  dry_or_moist     Int // -2 is for very dry, -1 for dry, 0 for medium, 1 for moist, 2 for very moist
+  light_or_dense   Int // -2 is for very light, -1 for light, 0 for medium, 1 for dense, 2 for very dense
+  crispy_or_soft   Int // -2 is for very crispy, -1 for crispy, 0 for medium, 1 for soft, 2 for very soft
+  golden_or_pale   Int // -2 is for very golden, -1 for golden, 0 for medium, 1 for pale, 2 for very pale
+  good_or_not_good Int // subjective, score from 0 to 20
+  shop_id          String
+  shop_name        String? // cache
+  user_id          String
+  user_username    String
+  user_email       String? //cache
+  shop             Shop      @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user             User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum Action {
