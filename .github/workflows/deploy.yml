@@ -14,9 +14,9 @@ jobs:
         host: ${{ secrets.HOST }}
         username: deployer
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        debug: true
         script: |
           echo "SSH connection successful"
-        debug: true
 
 
           # Charger fnm
