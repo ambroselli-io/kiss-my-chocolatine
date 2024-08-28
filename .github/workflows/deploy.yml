@@ -1,0 +1,56 @@
+name: Simplified Deploy
+
+on:
+  push:
+    branches: [ main ]  # Or the name of your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: deployer
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+
+
+          # Charger fnm
+          echo "Chargement fnm"
+          FNM_PATH="$HOME/.local/share/fnm"
+          if [ -d "$FNM_PATH" ]; then
+            export PATH="$FNM_PATH:$PATH"
+            eval "`fnm env`"
+          fi
+          export PATH=$HOME/.npm-global/bin:$PATH
+
+          # Vérifier que fnm est bien chargé
+          echo "Vérification que fnm est bien chargé"
+          if ! command -v fnm &> /dev/null; then
+            echo "Error: fnm is not available. Please check its installation."
+            exit 1
+          fi
+
+          # Afficher la version de fnm pour le debug
+          fnm --version
+
+          cd /var/www/kiss-my-chocolatine
+          git pull origin main
+          npm ci --include=dev
+          npm run build
+
+           # Restart or start the application using PM2
+          pm2 restart ecosystem.config.cjs || pm2 start ecosystem.config.cjs
+
+          # Wait for the app to start
+          sleep 10
+
+          # Check if the app is running
+          if curl -f http://localhost:5177/health; then
+            echo "Application is running correctly."
+          else
+            echo "Application failed to start."
+            exit 1
+          fi
