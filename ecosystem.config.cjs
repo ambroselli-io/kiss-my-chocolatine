@@ -3,7 +3,7 @@ require("dotenv").config();
 module.exports = {
   apps: [
     {
-      name: "medspot",
+      name: "kiss-my-chocolatine",
       script: "npm",
       args: "run start-pm2",
       env: {
